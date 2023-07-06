@@ -20,7 +20,7 @@ class _Detail_ScreenState extends State<Detail_Screen> {
     Color(0xffcd9403),
     Color(0xff0066da),
     Color(0xffd5299b),
-    Color(0xff4cd964)
+    Color(0xff4cd964),
   ];
   List<String> Img = [
     "assets/president eua.webp",
