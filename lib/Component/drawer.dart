@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/Edit_Profile/Edit_Profile.dart';
 import 'package:brazeellian_community/Itens%20Salvos/Itnes_Salvos.dart';
 import 'package:brazeellian_community/Not%C3%ADcias/Not%C3%ADcias.dart';
 import 'package:brazeellian_community/Tutorials/Tutorial.dart';
@@ -184,19 +185,35 @@ class _drawerState extends State<drawer> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset("assets/User, Profile.svg"),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Editar perfil",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xff111111),
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: "Plus Jakarta Sans"),
-                                )
-                              ],
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  loading = true;
+                                });
+                                await Future.delayed(
+                                    const Duration(seconds: 0));
+                                setState(() {
+                                  loading = false;
+                                });
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return Edit_Profile();
+                                }));
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset("assets/User, Profile.svg"),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "Editar perfil",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xff111111),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Plus Jakarta Sans"),
+                                  )
+                                ],
+                              ),
                             ),
                             SvgPicture.asset("assets/Icon - Next.svg")
                           ],

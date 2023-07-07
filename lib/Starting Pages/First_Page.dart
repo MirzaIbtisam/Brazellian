@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:brazeellian_community/Create%20Account/Create_Account.dart';
 import 'package:brazeellian_community/Home%20Screen/Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +18,7 @@ class _First_PageState extends State<First_Page> {
     Timer(
         Duration(seconds: 5),
         () => Navigator.pushReplacement(context as BuildContext,
-            MaterialPageRoute(builder: (context) => Home_Screen())));
+            MaterialPageRoute(builder: (context) => Create_Account())));
   }
 
   Widget build(BuildContext context) {
