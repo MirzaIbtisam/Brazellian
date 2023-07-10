@@ -18,7 +18,7 @@ class _First_PageState extends State<First_Page> {
     Timer(
         Duration(seconds: 5),
         () => Navigator.pushReplacement(context as BuildContext,
-            MaterialPageRoute(builder: (context) => Create_Account())));
+            MaterialPageRoute(builder: (context) => Home_Screen())));
   }
 
   Widget build(BuildContext context) {

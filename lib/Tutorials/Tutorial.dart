@@ -11,7 +11,7 @@ class Tutorial extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
               SizedBox(height: 40),
