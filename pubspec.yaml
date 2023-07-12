@@ -46,7 +46,8 @@ dependencies:
   share_plus: ^7.0.2
   get: ^4.6.5
   share_extend: ^2.0.0
-
+  spline_chart: ^0.0.2
+  line_chart: ^1.0.9
 
 dev_dependencies:
   flutter_test:
