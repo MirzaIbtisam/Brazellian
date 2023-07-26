@@ -46,8 +46,10 @@ dependencies:
   share_plus: ^7.0.2
   get: ^4.6.5
   share_extend: ^2.0.0
-  spline_chart: ^0.0.2
-  line_chart: ^1.0.9
+  smooth_page_indicator: ^1.1.0
+  flutter_rating_bar: ^4.0.1
+  syncfusion_flutter_sliders: ^22.1.39
+  rating_summary: ^1.0.2+1
 
 dev_dependencies:
   flutter_test:
@@ -88,10 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+#  fonts:
+#     - family: MyFlutterApp
+#       fonts:
+#         - asset: assets/fonts/MyFlutterApp.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

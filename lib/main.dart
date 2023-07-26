@@ -1,6 +1,6 @@
-import 'package:brazeellian_community/Starting%20Pages/First_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'Screens/Starting Pages/First_Page.dart';
 
 void main() {
   runApp(GetMaterialApp(
