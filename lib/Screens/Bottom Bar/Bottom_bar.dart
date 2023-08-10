@@ -1,4 +1,5 @@
 import 'package:brazeellian_community/Screens/Component/drawer.dart';
+import 'package:brazeellian_community/Screens/Explorer/PageMapView.dart';
 import 'package:brazeellian_community/Screens/Listing/New_Listing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _Bottom_barState extends State<Bottom_bar> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
   static List<Widget> _widgetOptions = <Widget>[
     Home_Screen(),
-    Messages(),
+    ExplorePageMapView(),
     New_Listing(),
     Adds(),
     drawer(),

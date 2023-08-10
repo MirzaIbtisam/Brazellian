@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:brazeellian_community/Screens/Event%20Screen/Event.dart';
+import 'package:brazeellian_community/Screens/High%20Lights/High_Lights.dart';
+import 'package:brazeellian_community/Screens/Job%20Screen/Job_Screen.dart';
 import 'package:brazeellian_community/Screens/Listing_Screen/Listing_Screen.dart';
 import 'package:brazeellian_community/Screens/Notification%20Screen/Notifications.dart';
 import 'package:brazeellian_community/Screens/Real_State/Real_State.dart';
 import 'package:brazeellian_community/Screens/Search/Search.dart';
+import 'package:brazeellian_community/Screens/Vehicles/Vehicle_Service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +14,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Component/Beauty_Tips.dart';
 import '../Component/Categorias.dart';
 import '../Component/Multiple Service.dart';
 import '../Component/drawer.dart';
+import '../Explorer/PageMapView.dart';
 import '../FilterScreen.dart';
+import '../House Cleaning/House_Cleaning.dart';
 import '../Itens Salvos/Itnes_Salvos.dart';
 
 class Home_Screen extends StatefulWidget {
@@ -62,6 +68,12 @@ class _Home_ScreenState extends State<Home_Screen> {
 
   int currentIndex = 1;
 
+  Future<String> fetchLoginInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString("id").toString();
+    return id;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -70,7 +82,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       child: Scaffold(
         drawer: Drawer(
           width: double.infinity,
-          child: drawer(),
+          child: drawer(id: fetchLoginInfo()),
         ),
         backgroundColor: const Color(0xfff1a408),
         body: SingleChildScrollView(
@@ -254,25 +266,48 @@ class _Home_ScreenState extends State<Home_Screen> {
                                       Image: "assets/Events.svg"),
                                 )),
                             SizedBox(width: 10),
-                            InkWell(onTap: (){
-                              Get.to(() => RealState());
-                            },
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => RealState());
+                              },
                               child: Categorias(
-                                  Text: "Real State", Image: "assets/moives.svg"),
+                                  Text: "Real State",
+                                  Image: "assets/moives.svg"),
                             ),
                             SizedBox(width: 10),
-                            InkWell(onTap: (){Get.to(() => Listing_Screen());},
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => Listing_Screen());
+                              },
                               child: Categorias(
-                                  Text: "Listings", Image: "assets/Anúncios.svg"),
+                                  Text: "Listings",
+                                  Image: "assets/Anúncios.svg"),
                             ),
                             SizedBox(width: 10),
-                            Categorias(
-                                Text: "Services", Image: "assets/services.svg"),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => House_Cleaning());
+                              },
+                              child: Categorias(
+                                  Text: "Services",
+                                  Image: "assets/services.svg"),
+                            ),
                             SizedBox(width: 10),
-                            Categorias(Text: "Jobs", Image: "assets/Jobs.svg"),
+                            InkWell(
+                                onTap: () {
+                                  Get.to(() => Job_Screen());
+                                },
+                                child: Categorias(
+                                    Text: "Jobs", Image: "assets/Jobs.svg")),
                             SizedBox(width: 10),
-                            Categorias(
-                                Text: "Vehicles", Image: "assets/Vehicles.svg"),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => Vehicle_Service());
+                              },
+                              child: Categorias(
+                                  Text: "Vehicles",
+                                  Image: "assets/Vehicles.svg"),
+                            ),
                           ],
                         ),
                       ),
@@ -481,9 +516,14 @@ class _Home_ScreenState extends State<Home_Screen> {
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(right: 8),
-                  child: Beauty_Tips(Image: images[index]),
+                return InkWell(
+                  onTap: () {
+                    Highlight(index);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 8),
+                    child: Beauty_Tips(Image: images[index]),
+                  ),
                 );
               },
             ),
@@ -515,7 +555,9 @@ class _Home_ScreenState extends State<Home_Screen> {
           height: 50,
           width: MediaQuery.of(context).size.width / 1.150,
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => ExplorePageMapView());
+              },
               style: ElevatedButton.styleFrom(
                   primary: const Color(0xffCD9403),
                   shape: RoundedRectangleBorder(
@@ -546,5 +588,9 @@ class _Home_ScreenState extends State<Home_Screen> {
         ),
       ],
     );
+  }
+
+  Highlight(index) {
+    Get.to(High_Lights());
   }
 }

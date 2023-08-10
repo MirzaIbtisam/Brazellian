@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
+import '../../ApiServices/forgotApi.dart';
+import '../../Models/signUpModel.dart';
 import 'Change_Password.dart';
 
 class Forgot_Password extends StatefulWidget {
@@ -14,6 +15,8 @@ class Forgot_Password extends StatefulWidget {
 
 class _Forgot_PasswordState extends State<Forgot_Password> {
   bool loading = false;
+  TextEditingController email = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +61,10 @@ class _Forgot_PasswordState extends State<Forgot_Password> {
                   height: 50,
                   width: MediaQuery.of(context).size.width / 1.1,
                   child: TextFormField(
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(20),
-                      ],
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(30),
+                    ],
+                    controller: email,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 15),
                         border: InputBorder.none,
@@ -76,18 +80,46 @@ class _Forgot_PasswordState extends State<Forgot_Password> {
                   height: 55,
                   width: MediaQuery.of(context).size.width / 1.150,
                   child: ElevatedButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         setState(() {
-                          loading=true;
+                          loading = true;
                         });
                         await Future.delayed(Duration(seconds: 3));
                         setState(() {
-                          loading=false;
+                          loading = false;
                         });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return Change_Password();
-                            }));
+                        SignUpResponse response =
+                            await ApiServicesforForgot.forgot(email.toString());
+                        if (email.text.toString() == "") {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: Text('Error Message'),
+                                  content: Text('Please Enter the Email'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); //close Dialog
+                                      },
+                                      child: Text('Close'),
+                                    )
+                                  ],
+                                );
+                              });
+                        } else {
+                          SignUpResponse response=await ApiServicesforForgot.forgot(email.text.toString());
+                          if(response.message=="Code sent to email"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return Change_Password(
+                                        email: email.text,
+                                      );
+                                    }));
+                          }
+
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xffCD9403),

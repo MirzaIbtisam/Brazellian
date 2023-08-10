@@ -1,3 +1,5 @@
+import 'package:brazeellian_community/Screens/Bottom%20Bar/Bottom_bar.dart';
+import 'package:brazeellian_community/Screens/Home%20Screen/Home_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,7 +91,7 @@ class _welcomeState extends State<welcome> {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (BuildContext context) {
-                                                  return New_Password();
+                                                  return Bottom_bar();
                                                 }));
 
                                       },

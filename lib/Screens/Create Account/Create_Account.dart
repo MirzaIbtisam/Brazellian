@@ -1,10 +1,12 @@
 import 'dart:async';
-
+import 'package:brazeellian_community/ApiServices/signupApi.dart';
+import 'package:brazeellian_community/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import '../../Models/signUpModel.dart';
 import '../Verification/verification.dart';
 
 class Create_Account extends StatefulWidget {
@@ -16,7 +18,10 @@ class Create_Account extends StatefulWidget {
 
 class _Create_AccountState extends State<Create_Account> {
   bool loading=false;
-
+  TextEditingController name=TextEditingController();
+  TextEditingController email=TextEditingController();
+  TextEditingController password=TextEditingController();
+  TextEditingController confirmPassword=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +60,7 @@ class _Create_AccountState extends State<Create_Account> {
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(20),
                     ],
+                    controller: name,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 15),
                         border: InputBorder.none,
@@ -76,8 +82,9 @@ class _Create_AccountState extends State<Create_Account> {
                   width: MediaQuery.of(context).size.width / 1.1,
                   child: TextFormField(
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(20),
+                      LengthLimitingTextInputFormatter(30),
                     ],
+                    controller: email,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 15),
                         border: InputBorder.none,
@@ -101,7 +108,7 @@ class _Create_AccountState extends State<Create_Account> {
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(15),
                     ],
-                    keyboardType: TextInputType.number,
+                    controller: password,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 15, top: 12),
                         border: InputBorder.none,
@@ -114,7 +121,7 @@ class _Create_AccountState extends State<Create_Account> {
                           fontSize: 14,
                           color: Color(0xff75788D),
                         )),
-                    obscureText: true,
+                    // obscureText: true,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -130,7 +137,7 @@ class _Create_AccountState extends State<Create_Account> {
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(15),
                     ],
-                    keyboardType: TextInputType.number,
+                    controller: confirmPassword,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 15, top: 12),
                         border: InputBorder.none,
@@ -143,7 +150,7 @@ class _Create_AccountState extends State<Create_Account> {
                           fontSize: 14,
                           color: Color(0xff75788D),
                         )),
-                    obscureText: true,
+                    // obscureText: true,
                   ),
                 ),
                 SizedBox(height: 80),
@@ -165,11 +172,55 @@ class _Create_AccountState extends State<Create_Account> {
                           loading=false;
 
                         });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return verification();
-                            }));
-
+                        // Navigator.of(context).pushReplacement(
+                        //     MaterialPageRoute(builder: (BuildContext context) {
+                        //       return verification(email: email.text,);
+                        //     }));
+                        if(confirmPassword.text==password.text&&(confirmPassword.text!=""&&password.text!="")){
+                          SignUpResponse response=await ApiServicesforSignUp.signup(email.text, password.text, name.text);
+                          if(response.message=="User Created Successfully"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (BuildContext context) {
+                                  return verification(email: email.text,);
+                                }));
+                          }
+                          else{
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Error Message'),
+                                    content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context); //close Dialog
+                                        },
+                                        child: Text('Close'),
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
+                        }
+                        else{
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: Text('Error Message'),
+                                  content: Text('Password and Confirm Password do not match'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); //close Dialog
+                                      },
+                                      child: Text('Close'),
+                                    )
+                                  ],
+                                );
+                              });
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xffCD9403),

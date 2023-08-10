@@ -169,22 +169,6 @@ class _Edit_ProfileState extends State<Edit_Profile> {
               SizedBox(height: 8),
               Textfield("Germano"),
               SizedBox(height: 15),
-              Row(
-                children: [
-                  text("SSN"),
-                  Text(
-                    " (Social Security Number)",
-                    style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Plus Jakarta Sana",
-                        color: Color(0xff78828a)),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Textfield("crissgermano@gmail.com"),
-              SizedBox(height: 15),
               text("E-mail"),
               SizedBox(height: 8),
               Textfield("crissgermano@gmail.com"),

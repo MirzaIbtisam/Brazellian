@@ -1,5 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:brazeellian_community/Screens/Listing/Multi_List.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -14,12 +15,12 @@ class New_Listing extends StatefulWidget {
 
 class _New_ListingState extends State<New_Listing> {
   final List<String> items = [
-    'Events',
-    'Real State',
-    'Adverts',
+    'Event',
+    'Property',
+    'Advert',
     'Service',
     'Work',
-    'Vehicles'
+    'Vehicle'
   ];
   final TextEditingController controller = TextEditingController(text: '');
 
@@ -104,6 +105,7 @@ class _New_ListingState extends State<New_Listing> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: CustomDropdown(
+                    hintText: "Select Type",
                     fillColor: Colors.white,
                     selectedStyle:
                         TextStyle(fontSize: 16, color: Color(0xff78828a)),
@@ -122,7 +124,29 @@ class _New_ListingState extends State<New_Listing> {
                 width: Get.width * 0.9,
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => Multi_List());
+                      if (controller.text.isNotEmpty) {
+                        Get.to(() => Multi_List(
+                              type: controller.text.toString(),
+                          page: 0,
+                            ));
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: Text('Error Message'),
+                                content: Text('Please select the type'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); //close Dialog
+                                    },
+                                    child: Text('Close'),
+                                  )
+                                ],
+                              );
+                            });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xfffcd9403),

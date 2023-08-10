@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:brazeellian_community/Screens/Create%20Account/Create_Account.dart';
+import 'package:brazeellian_community/Screens/Starting%20Pages/Brazellian.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../Home Screen/Home_Screen.dart';
 
 class First_Page extends StatefulWidget {
   const First_Page({super.key});
@@ -18,7 +21,7 @@ class _First_PageState extends State<First_Page> {
     Timer(
         Duration(seconds: 5),
         () => Navigator.pushReplacement(context as BuildContext,
-            MaterialPageRoute(builder: (context) => Create_Account())));
+            MaterialPageRoute(builder: (context) => Brazellian())));
   }
 
   Widget build(BuildContext context) {

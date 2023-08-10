@@ -1,13 +1,17 @@
+import 'package:brazeellian_community/Models/signUpModel.dart';
+import 'package:brazeellian_community/Screens/Starting%20Pages/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../ApiServices/verificationapi.dart';
 import '../Selecione o seu perfil/Selecione.dart';
 
 class verification extends StatefulWidget {
-  const verification({super.key});
+  final email;
+  const verification({super.key, this.email});
 
   @override
   State<verification> createState() => _verificationState();
@@ -15,7 +19,7 @@ class verification extends StatefulWidget {
 
 class _verificationState extends State<verification> {
   bool loading = false;
-
+  TextEditingController Code = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +65,7 @@ class _verificationState extends State<verification> {
                     showFieldAsBox: true,
                     onCodeChanged: (String code) {},
                     onSubmit: (String verificationCode) {
+                      Code.text = verificationCode.toString();
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -86,62 +91,84 @@ class _verificationState extends State<verification> {
                         setState(() {
                           loading = false;
                         });
-                        showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            title: SvgPicture.asset("assets/Vector.svg"),
-                            content: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                "Código confirmado\n     com sucesso!",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Color(0xff343A40),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            actions: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
+                        SignUpResponse response = await ApiServicesforVerification. verification(widget.email.toString(),Code.text.toString());
+                        if(response.message=="OTP verified successfully"){
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15)),
+                              title: SvgPicture.asset("assets/Vector.svg"),
+                              content: Padding(
+                                padding: const EdgeInsets.only(left: 20),
                                 child: Text(
-                                  "Estamos quase lá! Agora precisamos\n   saber um pouco mais sobre você",
+                                  "Código confirmado\n     com sucesso!",
                                   style: TextStyle(
-                                      fontSize: 12, color: Color(0xff6C6C6C)),
+                                      fontSize: 24,
+                                      color: Color(0xff343A40),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
-                              SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  height: 53,
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.5,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return Selecione();
-                                        }));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Color(0xffCD9403),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                      child: Text(
-                                        "Continuar",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      )),
+                              actions: <Widget>[
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Estamos quase lá! Agora precisamos\n   saber um pouco mais sobre você",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Color(0xff6C6C6C)),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 15),
-                            ],
-                          ),
-                        );
+                                SizedBox(height: 20),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    height: 53,
+                                    width:
+                                    MediaQuery.of(context).size.width / 1.5,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(builder:
+                                                  (BuildContext context) {
+                                                return Login();
+                                              }));
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Color(0xffCD9403),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(15))),
+                                        child: Text(
+                                          "Continuar",
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.white),
+                                        )),
+                                  ),
+                                ),
+                                SizedBox(height: 15),
+                              ],
+                            ),
+                          );
+                        }
+                        else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CupertinoAlertDialog(
+                                      title: Text('Error Message'),
+                                      content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context); //close Dialog
+                                          },
+                                          child: Text('Close'),
+                                        )
+                                      ],
+                                    );
+                                  });
+                          }
+
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xffCD9403),
