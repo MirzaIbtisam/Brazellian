@@ -8,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../ApiServices/ApIServiceForGetAllListings.dart';
+import '../../Models/eventModel.dart';
 import '../Component/Multiple Service.dart';
 
 class Event extends StatefulWidget {
@@ -18,6 +20,9 @@ class Event extends StatefulWidget {
 }
 
 class EventState extends State<Event> {
+
+
+
   List<String> Event = [
     "assets/Events.webp",
     "assets/Events.webp",
@@ -31,7 +36,20 @@ class EventState extends State<Event> {
     "assets/Events.webp",
   ];
   int currentIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialize();
+    setState(() {
 
+    });
+  }
+  EventsResponse? data;
+  void initialize()async{
+    data =await ApiServicesforGetListing.getAllEvents();
+    print(data?.events[0].title);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,8 +183,10 @@ class EventState extends State<Event> {
                   ),
                   width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
+                    physics: ScrollPhysics(),
                     child: Column(
                       children: [
+
                         SizedBox(height: 20),
                         Container(
                           height: 15,
@@ -223,154 +243,179 @@ class EventState extends State<Event> {
                           thickness: 0.5,
                           color: Color(0xffefefef),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: GridView(
-                            scrollDirection: Axis.vertical,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 215,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            // itemCount: 4,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
+                        SingleChildScrollView(
+                          child: Column(
                             children: [
-                              InkWell(onTap: (){Get.to(()=> Detail());},
-                                child: Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite.svg",
-                                    Image3: "assets/Events.webp",
-                                    Text1:
-                                        "O poder do Networking\nSegunda Edição",
-                                    Text2: "\$ 50,00"),
+                              GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: data?.events.length, // Replace with the actual item count
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Number of columns in the grid
+                                  crossAxisSpacing: 10.0, // Spacing between columns
+                                  mainAxisSpacing: 20.0, // Spacing between rows
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  // Replace with your item widget
+                                  return Multiple_Service(
+                                      Image1: "assets/Event button.svg",
+                                      Image2: "assets/Favorite (1).svg",
+                                      Image3: "assets/Events.png",
+                                      Text1: "${data?.events[index].title}",
+                                      Text2: "\$ 50,00");
+                                },
                               ),
-                              Multiple_Service(
-                                  Image1: "assets/Event button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Events.png",
-                                  Text1:
-                                      "O poder do Networking\nTerceira Edição",
-                                  Text2: "\$ 50,00"),
-                              Multiple_Service(
-                                  Image1: "assets/Event button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Events.webp",
-                                  Text1:
-                                      "O poder do Networking\nTerceira Edição",
-                                  Text2: "\$ 50,00"),
-                              Multiple_Service(
-                                  Image1: "assets/Event button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Events.png",
-                                  Text1:
-                                      "O poder do Networking\nTerceira Edição",
-                                  Text2: "\$ 50,00"),
-                              Multiple_Service(
-                                  Image1: "assets/Event button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Events.webp",
-                                  Text1:
-                                      "O poder do Networking\nTerceira Edição",
-                                  Text2: "\$ 50,00"),
-                              Multiple_Service(
-                                  Image1: "assets/Event button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Events.png",
-                                  Text1:
-                                      "O poder do Networking\nTerceira Edição",
-                                  Text2: "\$ 50,00"),
+                              SizedBox(height: 30),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Destaques da semana",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "PlusJakarta Sans"),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Divider(
+                                thickness: 0.5,
+                                color: Color(0xffefefef),
+                              ),
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: SizedBox(
+                                  height: 220,
+                                  child: GridView(
+                                    scrollDirection: Axis.horizontal,
+                                    gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 1,
+                                      mainAxisExtent: 185,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                    ),
+                                    // itemCount: 4,
+                                    shrinkWrap: true,
+                                    children: [
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite.svg",
+                                          Image3: "assets/Events.webp",
+                                          Text1:
+                                          "O poder do Networking\nSegunda Edição",
+                                          Text2: "\$ 50,00"),
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite (1).svg",
+                                          Image3: "assets/Events.png",
+                                          Text1:
+                                          "O poder do Networking\nTerceira Edição",
+                                          Text2: "\$ 50,00"),
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite (1).svg",
+                                          Image3: "assets/Events.webp",
+                                          Text1:
+                                          "O poder do Networking\nTerceira Edição",
+                                          Text2: "\$ 50,00"),
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite (1).svg",
+                                          Image3: "assets/Events.png",
+                                          Text1:
+                                          "O poder do Networking\nTerceira Edição",
+                                          Text2: "\$ 50,00"),
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite (1).svg",
+                                          Image3: "assets/Events.webp",
+                                          Text1:
+                                          "O poder do Networking\nTerceira Edição",
+                                          Text2: "\$ 50,00"),
+                                      Multiple_Service(
+                                          Image1: "assets/Event button.svg",
+                                          Image2: "assets/Favorite (1).svg",
+                                          Image3: "assets/Events.png",
+                                          Text1:
+                                          "O poder do Networking\nTerceira Edição",
+                                          Text2: "\$ 50,00"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 50),
+                              SvgPicture.asset("assets/card.svg"),
+                              SizedBox(height: 50),
                             ],
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Destaques da semana",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "PlusJakarta Sans"),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Divider(
-                          thickness: 0.5,
-                          color: Color(0xffefefef),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: SizedBox(
-                            height: 220,
-                            child: GridView(
-                              scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1,
-                                mainAxisExtent: 185,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              // itemCount: 4,
-                              shrinkWrap: true,
-                              children: [
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite.svg",
-                                    Image3: "assets/Events.webp",
-                                    Text1:
-                                    "O poder do Networking\nSegunda Edição",
-                                    Text2: "\$ 50,00"),
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Events.png",
-                                    Text1:
-                                    "O poder do Networking\nTerceira Edição",
-                                    Text2: "\$ 50,00"),
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Events.webp",
-                                    Text1:
-                                    "O poder do Networking\nTerceira Edição",
-                                    Text2: "\$ 50,00"),
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Events.png",
-                                    Text1:
-                                    "O poder do Networking\nTerceira Edição",
-                                    Text2: "\$ 50,00"),
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Events.webp",
-                                    Text1:
-                                    "O poder do Networking\nTerceira Edição",
-                                    Text2: "\$ 50,00"),
-                                Multiple_Service(
-                                    Image1: "assets/Event button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Events.png",
-                                    Text1:
-                                    "O poder do Networking\nTerceira Edição",
-                                    Text2: "\$ 50,00"),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 50),
-                        SvgPicture.asset("assets/card.svg"),
-                        SizedBox(height: 50),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                        //   child: GridView(
+                        //     scrollDirection: Axis.vertical,
+                        //     gridDelegate:
+                        //         const SliverGridDelegateWithFixedCrossAxisCount(
+                        //       crossAxisCount: 2,
+                        //       mainAxisExtent: 215,
+                        //       crossAxisSpacing: 10,
+                        //       mainAxisSpacing: 10,
+                        //     ),
+                        //     // itemCount: 4,
+                        //     shrinkWrap: true,
+                        //     physics: const NeverScrollableScrollPhysics(),
+                        //     children: [
+                        //       InkWell(onTap: (){Get.to(()=> Detail());},
+                        //         child: Multiple_Service(
+                        //             Image1: "assets/Event button.svg",
+                        //             Image2: "assets/Favorite.svg",
+                        //             Image3: "assets/Events.webp",
+                        //             Text1:
+                        //                 "O poder do Networking\nSegunda Edição",
+                        //             Text2: "\$ 50,00"),
+                        //       ),
+                        //       Multiple_Service(
+                        //           Image1: "assets/Event button.svg",
+                        //           Image2: "assets/Favorite (1).svg",
+                        //           Image3: "assets/Events.png",
+                        //           Text1:
+                        //               "O poder do Networking\nTerceira Edição",
+                        //           Text2: "\$ 50,00"),
+                        //       Multiple_Service(
+                        //           Image1: "assets/Event button.svg",
+                        //           Image2: "assets/Favorite (1).svg",
+                        //           Image3: "assets/Events.webp",
+                        //           Text1:
+                        //               "O poder do Networking\nTerceira Edição",
+                        //           Text2: "\$ 50,00"),
+                        //       Multiple_Service(
+                        //           Image1: "assets/Event button.svg",
+                        //           Image2: "assets/Favorite (1).svg",
+                        //           Image3: "assets/Events.png",
+                        //           Text1:
+                        //               "O poder do Networking\nTerceira Edição",
+                        //           Text2: "\$ 50,00"),
+                        //       Multiple_Service(
+                        //           Image1: "assets/Event button.svg",
+                        //           Image2: "assets/Favorite (1).svg",
+                        //           Image3: "assets/Events.webp",
+                        //           Text1:
+                        //               "O poder do Networking\nTerceira Edição",
+                        //           Text2: "\$ 50,00"),
+                        //       Multiple_Service(
+                        //           Image1: "assets/Event button.svg",
+                        //           Image2: "assets/Favorite (1).svg",
+                        //           Image3: "assets/Events.png",
+                        //           Text1:
+                        //               "O poder do Networking\nTerceira Edição",
+                        //           Text2: "\$ 50,00"),
+                        //     ],
+                        //   ),
+                        // ),
+
                       ],
                     ),
                   ),

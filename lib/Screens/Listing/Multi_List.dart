@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:brazeellian_community/Controller/image_picker_controller.dart';
 import 'package:brazeellian_community/Screens/Listing_Screen/View.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-
 import '../../ApiServices/addListingApi.dart';
 import '../../Models/signUpModel.dart';
 
 class Multi_List extends StatefulWidget {
-   String type;
-  final int page ;
+  String type;
+  final int page;
 
   Multi_List({super.key, required this.type, required this.page});
 
@@ -25,7 +23,23 @@ class Multi_List extends StatefulWidget {
   State<Multi_List> createState() => _Multi_ListState();
 }
 
-class _Multi_ListState extends State<Multi_List>  with SingleTickerProviderStateMixin  {
+class _Multi_ListState extends State<Multi_List>
+    with SingleTickerProviderStateMixin {
+  // File? _selectedImage;
+
+  Future<void> _showImagePickerDialog(BuildContext context, int index) async {
+    final ImagePicker _picker = ImagePicker();
+
+    final XFile? pickedImage =
+        await _picker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      setState(() {
+        pickedImages[index] = File(pickedImage.path);
+      });
+    }
+  }
+
   final List<String> items = [
     'Event',
     'Property',
@@ -115,23 +129,58 @@ class _Multi_ListState extends State<Multi_List>  with SingleTickerProviderState
     TextEditingController(text: ''),
     TextEditingController(text: ''),
   ];
-  ImagePickerController controller7 = Get.put(ImagePickerController());
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
+
+  void _clearImage() {
+    setState(() {
+      _image = null;
+    });
+  }
+
   late TabController _tabController;
+  late List<File?> pickedImages = List.generate(6, (index) => null);
 
   @override
   void initState() {
+    File? imageone;
+    File? imagetwo;
+    File? imagethree;
+    File? imagefour;
+    File? imagefive;
+    File? imagesix;
+
+    pickedImages = [
+      imageone,
+      imagetwo,
+      imagethree,
+      imagefour,
+      imagefive,
+      imagesix,
+    ];
     // TODO: implement initState
     super.initState();
     _controller = TextfieldTagsController();
     _tabController = TabController(length: 2, vsync: this);
-
 
     controller.text = widget.type.toString();
     if (widget.type == 'Event') {
       final TextEditingController a = TextEditingController(text: '');
       final TextEditingController b = TextEditingController(text: '');
       final TextEditingController c = TextEditingController(text: '');
-      controllers.addAll([a, b, c]);
+      final TextEditingController d = TextEditingController(text: '');
+      final TextEditingController e = TextEditingController(text: '');
+      controllers.addAll([a, b, c, d, e]);
     } else if (widget.type == 'Property') {
       final TextEditingController a = TextEditingController(text: '');
       controllers.add(a);
@@ -184,7 +233,8 @@ class _Multi_ListState extends State<Multi_List>  with SingleTickerProviderState
   }
 
   double _distanceToField = 2.0;
-int page = 0;
+  int page = 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -319,7 +369,7 @@ int page = 0;
               ),
               Container(
                 color: Colors.white,
-                height: 2000,
+                height: 2500,
                 child: TabBarView(
                   children: [
                     Padding(
@@ -385,7 +435,7 @@ int page = 0;
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(color: Color(0xffc9cdd2))),
-                            height: 75,
+                            height: 100,
                             width: Get.width * 0.9,
                             child: Column(
                               children: [
@@ -637,55 +687,69 @@ int page = 0;
                           SizedBox(height: 10),
                           Txt("Add thumbnail"),
                           SizedBox(height: 10),
-                          Obx(() {
-                            return Container(
-                              decoration: controller7.imagePath.isNotEmpty
-                                  ? BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                        image: FileImage(File(
-                                            controller7.imagePath.toString())),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )
-                                  : BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border:
-                                          Border.all(color: Color(0xffc9cdd2)),
-                                    ),
-                              height: 200,
-                              width: Get.width * 0.9,
-                              child: InkWell(
-                                onTap: () {
-                                  controller7.getImage();
-                                },
-                                child: SvgPicture.asset(
-                                  "assets/import pic.svg",
-                                  fit: BoxFit.scaleDown,
+                          GestureDetector(
+                            onTap: _pickImage,
+                            // Call the function to pick the image
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border:
+                                        Border.all(color: Color(0xffe5c87e)),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  height: 200,
+                                  width: Get.width * 0.9,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: _image != null
+                                        ? Image.file(
+                                            _image!,
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/import pic.svg",
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
+                                if (_image != null)
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: _clearImage,
+                                      // Call the function to clear the image
+                                      child: SvgPicture.asset(
+                                        "assets/delete_pic.svg",
+                                        height: 25,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                           SizedBox(height: 20),
                           Txt("Add photos"),
                           SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Box2(),
-                              Box2(),
-                              Box2(),
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Box2(),
-                              Box2(),
-                              Box2(),
-                            ],
+                          Container(
+                            height: 250,
+                            child: GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 5,
+                                crossAxisSpacing: 5,
+                              ),
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: pickedImages.length, // Number of boxes
+                              itemBuilder: (BuildContext context, int index) {
+                                return Box2(context, pickedImages[index],
+                                    index); // Pass index here
+                              },
+                            ),
                           ),
                           SizedBox(height: 20),
                           SizedBox(
@@ -697,11 +761,8 @@ int page = 0;
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
                                   Map<String, dynamic> body =
-                                      generateListingBody(
-                                          widget.type,
-                                          controllers,
-                                          controller7,
-                                          id.toString());
+                                      generateListingBody(widget.type,
+                                          controllers, id.toString());
                                   UserLoginResponse response =
                                       await ApiServicesforListing.addListing(
                                           body, widget.type.toString());
@@ -747,9 +808,7 @@ int page = 0;
                       ),
                     ),
                     Column(
-                      children: [
-
-                      ],
+                      children: [],
                     )
                   ],
                 ),
@@ -763,10 +822,7 @@ int page = 0;
   }
 
   Map<String, dynamic> generateListingBody(
-      String type,
-      List<TextEditingController> controllers,
-      ImagePickerController imagePickerController,
-      String id) {
+      String type, List<TextEditingController> controllers, String id) {
     Map<String, dynamic> body = {
       "userId": id.toString(),
       "title": controllers[0].text.toString(),
@@ -834,12 +890,8 @@ int page = 0;
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Box1(
-                "13/09/2023",
-              ),
-              Box1(
-                "4pm",
-              ),
+              Box1("MM/DD/YYYY", controllers[8]),
+              Box1("4pm", controllers[9]),
             ],
           ),
           SizedBox(height: 20),
@@ -1021,9 +1073,7 @@ int page = 0;
     );
   }
 
-  Widget Box1(
-    String txt,
-  ) {
+  Widget Box1(String txt, TextEditingController dateController) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1034,6 +1084,43 @@ int page = 0;
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 5),
         child: TextFormField(
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            if (value.length == 2) {
+              int? month = int.tryParse(value);
+              if (month != null && month >= 1 && month <= 12) {
+                dateController.text = value + "/";
+                dateController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: dateController.text.length));
+              }
+            } else if (value.length == 5) {
+              int? day = int.tryParse(value.substring(3, 5));
+              int? month = int.tryParse(value.substring(0, 2));
+
+              if (day != null && month != null && month >= 1 && month <= 12) {
+                int maxDaysInMonth;
+
+                if (month == 2) {
+                  // February
+                  maxDaysInMonth = 28; // Leap years are not considered here
+                } else if (month == 4 ||
+                    month == 6 ||
+                    month == 9 ||
+                    month == 11) {
+                  maxDaysInMonth = 30; // Months with 30 days
+                } else {
+                  maxDaysInMonth = 31; // Months with 31 days
+                }
+
+                if (day >= 1 && day <= maxDaysInMonth) {
+                  dateController.text = value + "/";
+                  dateController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: dateController.text.length));
+                }
+              }
+            }
+          },
+          controller: dateController,
           inputFormatters: [
             LengthLimitingTextInputFormatter(50),
           ],
@@ -1050,17 +1137,49 @@ int page = 0;
     );
   }
 
-  Widget Box2() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xfffdf7e8),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      height: MediaQuery.of(context).size.height / 7.5,
-      width: MediaQuery.of(context).size.width / 3.5,
-      child: SvgPicture.asset(
-        "assets/import_Pic1.svg",
-        fit: BoxFit.scaleDown,
+  Widget Box2(BuildContext context, File? edImage, int index) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xfffdf7e8),
+            ),
+            height: MediaQuery.of(context).size.height / 7.5,
+            width: MediaQuery.of(context).size.width / 3.5,
+            child: GestureDetector(
+              onTap: () {
+                _showImagePickerDialog(context, index);
+              },
+              child: edImage != null
+                  ? Image.file(
+                      edImage,
+                      fit: BoxFit.cover,
+                    )
+                  : SvgPicture.asset(
+                      "assets/import_Pic1.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+            ),
+          ),
+          if (edImage != null)
+            Positioned(
+              top: 5,
+              right: 5,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pickedImages[index] = null; // Remove the selected image
+                  });
+                },
+                child: SvgPicture.asset(
+                  "assets/delete_pic.svg",
+                  height: 20,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

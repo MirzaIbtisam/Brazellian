@@ -30,18 +30,17 @@ class _Multiple_ServiceState extends State<Multiple_Service> {
         border: Border.all(color: Color(0xffedebe9)),
         borderRadius: BorderRadius.circular(15),
       ),
-      height: MediaQuery.of(context).size.height / 3.6,
+      height: MediaQuery.of(context).size.height / 4.6,
       width: MediaQuery.of(context).size.width / 2.3,
       child: Column(
         children: [
-          SizedBox(height: 5),
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(widget.Image3), fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(10),
             ),
-            height: 140,
+            height: 120,
             width: MediaQuery.of(context).size.width / 2.4,
             child: Column(
               children: [
@@ -67,7 +66,7 @@ class _Multiple_ServiceState extends State<Multiple_Service> {
               child: Text(
                 widget.Text1,
                 style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     color: Color(0xff101828),
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Plus Jakarta Sans'),
@@ -100,7 +99,6 @@ class _Multiple_ServiceState extends State<Multiple_Service> {
               ],
             ),
           ),
-
         ],
       ),
     );
