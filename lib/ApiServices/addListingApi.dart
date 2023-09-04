@@ -8,8 +8,6 @@ class ApiServicesforListing {
   static Future<UserLoginResponse> addListing(Map<String, dynamic> body,String endpoint) async {
      String URL =
         "${Constants.baseUrl}${Constants.create}${endpoint}"; // Replace 'Constants.baseUrl' with your actual base URL.
-     print(URL);
-     print(body);
     final response = await http.post(
       Uri.parse(URL),
       body: json.encode(body),
