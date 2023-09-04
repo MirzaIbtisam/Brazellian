@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:brazeellian_community/constant/constant.dart';
 import 'package:http/http.dart' as http;
-
 import '../Models/signUpModel.dart';
 
 class ApiServicesforListing {
