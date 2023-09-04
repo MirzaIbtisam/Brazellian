@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../Models/eventModel.dart';
+
 class Detail extends StatefulWidget {
-  const Detail({super.key});
+  Event data;
+  Detail({super.key,required this.data});
 
   @override
   State<Detail> createState() => DetailState();
@@ -195,8 +198,8 @@ class DetailState extends State<Detail> {
                                           color: const Color(0xff1d2939),
                                         ),
                                         const SizedBox(width: 5),
-                                        const Text(
-                                          "Miami, FL",
+                                         Text(
+                                          "${widget.data.local}",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Color(0xff475467),
@@ -207,7 +210,7 @@ class DetailState extends State<Detail> {
                                     )),
                               ),
                               Text(
-                                "10 Julho 2023",
+                                "${widget.data.date}".split('T')[0],
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: Color(0xff78828a),
@@ -217,10 +220,10 @@ class DetailState extends State<Detail> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          const Align(
+                          Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "O Poder do networking\nSegunda edição",
+                              "${widget?.data.title}",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Color(0xff101828),
@@ -229,10 +232,10 @@ class DetailState extends State<Detail> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          const Align(
+                          Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Especialista em network e conexões, é o idealizador do\nprojeto.De origem humilde, é casado com Cláudia Avelar e\npai de dois filhos, Kevin e Kai. Bruno é um empreendedor,\nmentor e escritor brasileiro, CVO (Chief Visionary Officer) de\ndiversas empresas.",
+                              "${widget.data.description}",
                               style: TextStyle(
                                   fontSize: 12,
                                   color: Color(0xff828a9b),
@@ -291,7 +294,7 @@ class DetailState extends State<Detail> {
                                   ),
                                   SizedBox(height: 15),
                                   Text(
-                                    "10/06/2023",
+                                    "${widget.data.date}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xff667085),

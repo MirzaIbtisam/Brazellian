@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:brazeellian_community/Screens/Create%20Account/Create_Account.dart';
 import 'package:brazeellian_community/Screens/Starting%20Pages/Brazellian.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../Home Screen/Home_Screen.dart';
 
 class First_Page extends StatefulWidget {
   const First_Page({super.key});

@@ -5,7 +5,7 @@ import '../Models/signUpModel.dart';
 
 class ApiServicesforForgot {
   static Future<SignUpResponse> forgot(String email,) async {
-    const String URL = "${baseUrl}forgotPassword"; // Replace 'baseUrl' with your actual base URL.
+    const String URL = "${Constants.baseUrl}${Constants.forgotPassword}"; // Replace 'Constants.baseUrl' with your actual base URL.
     Map<String, dynamic> body = {
       'email': email,
     };

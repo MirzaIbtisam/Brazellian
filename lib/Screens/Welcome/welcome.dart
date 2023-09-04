@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../Create Password/New_Password.dart';
+import '../Starting Pages/Login.dart';
 
 class welcome extends StatefulWidget {
   const welcome({super.key});
@@ -91,7 +92,7 @@ class _welcomeState extends State<welcome> {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (BuildContext context) {
-                                                  return Bottom_bar();
+                                                  return Login();
                                                 }));
 
                                       },

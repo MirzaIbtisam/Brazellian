@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/ApiServices/updateAccountType.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -5,14 +6,14 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../Location/location.dart';
 
 class Selecione extends StatefulWidget {
-  const Selecione({super.key});
-
+  String? id;
+  Selecione({super.key,this.id});
   @override
   State<Selecione> createState() => _SelecioneState();
 }
 
 class _SelecioneState extends State<Selecione> {
-  String Level = 'one';
+  String Level = 'Consumer';
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _SelecioneState extends State<Selecione> {
                 children: [
                   Radio(
                       activeColor: Colors.black,
-                      value: 'one',
+                      value: 'Consumer',
                       groupValue: Level,
                       onChanged: (value) {
                         setState(() {
@@ -61,7 +62,7 @@ class _SelecioneState extends State<Selecione> {
                 children: [
                   Radio(
                       activeColor: Colors.black,
-                      value: 'two',
+                      value: 'Company',
                       groupValue: Level,
                       onChanged: (value) {
                         setState(() {
@@ -86,13 +87,40 @@ class _SelecioneState extends State<Selecione> {
                           loading=true;
                         });
                         await Future.delayed(Duration(seconds: 3));
+                        Map<String, dynamic> body = {
+                          'id': widget.id.toString(),
+                          'accountType': Level.toString(),
+                        };
+                        ApiServicesforUpdateAccountType.updateAcoountType(body).then((response) {
+                          if(response.message=="Account type updated successfully"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (BuildContext context) {
+                                  return location(id: widget.id.toString(),);
+                                }));
+                          }
+                          else{
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Error Message'),
+                                    content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context); //close Dialog
+                                        },
+                                        child: Text('Close'),
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
+                        });
                         setState(() {
                           loading=false;
                         });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return location();
-                        }));
+
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xffCD9403),

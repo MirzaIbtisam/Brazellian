@@ -6,7 +6,7 @@ import '../Models/signUpModel.dart';
 
 class ApiServicesforVerification {
   static Future<SignUpResponse> verification(String email, String otpCode,) async {
-    const String URL = "${baseUrl}verifyOTP"; // Replace 'baseUrl' with your actual base URL.
+    const String URL = "${Constants.baseUrl}${Constants.verifyOTP}"; // Replace 'Constants.baseUrl' with your actual base URL.
     Map<String, dynamic> body = {
       'email': email,
       'otpCode': otpCode,

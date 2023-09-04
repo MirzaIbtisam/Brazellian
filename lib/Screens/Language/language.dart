@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../ApiServices/updateLanguage.dart';
 import '../Select your interests/Interests.dart';
 
 class language extends StatefulWidget {
-  const language({super.key});
+  String? id;
+  language({super.key,this.id});
 
   @override
   State<language> createState() => _languageState();
@@ -114,10 +116,37 @@ class _languageState extends State<language> {
                       setState(() {
                         loading=false;
                       });
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return Interests();
-                      }));
+                      Map<String, dynamic> body = {
+                        'id': widget.id.toString(),
+                        'language': controller.text.toString(),
+                      };
+                      ApiServicesforUpdateLanguage.updateLanguage(body).then((response) {
+                        if(response.message=="Language updated successfully"){
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return Interests(id: widget.id,);
+                              }));
+                        }
+                        else{
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: Text('Error Message'),
+                                  content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); //close Dialog
+                                      },
+                                      child: Text('Close'),
+                                    )
+                                  ],
+                                );
+                              });
+                        }
+                      });
+
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xffCD9403),

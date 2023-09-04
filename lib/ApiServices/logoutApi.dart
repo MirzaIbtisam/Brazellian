@@ -7,7 +7,7 @@ import '../Models/signUpModel.dart';
 
 class ApiServicesforlogout {
   static Future<UserLoginResponse> logout() async {
-    const String URL = "${baseUrl}logoutUser"; // Replace 'baseUrl' with your actual base URL.
+    const String URL = "${Constants.baseUrl}${Constants.logoutUser}"; // Replace 'Constants.baseUrl' with your actual base URL.
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String id =  prefs.get("id").toString();
     Map<String, dynamic> body = {

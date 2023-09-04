@@ -11,7 +11,8 @@ import '../Selecione o seu perfil/Selecione.dart';
 
 class verification extends StatefulWidget {
   final email;
-  const verification({super.key, this.email});
+  final id;
+  const verification({super.key, this.email,this.id});
 
   @override
   State<verification> createState() => _verificationState();
@@ -130,7 +131,7 @@ class _verificationState extends State<verification> {
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(builder:
                                                   (BuildContext context) {
-                                                return Login();
+                                                return Selecione(id: widget.id,);
                                               }));
                                         },
                                         style: ElevatedButton.styleFrom(

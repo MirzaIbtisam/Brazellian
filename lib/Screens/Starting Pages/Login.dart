@@ -1,7 +1,6 @@
 import 'package:brazeellian_community/ApiServices/loginApi.dart';
 import 'package:brazeellian_community/Screens/Bottom%20Bar/Bottom_bar.dart';
 import 'package:brazeellian_community/Screens/Forgot%20Password/Forgot_Password.dart';
-import 'package:brazeellian_community/Screens/Home%20Screen/Home_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +13,6 @@ import '../../Models/signUpModel.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
-
   @override
   State<Login> createState() => LoginState();
 }
@@ -23,21 +21,13 @@ class LoginState extends State<Login> {
   bool loading = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
-
-
   void _login(BuildContext context,String id) async {
-    // Simulate a successful login
     await _saveLoggedIn(id);
-
   }
-
-
   Future<void> _saveLoggedIn(String id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
     await prefs.setString("id", id);}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,11 +205,8 @@ class LoginState extends State<Login> {
                                     if (response.message ==
                                         "User logged in successfully") {
                                       _login(context, response.id.toString());
-
                                       print(response.id);
                                       print("ASdasd");
-
-
                                       Get.to(() => Bottom_bar());
                                     } else {
                                       showDialog(

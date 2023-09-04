@@ -4,34 +4,29 @@ import 'package:http/http.dart' as http;
 
 import '../Models/signUpModel.dart';
 
-class ApiServicesforUpdatedPassword {
-  static Future<SignUpResponse> UpdatedPassword(String email, String newPassword,) async {
-    const String URL = "${Constants.baseUrl}${Constants.updatePassword}"; // Replace 'Constants.baseUrl' with your actual base URL.
-    Map<String, dynamic> body = {
-      'email': email,
-      'newPassword': newPassword,
-    };
+class ApiServicesforUpdateAccountType {
+  static Future<UserLoginResponse> updateAcoountType(Map<String, dynamic> body) async {
+    String URL =
+        "${Constants.baseUrl}${Constants.updateAccountType}"; // Replace 'Constants.baseUrl' with your actual base URL.
     print(body);
     final response = await http.post(
       Uri.parse(URL),
       body: json.encode(body),
       headers: {"Content-Type": "application/json"},
     );
-    print(response.body);
     final String res = response.body;
+    print(res);
     if (res != 'null') {
-      print(res);
       try {
         final jsonData = json.decode(res) as Map<String, dynamic>;
         // Assuming the response follows the structure of SignUpResponse
-        return SignUpResponse.fromJson(jsonData);
+        return UserLoginResponse.fromJson(jsonData);
       } catch (e) {
         // Handle parsing error
-        return SignUpResponse( error: e.toString());
+        return UserLoginResponse(error: e.toString());
       }
     }
     // Return an error response if the server response is 'null'
-    return SignUpResponse(error: "Server returned null response");
+    return UserLoginResponse(error: "Server returned null response");
   }
 }
-

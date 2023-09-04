@@ -8,7 +8,7 @@ import '../Models/signUpModel.dart';
 class ApiServicesforlogin {
   static Future<UserLoginResponse> login(String email, String password,) async {
 
-    const String URL = "${baseUrl}loginUser"; // Replace 'baseUrl' with your actual base URL.
+    const String URL = "${Constants.baseUrl}${Constants.loginUser}"; // Replace 'Constants.baseUrl' with your actual base URL.
     Map<String, dynamic> body = {
       'email': email,
       'password': password,

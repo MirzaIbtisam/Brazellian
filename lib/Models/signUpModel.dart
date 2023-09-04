@@ -1,11 +1,18 @@
 class SignUpResponse {
   final String? message;
   final String? error;
+  final String? id;
 
-  SignUpResponse({ this.message, this.error});
+  SignUpResponse({ this.message, this.error,this.id});
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) {
-    if(json.containsKey('message')){
+    if(json.containsKey('message')&&json.containsKey('id')){
+      return SignUpResponse(
+        message: json['message'],
+        id: json['id'],
+      );
+    }
+    else if(json.containsKey('message')){
       return SignUpResponse(
         message: json['message'],
       );
