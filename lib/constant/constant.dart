@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 @immutable
 class Constants{
+
   static const baseUrl="https://braelo.azurewebsites.net/";
   static const create="create";
   static const getAllEvents="getAllEvents";
