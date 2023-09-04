@@ -1,13 +1,17 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import '../../ApiServices/getUserInfo.dart';
+import '../../ApiServices/updateUserProfile.dart';
+import '../../Models/userModel.dart';
+import '../Home Screen/Home_Screen.dart';
 
 class Edit_Profile extends StatefulWidget {
   const Edit_Profile({super.key});
-
   @override
   State<Edit_Profile> createState() => _Edit_ProfileState();
 }
@@ -18,28 +22,68 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     'Rather say',
     'Rather',
   ];
+  final List<TextEditingController> controllers = [TextEditingController(text: ''),TextEditingController(text: ''),TextEditingController(text: ''),
+    TextEditingController(text: ''),TextEditingController(text: ''),TextEditingController(text: ''),TextEditingController(text: ''),];
   final TextEditingController controller = TextEditingController(text: '');
-  final List<String> items1 = [
+  final TextEditingController controller1 = TextEditingController(text: '');
+  final TextEditingController controller2 = TextEditingController(text: '');
+  final List<String> country = [
     'Pakistan',
     'America',
-    'United State',
-    'French',
+    'United States',
+    'France',
+    'Canada',
+    'Germany',
+    'Australia',
   ];
-  final TextEditingController controller1 = TextEditingController(text: '');
-  final List<String> items2 = [
+
+  final List<String> state = [
     'Florida',
     'California',
     'Georgia',
+    'Texas',
+    'New York',
+    'Illinois',
+    'Washington',
   ];
-  final TextEditingController controller2 = TextEditingController(text: '');
-  final List<String> items3 = [
+
+  final List<String> city = [
     'Lahore',
     'Islamabad',
     'Karachi',
+    'New York City',
+    'Los Angeles',
+    'Berlin',
+    'Sydney',
   ];
   final TextEditingController controller3 = TextEditingController(text: '');
   double a = 60.0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialize();
+  }
+  void initialize()async {
+    print(11);
+    UserProfile user=await ApiServicesforGetUserInfo.getUserInfo();
+    controllers[0].text=user.name!.split(' ')[0];
+    if(user.name.toString().contains(' ')){
+      controllers[1].text=user.name!.split(' ')[1];
+    }
+    controllers[2].text=user.email!;
+    controllers[3].text=user.dateOfBirth!;
+    controllers[4].text=user.address!;
+    controllers[5].text=user.complement!;
+    controllers[6].text=user.zipCode!;
+    controller.text=user.gender!;
+    controller2.text=user.state!;
+    controller1.text=user.location!;
+    controller3.text=user.city!;
+    setState(() {
 
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,15 +207,15 @@ class _Edit_ProfileState extends State<Edit_Profile> {
               SizedBox(height: 20),
               text("Name"),
               SizedBox(height: 8),
-              Textfield("Criss"),
+              Textfield("Criss",controllers[0]),
               SizedBox(height: 15),
               text("Last name"),
               SizedBox(height: 8),
-              Textfield("Germano"),
+              Textfield("Germano",controllers[1]),
               SizedBox(height: 15),
               text("E-mail"),
               SizedBox(height: 8),
-              Textfield("crissgermano@gmail.com"),
+              Textfield("crissgermano@gmail.com",controllers[2]),
               SizedBox(height: 15),
               text("Date of birth"),
               SizedBox(height: 8),
@@ -185,6 +229,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5, left: 15),
                   child: TextFormField(
+                    controller: controllers[6],
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(25),
                     ],
@@ -210,86 +255,74 @@ class _Edit_ProfileState extends State<Edit_Profile> {
               SizedBox(height: 15),
               text("Addres"),
               SizedBox(height: 8),
-              Textfield("777 Test Street"),
+              Textfield("777 Test Street",controllers[3]),
               SizedBox(height: 15),
               text("Complement (optional)"),
               SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Color(0xffb8bec4))),
-                height: a,
-                width: Get.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 15),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      value.length >= 10 ? a = 120.0 : 60.0;
-                      setState(() {});
-                    },
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(200),
-                    ],
-                    decoration: InputDecoration(
-                        hintText:
-                            "Lorem Ipsum is simply dummy text of\nthedd printing and typesetting industry.",
-                        hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Plus Jakarta Sana",
-                            color: Color(0xff78828a)),
-                        border: InputBorder.none),
-                  ),
-                ),
-              ),
+              Textfield("Lorem Ipsum is simply dummy text of\nthedd printing and typesetting industry.",controllers[4]),
               SizedBox(height: 15),
               text("Country"),
               SizedBox(height: 8),
-              Dropdown(items1, controller1),
+              Dropdown(country, controller1),
               SizedBox(height: 15),
               text("State"),
               SizedBox(height: 8),
-              Dropdown(items2, controller2),
+              Dropdown(state, controller2),
               SizedBox(height: 15),
               text("City"),
               SizedBox(height: 8),
-              Dropdown(items3, controller3),
+              Dropdown(city, controller3),
               SizedBox(
                 height: 15,
               ),
               text("ZIP Code"),
               SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Color(0xffb8bec4))),
-                height: 60,
-                width: Get.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 15),
-                  child: TextFormField(
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(6),
-                    ],
-                    decoration: InputDecoration(
-                        hintText: "SE1 7AB",
-                        hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Plus Jakarta Sana",
-                            color: Color(0xff78828a)),
-                        border: InputBorder.none),
-                  ),
-                ),
-              ),
+              Textfield("SE1 7AB",controllers[5]),
               SizedBox(height: 30),
               SizedBox(
                 width: Get.width,
                 height: 60,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async{
+                      Map<String, dynamic> body = {
+                        'name': controllers[0].text.trim()+" "+controllers[1].text.trim(),
+                        'email': controllers[2].text.trim(),
+                        'dateOfBirth': controllers[3].text.trim(),
+                        'address': controllers[4].text.trim(),
+                        'complement': controllers[5].text.trim(),
+                        'zipCode': controllers[6].text.trim(),
+                        "gender":controller.text,
+                        "location":controller1.text,
+                        "state":controller2.text,
+                        "city":controller3.text,
+                      };
+                      ApiServicesforUpdateUserProfile.UpdateUserProfile(body).then((response) {
+                        if(response.message=="User information updated successfully"){
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return Home_Screen();
+                              }));
+                        }
+                        else{
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: Text('Error Message'),
+                                  content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); //close Dialog
+                                      },
+                                      child: Text('Close'),
+                                    )
+                                  ],
+                                );
+                              });
+                        }
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xffcd9403),
                         shape: RoundedRectangleBorder(
@@ -328,7 +361,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
 
   Widget Textfield(
     String Name,
-  ) {
+      TextEditingController controllerr
+
+      ) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -342,6 +377,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
           inputFormatters: [
             LengthLimitingTextInputFormatter(25),
           ],
+          controller: controllerr,
           decoration: InputDecoration(
               hintText: Name,
               hintStyle: TextStyle(

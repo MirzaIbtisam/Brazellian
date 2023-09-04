@@ -251,20 +251,13 @@ class _Home_ScreenState extends State<Home_Screen> {
                           physics: const ScrollPhysics(),
                           children: [
                             InkWell(
-                                onTap: () {
-                                  if (mounted) {
-                                    final RenderObject? inkwellRenderObject =
-                                        context.findRenderObject();
-                                  }
-                                },
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(() => Event());
-                                  },
-                                  child: Categorias(
-                                      Text: "Events",
-                                      Image: "assets/Events.svg"),
-                                )),
+                              onTap: () {
+                                Get.to(() => Event());
+                              },
+                              child: Categorias(
+                                  Text: "Events",
+                                  Image: "assets/Events.svg"),
+                            ),
                             SizedBox(width: 10),
                             InkWell(
                               onTap: () {

@@ -45,58 +45,60 @@ class _BrazellianState extends State<Brazellian> {
                 ),
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    Text(
-                      "Connect with the best\nof Brazilian service!",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Plus Jakarta Sans",
-                          color: Color(0xff232f30)),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      "You missed Brazil, didn't you?\nClick on the video and learn\nall about the platform.",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Plus Jakarta Sans",
-                        color: Color(0xff75838d),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Text(
+                        "Connect with the best\nof Brazilian service!",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Plus Jakarta Sans",
+                            color: Color(0xff232f30)),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 30),
-                    SizedBox(
-                      height: 55,
-                      width: MediaQuery.of(context).size.width / 1.150,
-                      child: ElevatedButton(
-                          onPressed: () async{
-                            setState(() {
-                              loading=true;
-                            });
-                            await Future.delayed(const Duration(seconds: 3));
-                            setState(() {
-                              loading=false;
+                      SizedBox(height: 20),
+                      Text(
+                        "You missed Brazil, didn't you?\nClick on the video and learn\nall about the platform.",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Plus Jakarta Sans",
+                          color: Color(0xff75838d),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30),
+                      SizedBox(
+                        height: 55,
+                        width: MediaQuery.of(context).size.width / 1.150,
+                        child: ElevatedButton(
+                            onPressed: () async{
+                              setState(() {
+                                loading=true;
+                              });
+                              await Future.delayed(const Duration(seconds: 3));
+                              setState(() {
+                                loading=false;
 
-                            });
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (BuildContext context) {
-                                  return Sign_Up();
-                                }));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Color(0xffCD9403),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15))),
-                          child: Text(
-                            "Next",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          )),
-                    ),
-                  ],
+                              });
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (BuildContext context) {
+                                    return Sign_Up();
+                                  }));
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: Color(0xffCD9403),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15))),
+                            child: Text(
+                              "Next",
+                              style: TextStyle(fontSize: 16, color: Colors.white),
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

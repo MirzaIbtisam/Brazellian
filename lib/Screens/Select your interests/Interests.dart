@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../ApiServices/updateInterest.dart';
 import '../Welcome/welcome.dart';
 
 class Interests extends StatefulWidget {
-  Interests({super.key});
+  String? id;
+  Interests({super.key,this.id});
 
   @override
   State<Interests> createState() => _InterestsState();
@@ -152,10 +154,41 @@ class _InterestsState extends State<Interests> {
                         setState(() {
                           loading=false;
                         });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return welcome();
-                            }));
+                        List<String> activeTitles = interest
+                            .where((item) => item['isActive'] == true)
+                            .map((item) => item['title'] as String)
+                            .toList();
+                        Map<String, dynamic> body = {
+                          'id': widget.id.toString(),
+                          'interests': activeTitles,
+                        };
+                        ApiServicesforUpdateInterests.updateInterests(body).then((response) {
+                          if(response.message=="Interests updated successfully"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (BuildContext context) {
+                                  return welcome();
+                                }));
+                          }
+                          else{
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Error Message'),
+                                    content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context); //close Dialog
+                                        },
+                                        child: Text('Close'),
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
+                        });
+
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Color(0xffCD9403),

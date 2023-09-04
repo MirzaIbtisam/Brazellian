@@ -8,7 +8,7 @@ import '../Models/signUpModel.dart';
 class ApiServicesforGetListing {
   static Future<EventsResponse> getAllEvents() async {
     String URL =
-        "${baseUrl}getAllEvents"; // Replace 'baseUrl' with your actual base URL.
+        "${Constants.baseUrl}${Constants.getAllEvents}"; // Replace 'Constants.baseUrl' with your actual base URL.
     final response = await http.get(
       Uri.parse(URL),
       headers: {"Content-Type": "application/json"},

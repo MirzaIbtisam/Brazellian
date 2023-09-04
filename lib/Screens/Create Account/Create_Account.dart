@@ -181,7 +181,7 @@ class _Create_AccountState extends State<Create_Account> {
                           if(response.message=="User Created Successfully"){
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(builder: (BuildContext context) {
-                                  return verification(email: email.text,);
+                                  return verification(email: email.text,id: response.id,);
                                 }));
                           }
                           else{

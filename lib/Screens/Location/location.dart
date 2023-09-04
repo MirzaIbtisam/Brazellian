@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../ApiServices/updateLocation.dart';
 import '../Language/language.dart';
+import '../Select your interests/Interests.dart';
 
 class location extends StatefulWidget {
-  const location({super.key});
+  String id;
+  location({super.key,required this.id});
 
   @override
   State<location> createState() => _locationState();
@@ -154,13 +157,41 @@ class _locationState extends State<location> {
                       loading=true;
                     });
                     await Future.delayed(Duration(seconds: 3));
+                    Map<String, dynamic> body = {
+                      'id': widget.id.toString(),
+                      'location': indexx.toString(),
+                    };
+                    ApiServicesforUpdateLocation.updateLocation(body).then((response) {
+                      if(response.message=="Location updated successfully"){
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                              return language(id:widget.id);
+                            }));
+
+                      }
+                      else{
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: Text('Error Message'),
+                                content:response.error!=null? Text(response.error.toString()):Text(response.message.toString()),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); //close Dialog
+                                    },
+                                    child: Text('Close'),
+                                  )
+                                ],
+                              );
+                            });
+                      }
+                    });
                     setState(() {
                       loading=false;
                     });
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return language();
-                    }));
+
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xffCD9403),

@@ -9,7 +9,7 @@ class ApiServicesforDelete {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
      String id =  prefs.get("id").toString();
      print(id);
-     String URL = "${baseUrl}deleteUser/$id"; // Replace 'baseUrl' with your actual base URL.
+     String URL = "${Constants.baseUrl}${Constants.deleteUser}/$id"; // Replace 'Constants.baseUrl' with your actual base URL.
     print(URL);
 
     final response = await http.delete(
