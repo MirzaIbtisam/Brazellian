@@ -1,12 +1,11 @@
-import 'package:brazeellian_community/Screens/Bottom%20Bar/Bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:country_state_city/country_state_city.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/Home Screen/Home_Screen.dart';
-import 'Screens/Starting Pages/First_Page.dart';
+import 'View/Bottom Bar/Bottom_bar.dart';
+import 'View/Starting Pages/First_Page.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
