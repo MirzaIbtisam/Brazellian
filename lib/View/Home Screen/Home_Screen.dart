@@ -1,13 +1,12 @@
 import 'dart:ui';
+import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../constant/colors.dart';
 import '../Component/Beauty_Tips.dart';
 import '../Component/Categorias.dart';
 import '../Component/Multiple Service.dart';

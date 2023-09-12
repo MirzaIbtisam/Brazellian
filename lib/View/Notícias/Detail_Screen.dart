@@ -1,8 +1,7 @@
+import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '../../constant/colors.dart';
 
 class Detail_Screen extends StatefulWidget {
   const Detail_Screen({super.key});

@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:rating_summary/rating_summary.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '../../constant/colors.dart';
 import '../Component/Bottom_Sheet.dart';
 
 class Detailing_Screen extends StatefulWidget {

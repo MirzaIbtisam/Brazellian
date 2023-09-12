@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../Models/signUpModel.dart';
-import '../../ViewModel/ApiServices/forgotApi.dart';
+import '../../Services/ApiServices/forgotApi.dart';
 import 'Change_Password.dart';
 
 class Forgot_Password extends StatefulWidget {

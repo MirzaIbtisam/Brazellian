@@ -1,12 +1,10 @@
+import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../constant/colors.dart';
 import '../Component/MultiService_extended.dart';
 
 class DetailsRealEstate extends StatefulWidget {

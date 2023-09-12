@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../Models/eventModel.dart';
-import '../../ViewModel/ApiServices/ApIServiceForGetAllListings.dart';
+import '../../Services/ApiServices/ApIServiceForGetAllListings.dart';
 import '../Component/Multiple Service.dart';
 import 'Detail.dart';
 

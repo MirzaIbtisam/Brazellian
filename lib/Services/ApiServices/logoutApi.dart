@@ -1,13 +1,20 @@
 import 'dart:convert';
-import 'package:brazeellian_community/constant/constant.dart';
+
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/signUpModel.dart';
 
-class ApiServicesforUpdateLocation{
-  static Future<UserLoginResponse> updateLocation(Map<String, dynamic> body) async {
-    String URL =
-        "${Constants.baseUrl}${Constants.updateLocation}"; // Replace 'Constants.baseUrl' with your actual base URL.
+class ApiServicesforlogout {
+  static Future<UserLoginResponse> logout() async {
+    const String URL =
+        "${Constants.baseUrl}${Constants.logoutUser}"; // Replace 'Constants.baseUrl' with your actual base URL.
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.get("id").toString();
+    Map<String, dynamic> body = {
+      'id': id,
+    };
     print(body);
     final response = await http.post(
       Uri.parse(URL),
@@ -15,11 +22,12 @@ class ApiServicesforUpdateLocation{
       headers: {"Content-Type": "application/json"},
     );
     final String res = response.body;
-    print(res);
+    print(response.body);
     if (res != 'null') {
+      print(res);
       try {
         final jsonData = json.decode(res) as Map<String, dynamic>;
-        // Assuming the response follows the structure of SignUpResponse
+
         return UserLoginResponse.fromJson(jsonData);
       } catch (e) {
         // Handle parsing error

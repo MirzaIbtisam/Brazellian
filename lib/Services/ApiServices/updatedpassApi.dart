@@ -1,12 +1,17 @@
 import 'dart:convert';
-import 'package:brazeellian_community/constant/constant.dart';
+
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Models/signUpModel.dart';
 
 class ApiServicesforUpdatedPassword {
-  static Future<SignUpResponse> UpdatedPassword(String email, String newPassword,) async {
-    const String URL = "${Constants.baseUrl}${Constants.updatePassword}"; // Replace 'Constants.baseUrl' with your actual base URL.
+  static Future<SignUpResponse> UpdatedPassword(
+    String email,
+    String newPassword,
+  ) async {
+    const String URL =
+        "${Constants.baseUrl}${Constants.updatePassword}"; // Replace 'Constants.baseUrl' with your actual base URL.
     Map<String, dynamic> body = {
       'email': email,
       'newPassword': newPassword,
@@ -27,11 +32,10 @@ class ApiServicesforUpdatedPassword {
         return SignUpResponse.fromJson(jsonData);
       } catch (e) {
         // Handle parsing error
-        return SignUpResponse( error: e.toString());
+        return SignUpResponse(error: e.toString());
       }
     }
     // Return an error response if the server response is 'null'
     return SignUpResponse(error: "Server returned null response");
   }
 }
-

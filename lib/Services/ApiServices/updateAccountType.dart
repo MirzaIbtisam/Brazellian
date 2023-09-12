@@ -1,13 +1,16 @@
 import 'dart:convert';
-import 'package:brazeellian_community/constant/constant.dart';
+
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Models/signUpModel.dart';
 
-class ApiServicesforUpdateLanguage{
-  static Future<UserLoginResponse> updateLanguage(Map<String, dynamic> body) async {
+class ApiServicesforUpdateAccountType {
+  static Future<UserLoginResponse> updateAcoountType(
+      Map<String, dynamic> body) async {
     String URL =
-        "${Constants.baseUrl}${Constants.updateLanguage}"; // Replace 'Constants.baseUrl' with your actual base URL.
+        "${Constants.baseUrl}${Constants.updateAccountType}"; // Replace 'Constants.baseUrl' with your actual base URL.
+    print(body);
     final response = await http.post(
       Uri.parse(URL),
       body: json.encode(body),

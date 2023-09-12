@@ -1,27 +1,25 @@
+import 'package:brazeellian_community/constant/getx_localization/languages.dart';
+import 'package:brazeellian_community/constant/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'View/Bottom Bar/Bottom_bar.dart';
-import 'View/Starting Pages/First_Page.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool loggedIn = prefs.getBool('isLoggedIn') ?? false;
-  runApp(MyApp(loggedIn: loggedIn));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool loggedIn;
-  MyApp({required this.loggedIn});
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: loggedIn ?  Bottom_bar(): First_Page(),
+      translations: Languages(),
+      locale: const Locale('en' ,'US'),
+      fallbackLocale: const Locale('en' ,'US'),
+      getPages: AppRoutes.appRoutes(),
       builder: (context, widget) => ResponsiveWrapper.builder(
         BouncingScrollWrapper.builder(
             context, widget!), // Use BouncingScrollWrapper if needed

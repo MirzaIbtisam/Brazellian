@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../Models/signUpModel.dart';
-import '../../ViewModel/ApiServices/updatedpassApi.dart';
+import '../../Services/ApiServices/updatedpassApi.dart';
 
 class New_Password extends StatefulWidget {
   final email;
