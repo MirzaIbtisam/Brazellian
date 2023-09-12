@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:brazeellian_community/constant/constant.dart';
+
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:http/http.dart' as http;
+
 import '../../Models/eventModel.dart';
 
 class ApiServicesforGetListing {

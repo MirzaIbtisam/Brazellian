@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'package:brazeellian_community/constant/constant.dart';
+
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Models/signUpModel.dart';
 
-class ApiServicesforUpdateInterests{
-  static Future<UserLoginResponse> updateInterests(Map<String, dynamic> body) async {
+class ApiServicesforUpdateInterests {
+  static Future<UserLoginResponse> updateInterests(
+      Map<String, dynamic> body) async {
     String URL =
         "${Constants.baseUrl}${Constants.updateInterests}"; // Replace 'Constants.baseUrl' with your actual base URL.
     print(body);

@@ -1,8 +1,8 @@
+import 'package:brazeellian_community/ViewModel/splashScreen/splashScreenViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 import 'Sign_Up.dart';
 
 class Brazellian extends StatefulWidget {
@@ -13,6 +13,15 @@ class Brazellian extends StatefulWidget {
 }
 
 class _BrazellianState extends State<Brazellian> {
+  SplashServices splashScreen = SplashServices();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    splashScreen.isLogin();
+
+  }
   bool loading = false;
   @override
   Widget build(BuildContext context) {

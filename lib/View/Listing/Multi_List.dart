@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import '../../Models/signUpModel.dart';
-import '../../ViewModel/ApiServices/addListingApi.dart';
+import '../../Services/ApiServices/addListingApi.dart';
 import '../Listing_Screen/View.dart';
 
 class Multi_List extends StatefulWidget {

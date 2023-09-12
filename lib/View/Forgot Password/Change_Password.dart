@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../Models/signUpModel.dart';
-import '../../ViewModel/ApiServices/verificationapi.dart';
+import '../../Services/ApiServices/verificationapi.dart';
 import '../Create Password/New_Password.dart';
 import '../Selecione o seu perfil/Selecione.dart';
 

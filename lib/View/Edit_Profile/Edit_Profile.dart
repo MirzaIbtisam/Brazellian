@@ -6,8 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../Models/userModel.dart';
-import '../../ViewModel/ApiServices/getUserInfo.dart';
-import '../../ViewModel/ApiServices/updateUserProfile.dart';
+import '../../Services/ApiServices/getUserInfo.dart';
+import '../../Services/ApiServices/updateUserProfile.dart';
 import '../Home Screen/Home_Screen.dart';
 
 class Edit_Profile extends StatefulWidget {

@@ -27,11 +27,13 @@ class UserLoginResponse {
   final String? message;
   final String? id; // Use String? to allow for null values
   final String? error; // Error message
+  final bool? isLogin; // Error message
 
-  UserLoginResponse({
-     this.message,
+  UserLoginResponse( {
+    this.message,
     this.id,
     this.error,
+    this.isLogin,
   });
 
   factory UserLoginResponse.fromJson(Map<String, dynamic> json) {

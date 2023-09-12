@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../Models/eventModel.dart';
-import '../../constant/colors.dart';
+import '../../constant/colors/colors.dart';
 
 class Detail extends StatefulWidget {
   Event data;

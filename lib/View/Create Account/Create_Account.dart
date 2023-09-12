@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:brazeellian_community/constant/constant.dart';
+import 'package:brazeellian_community/constant/app_urls/app_urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../Models/signUpModel.dart';
-import '../../ViewModel/ApiServices/signupApi.dart';
+import '../../Services/ApiServices/signupApi.dart';
 import '../Verification/verification.dart';
 
 class Create_Account extends StatefulWidget {
@@ -172,10 +172,6 @@ class _Create_AccountState extends State<Create_Account> {
                           loading=false;
 
                         });
-                        // Navigator.of(context).pushReplacement(
-                        //     MaterialPageRoute(builder: (BuildContext context) {
-                        //       return verification(email: email.text,);
-                        //     }));
                         if(confirmPassword.text==password.text&&(confirmPassword.text!=""&&password.text!="")){
                           SignUpResponse response=await ApiServicesforSignUp.signup(email.text, password.text, name.text);
                           if(response.message=="User Created Successfully"){

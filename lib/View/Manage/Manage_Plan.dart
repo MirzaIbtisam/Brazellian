@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class Manage_Plan extends StatefulWidget {
   const Manage_Plan({Key? key}) : super(key: key);

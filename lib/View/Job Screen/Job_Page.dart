@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '../../constant/colors.dart';
 
 class Job_Page extends StatefulWidget {
   const Job_Page({super.key});

@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:carousel_slider/carousel_options.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,12 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../Component/MultiService_extended.dart';
-
 import '../FilterScreen.dart';
 import 'ReaslStateDetail.dart';
 

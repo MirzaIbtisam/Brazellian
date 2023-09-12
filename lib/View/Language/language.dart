@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../../ViewModel/ApiServices/updateLanguage.dart';
+
+import '../../Services/ApiServices/updateLanguage.dart';
 import '../Select your interests/Interests.dart';
 
 class language extends StatefulWidget {
