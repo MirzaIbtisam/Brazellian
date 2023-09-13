@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
 import '../constant/colors/colors.dart';
 class Utils {
-
 
   static void fieldFocusChange(BuildContext context , FocusNode current , FocusNode  nextFocus ){
     current.unfocus();
