@@ -1,4 +1,4 @@
-import 'package:brazeellian_community/View/Home%20Screen/ui/homeScreenUi.dart';
+import 'package:brazeellian_community/View/Bottom%20Bar/Bottom_bar.dart';
 import 'package:brazeellian_community/View/Starting%20Pages/Brazellian.dart';
 import 'package:brazeellian_community/View/Starting%20Pages/Login.dart';
 import 'package:brazeellian_community/constant/routes/routes_name.dart';
@@ -21,7 +21,7 @@ class AppRoutes {
     ) ,
     GetPage(
       name: RouteName.homeView,
-      page: () => homeScreenUi() ,
+      page: () => Bottom_bar() ,
       transitionDuration: Duration(milliseconds: 250),
       transition: Transition.leftToRightWithFade ,
     ) ,
