@@ -21,7 +21,6 @@ class NetworkApiServices extends BaseApiServices {
 
     }
     return responseJson ;
-
   }
 
 

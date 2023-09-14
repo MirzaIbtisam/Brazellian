@@ -273,7 +273,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                                 Get.to(() => Listing_Screen());
                               },
                               child: Categorias(
-                                  Text: "Listings",
+                                  Text: "Adverts",
                                   Image: "assets/Anúncios.svg"),
                             ),
                             SizedBox(width: 10),
