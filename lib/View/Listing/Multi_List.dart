@@ -26,7 +26,6 @@ class Multi_List extends StatefulWidget {
 class _Multi_ListState extends State<Multi_List>
     with SingleTickerProviderStateMixin {
   // File? _selectedImage;
-
   Future<void> _showImagePickerDialog(BuildContext context, int index) async {
     final ImagePicker _picker = ImagePicker();
 
