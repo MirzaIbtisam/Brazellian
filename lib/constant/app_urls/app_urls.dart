@@ -7,6 +7,9 @@ class Constants{
   static const createService="createService";
   static const createProperty="createProperty";
   static const createVehicle="createVehicle";
+  static const getAllServices="getAllServices";
+  static const getAllVehicles="getAllVehicles";
+  static const getAllWorks="getAllWorks";
   static const createAdvert="createAdvert";
   static const createWork="createWork";
   static const getAllEvents="getAllEvents";

@@ -9,19 +9,18 @@ import 'package:get/get.dart';
 class LoginViewModel extends GetxController {
   final _api = LoginRepository();
   UserPreference userPreference = UserPreference();
-  final emailController = TextEditingController(text: "immuhammadfaizan@gmail.com").obs ;
-  final passwordController = TextEditingController(text: "12345678").obs ;
+  final emailController = TextEditingController(text: "immuhammadfaizan@gmail.com").obs;
+  final passwordController = TextEditingController(text: "12345678").obs;
   final emailFocusNode = FocusNode().obs;
   final passwordFocusNode = FocusNode().obs;
   RxBool loading = false.obs;
-
   void loginApi(){
-    loading.value = true ;
-    Map data = {
+    loading.value = true;
+    Map data =  {
       'email' : emailController.value.text,
       'password' : passwordController.value.text
     };
-    _api.loginApi(data).then((value){
+    _api.loginApi(data).then((value) {
       loading.value = false ;
       if(value['error'] == 'User not found'){
         Utils.snackBar('Login', value['error']);
