@@ -6,8 +6,7 @@ import '../../Models/signUpModel.dart';
 class ApiServicesforListing {
   static Future<UserLoginResponse> addListing(
       Map<String, dynamic> body, String endpoint) async {
-    String URL =
-        "${Constants.baseUrl}${Constants.create}${endpoint}"; // Replace 'Constants.baseUrl' with your actual base URL.
+    String URL = "${Constants.baseUrl}${Constants.create}${endpoint}"; // Replace 'Constants.baseUrl' with your actual base URL.
     final response = await http.post(
       Uri.parse(URL),
       body: json.encode(body),

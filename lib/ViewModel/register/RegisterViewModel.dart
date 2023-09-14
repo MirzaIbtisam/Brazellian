@@ -4,7 +4,6 @@ import 'package:brazeellian_community/ViewModel/user_preference/userPrefrenceVie
 import 'package:brazeellian_community/constant/routes/routes_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../../repository/signupRepository.dart';
 
 class RegisterViewModel extends GetxController {
@@ -46,7 +45,6 @@ class RegisterViewModel extends GetxController {
             Get.toNamed(RouteName.loginView)!.then((value){});
             Utils.snackBar('Login', 'User Registered Successfully');
           }).onError((error, stackTrace){
-
           });
         }
       }).onError((error, stackTrace){
@@ -54,6 +52,5 @@ class RegisterViewModel extends GetxController {
         Utils.snackBar('Error', error.toString());
       });
     }
-
   }
 }
