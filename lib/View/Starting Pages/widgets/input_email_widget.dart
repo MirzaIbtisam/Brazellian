@@ -12,6 +12,7 @@ class InputEmailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return  TextFormField(
       inputFormatters: [
         LengthLimitingTextInputFormatter(50)

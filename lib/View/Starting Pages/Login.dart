@@ -43,7 +43,7 @@ class LoginState extends State<Login> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
@@ -53,8 +53,8 @@ class LoginState extends State<Login> {
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                          SizedBox(height: 20),
-                          Text(
+                          const SizedBox(height: 20),
+                          const Text(
                             "Connect with our people!",
                             style: TextStyle(
                                 fontSize: 18,
@@ -63,20 +63,20 @@ class LoginState extends State<Login> {
                                 color: Color(0xff232f30)),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Form(
                             key: _formkey,
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 15.0, top: 3.0, right: 15),
                                   child: InputEmailWidget(),
                                 ),
                                 const SizedBox(height: 20,),
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 15.0, top: 3.0, right: 15),
                                   child: InputPasswordWidget(),
                                 ),
@@ -88,7 +88,7 @@ class LoginState extends State<Login> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Don't have an account?",
                                   style: TextStyle(
                                       fontSize: 12,
@@ -100,9 +100,9 @@ class LoginState extends State<Login> {
                                   onPressed: () async {
 
 
-                                    Get.to(() => Forgot_Password());
+                                    Get.to(() => const Forgot_Password());
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Forgot password?"
                                     "",
                                     style: TextStyle(
@@ -115,14 +115,14 @@ class LoginState extends State<Login> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           SizedBox(
                             height: 55,
                             width: MediaQuery.of(context).size.width / 1.1,
                             child: LoginButtonWidget(formKey: _formkey,),
                           ),
-                          SizedBox(height: 10),
-                          Text(
+                          const SizedBox(height: 10),
+                          const Text(
                             "Or conecting using",
                             style: TextStyle(
                                 fontSize: 12,
@@ -130,12 +130,12 @@ class LoginState extends State<Login> {
                                 fontFamily: "Plus Jakarta Sans",
                                 color: Color(0xff78828a)),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SvgPicture.asset("assets/Icon - Google.svg"),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               SvgPicture.asset("assets/Icon - Apple.svg"),
                             ],
                           )

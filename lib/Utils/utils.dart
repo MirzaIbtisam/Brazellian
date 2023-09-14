@@ -35,7 +35,7 @@ class Utils {
     Get.snackbar(
       title,
       message ,
-      backgroundColor: ColorValues.errorColor,
+      backgroundColor: ColorValues.successColor,
       colorText: ColorValues.whiteColor
     );
   }
