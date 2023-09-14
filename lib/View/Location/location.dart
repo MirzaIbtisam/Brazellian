@@ -8,8 +8,8 @@ import '../Language/language.dart';
 import '../Select your interests/Interests.dart';
 
 class location extends StatefulWidget {
-  String id;
-  location({super.key,required this.id});
+  String? id;
+  location({super.key, this.id});
 
   @override
   State<location> createState() => _locationState();

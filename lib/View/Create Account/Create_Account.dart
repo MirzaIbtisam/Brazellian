@@ -53,49 +53,29 @@ class _Create_AccountState extends State<Create_Account> {
                   key: _formkey,
                     child: Column(
                       children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xffefefef)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      child: InputNameWidget(),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xffefefef)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      child: InputEmailWidget(),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xffefefef)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      child: InputPasswordWidget(),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xffefefef)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      child: InputConfirmPasswordWidget(),
-                    ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, top: 3.0, right: 15),
+                          child: InputNameWidget(),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, top: 3.0, right: 15),
+                          child: InputEmailWidget(),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, top: 3.0, right: 15),
+                          child: InputPasswordWidget(),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, top: 3.0, right: 15),
+                          child: InputConfirmPasswordWidget(),
+                        ),
                   ],
                 )),
                 SizedBox(height: 80),
