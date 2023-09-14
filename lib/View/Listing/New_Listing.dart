@@ -33,7 +33,7 @@ class _New_ListingState extends State<New_Listing> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,7 +43,7 @@ class _New_ListingState extends State<New_Listing> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xffececec),
+                        color: const Color(0xffececec),
                         borderRadius: BorderRadius.circular(100),
                       ),
                       height: 50,
@@ -54,7 +54,7 @@ class _New_ListingState extends State<New_Listing> {
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "New Listing",
                     style: TextStyle(
                         fontSize: 18,
@@ -62,22 +62,23 @@ class _New_ListingState extends State<New_Listing> {
                         fontFamily: "Plus Jakarta Sans",
                         color: Color(0xff111111)),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                 ],
               ),
-              SizedBox(height: 20),
-              SvgPicture.asset("assets/Listing.svg"),
-              SizedBox(height: 20),
-              Text(
-                "Hmm... Listing has\nnew item arriving \n    in the area!",
+              const SizedBox(height: 20),
+              SvgPicture.asset("assets/Listing.svg",height: MediaQuery.of(context).size.height / 3,),
+              const SizedBox(height: 20),
+              const Text(
+                "Hmm...Listing has\nnew item arriving \n  in the area!",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Plus Jakarta Sans",
                     color: Color(0xff141414)),
               ),
-              SizedBox(height: 15),
-              Text(
+              const SizedBox(height: 15),
+              const Text(
                 "Select the type of listing\n   you want to register.",
                 style: TextStyle(
                     fontSize: 16,
@@ -85,8 +86,8 @@ class _New_ListingState extends State<New_Listing> {
                     fontFamily: "Plus Jakarta Sans",
                     color: Color(0xff9ca4ab)),
               ),
-              SizedBox(height: 15),
-              Text(
+              const SizedBox(height: 15),
+              const Text(
                 "Select the Listing type",
                 style: TextStyle(
                     fontSize: 16,
@@ -94,21 +95,21 @@ class _New_ListingState extends State<New_Listing> {
                     fontFamily: "Plus Jakarta Sans",
                     color: Color(0xff78828a)),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
                 height: 60,
                 width: Get.width,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Color(0xffb8bec4))),
+                    border: Border.all(color: const Color(0xffb8bec4))),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: CustomDropdown(
                     hintText: "Select Type",
                     fillColor: Colors.white,
                     selectedStyle:
-                        TextStyle(fontSize: 16, color: Color(0xff78828a)),
+                        const TextStyle(fontSize: 16, color: Color(0xff78828a)),
                     items: items,
                     controller: controller,
                     onChanged: (value) {
@@ -118,7 +119,7 @@ class _New_ListingState extends State<New_Listing> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 height: 60,
                 width: Get.width * 0.9,
@@ -134,14 +135,14 @@ class _New_ListingState extends State<New_Listing> {
                             context: context,
                             builder: (context) {
                               return CupertinoAlertDialog(
-                                title: Text('Error Message'),
-                                content: Text('Please select the type'),
+                                title: const Text('Error Message'),
+                                content: const Text('Please select the type'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pop(context); //close Dialog
                                     },
-                                    child: Text('Close'),
+                                    child: const Text('Close'),
                                   )
                                 ],
                               );
@@ -149,11 +150,11 @@ class _New_ListingState extends State<New_Listing> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xfffcd9403),
+                        primary: const Color(0xfffcd9403),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 0),
-                    child: Text(
+                    child: const Text(
                       "Next",
                       style: TextStyle(
                           fontSize: 16,
@@ -162,7 +163,7 @@ class _New_ListingState extends State<New_Listing> {
                           fontFamily: "Plus Jakarta Sans"),
                     )),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),

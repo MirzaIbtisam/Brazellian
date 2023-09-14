@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 class Constants{
   static const baseUrl="https://braelo.azurewebsites.net/";
   static const create="create";
+  static const createEvent="createEvent";
+  static const createService="createService";
+  static const createProperty="createProperty";
+  static const createVehicle="createVehicle";
+  static const createAdvert="createAdvert";
+  static const createWork="createWork";
   static const getAllEvents="getAllEvents";
   static const deleteUser="deleteUser";
   static const loginUser="loginUser";

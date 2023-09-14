@@ -7,11 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class LoginViewModel extends GetxController {
-
   final _api = LoginRepository();
   UserPreference userPreference = UserPreference();
-  final emailController = TextEditingController().obs ;
-  final passwordController = TextEditingController().obs ;
+  final emailController = TextEditingController(text: "immuhammadfaizan@gmail.com").obs ;
+  final passwordController = TextEditingController(text: "12345678").obs ;
   final emailFocusNode = FocusNode().obs;
   final passwordFocusNode = FocusNode().obs;
   RxBool loading = false.obs;
