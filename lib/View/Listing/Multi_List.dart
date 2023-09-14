@@ -245,7 +245,7 @@ class _Multi_ListState extends State<Multi_List>
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -257,7 +257,7 @@ class _Multi_ListState extends State<Multi_List>
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xffececec),
+                          color: const Color(0xffececec),
                           borderRadius: BorderRadius.circular(100),
                         ),
                         height: 50,
@@ -270,17 +270,17 @@ class _Multi_ListState extends State<Multi_List>
                     ),
                     Text(
                       "${widget.type}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           fontFamily: "Plus Jakarta Sans",
                           color: Color(0xff111111)),
                     ),
-                    SizedBox(width: 35),
+                    const SizedBox(width: 35),
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Container(
                 color: Colors.white,
                 child: Row(
@@ -291,12 +291,12 @@ class _Multi_ListState extends State<Multi_List>
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              color: Color(0xffcd9403),
+                              color: const Color(0xffcd9403),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             height: 20,
                             width: 20,
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "1",
                                 style: TextStyle(
@@ -308,8 +308,8 @@ class _Multi_ListState extends State<Multi_List>
                               ),
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Text(
+                          const SizedBox(width: 15),
+                          const Text(
                             "New listing",
                             style: TextStyle(
                               fontSize: 14,
@@ -321,7 +321,7 @@ class _Multi_ListState extends State<Multi_List>
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: 40,
                       height: 40,
                       child: SvgPicture.asset(
@@ -334,12 +334,12 @@ class _Multi_ListState extends State<Multi_List>
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              color: Color(0xffacb6be),
+                              color: const Color(0xffacb6be),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             height: 20,
                             width: 20,
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "2",
                                 style: TextStyle(
@@ -351,8 +351,8 @@ class _Multi_ListState extends State<Multi_List>
                               ),
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Text(
+                          const SizedBox(width: 15),
+                          const Text(
                             "Confirm listing",
                             style: TextStyle(
                               fontSize: 14,
@@ -376,26 +376,26 @@ class _Multi_ListState extends State<Multi_List>
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          Divider(
+                          const Divider(
                             color: Color(0xffececec),
                             thickness: 0.5,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Txt("Select the Listing type"),
-                          SizedBox(height: 10),
-                          Dropdown(items, controller, flag: true),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 10),
+                          Dropdown(items, controller, flag: true ),
+                          const SizedBox(height: 20),
                           Txt("Listing title"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Box("The Power of the Network  |", controllers[0]),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("Description"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: Color(0xffc9cdd2))),
+                                border: Border.all(color: const Color(0xffc9cdd2))),
                             height: 150,
                             width: Get.width * 0.9,
                             child: Padding(
@@ -403,7 +403,7 @@ class _Multi_ListState extends State<Multi_List>
                               child: TextFormField(
                                 maxLines: 5,
                                 controller: controllers[1],
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     hintText:
                                         "Lorem Ipsum is simply dummy text of\nthedd printing and typesetting industry.",
@@ -415,10 +415,10 @@ class _Multi_ListState extends State<Multi_List>
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("Keywords"),
-                          SizedBox(height: 8),
-                          Align(
+                          const SizedBox(height: 8),
+                          const Align(
                             alignment: Alignment.topLeft,
                             child: Text(
                               "(Words or categories related to this item)",
@@ -429,12 +429,12 @@ class _Multi_ListState extends State<Multi_List>
                                   color: Color(0xffbbc0c4)),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: Color(0xffc9cdd2))),
+                                border: Border.all(color: const Color(0xffc9cdd2))),
                             height: 100,
                             width: Get.width * 0.9,
                             child: Column(
@@ -453,7 +453,7 @@ class _Multi_ListState extends State<Multi_List>
                                 //     ),
                                 //   ),
                                 // ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Autocomplete<String>(
                                   optionsViewBuilder:
                                       (context, onSelected, options) {
@@ -568,7 +568,7 @@ class _Multi_ListState extends State<Multi_List>
                                                           return Container(
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Color(
+                                                              color: const Color(
                                                                   0xfffbd35c),
                                                               borderRadius:
                                                                   BorderRadius
@@ -668,25 +668,25 @@ class _Multi_ListState extends State<Multi_List>
                               ],
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("Location"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Box("Avenida Braelo, 587", controllers[2]),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("ZIP Code"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Box("SE1 7AB", controllers[3]),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("Whatsapp"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Box("https://wa.me/00000000", controllers[4]),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           controllers[4].text.isNotEmpty
                               ? getTypeSpecificWidgets(controllers)
-                              : SizedBox(),
-                          SizedBox(height: 10),
+                              : const SizedBox(),
+                          const SizedBox(height: 10),
                           Txt("Add thumbnail"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           GestureDetector(
                             onTap: _pickImage,
                             // Call the function to pick the image
@@ -696,7 +696,7 @@ class _Multi_ListState extends State<Multi_List>
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border:
-                                        Border.all(color: Color(0xffe5c87e)),
+                                        Border.all(color: const Color(0xffe5c87e)),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   height: 200,
@@ -731,19 +731,19 @@ class _Multi_ListState extends State<Multi_List>
                               ],
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Txt("Add photos"),
-                          SizedBox(height: 10),
-                          Container(
+                          const SizedBox(height: 10),
+                          SizedBox(
                             height: 250,
                             child: GridView.builder(
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 mainAxisSpacing: 5,
                                 crossAxisSpacing: 5,
                               ),
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: pickedImages.length, // Number of boxes
                               itemBuilder: (BuildContext context, int index) {
                                 return Box2(context, pickedImages[index],
@@ -751,29 +751,33 @@ class _Multi_ListState extends State<Multi_List>
                               },
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           SizedBox(
                             height: 60,
                             width: Get.width * 0.9,
                             child: ElevatedButton(
                                 onPressed: () async {
+                                  print(widget.type);
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
                                   Map<String, dynamic> body =
                                       generateListingBody(widget.type,
                                           controllers, id.toString());
+                                  print(body);
+
+
                                   UserLoginResponse response =
                                       await ApiServicesforListing.addListing(
                                           body, widget.type.toString());
                                   if (response.message == 'success') {
-                                    Get.to(() => View_Items());
+                                    Get.to(() => const View_Items());
                                   } else {
                                     showDialog(
                                         context: context,
                                         builder: (context) {
                                           return CupertinoAlertDialog(
-                                            title: Text('Error Message'),
+                                            title: const Text('Error Message'),
                                             content: Text('${response.error}'),
                                             actions: <Widget>[
                                               TextButton(
@@ -781,7 +785,7 @@ class _Multi_ListState extends State<Multi_List>
                                                   Navigator.pop(
                                                       context); //close Dialog
                                                 },
-                                                child: Text('Close'),
+                                                child: const Text('Close'),
                                               )
                                             ],
                                           );
@@ -789,12 +793,12 @@ class _Multi_ListState extends State<Multi_List>
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                    primary: Color(0xfffcd9403),
+                                    primary: const Color(0xfffcd9403),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     elevation: 0),
-                                child: Text(
+                                child: const Text(
                                   "Next",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -803,17 +807,17 @@ class _Multi_ListState extends State<Multi_List>
                                       fontFamily: "Plus Jakarta Sans"),
                                 )),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
-                    Column(
+                    const Column(
                       children: [],
                     )
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -831,14 +835,11 @@ class _Multi_ListState extends State<Multi_List>
       "postalCode": controllers[3].text.toString(),
       "whatsapp": controllers[4].text.toString(),
       "keywords": _controller.getTags,
-      "thumbnail": "https://googleflutter.com/sample_image.jpg",
+      "thumbnail": _image,
       "multiplePictures": [
-        "https://googleflutter.com/sample_image.jpg",
-        "https://googleflutter.com/sample_image.jpg",
-        "https://googleflutter.com/sample_image.jpg"
+        pickedImages
       ],
     };
-
     if (type == 'Event') {
       body["date"] = "2023-07-15";
       body["time"] = "19:00";
@@ -867,7 +868,6 @@ class _Multi_ListState extends State<Multi_List>
       body["approximateValue"] = int.parse(controllers[6].text.toString());
       body["type"] = controllers[6].text.toString();
     }
-
     return body;
   }
 
@@ -875,7 +875,7 @@ class _Multi_ListState extends State<Multi_List>
     if (widget.type == 'Event') {
       return Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(right: 80),
             child: Row(
@@ -886,7 +886,7 @@ class _Multi_ListState extends State<Multi_List>
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -894,29 +894,29 @@ class _Multi_ListState extends State<Multi_List>
               Box1("4pm", controllers[9]),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Website"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("587 Braelo Avenue", controllers[5]),
-          SizedBox(height: 20),
-          Txt("Instagram "),
-          SizedBox(height: 10),
+          const SizedBox(height: 20),
+          Txt("Instagram"),
+          const SizedBox(height: 10),
           Box("@braelo.co", controllers[6]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Facebook "),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("@braelo.co", controllers[7]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       );
     } else if (widget.type == 'Property') {
       return Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Price"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("\$ 900,00", controllers[5]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(right: 80),
             child: Row(
@@ -927,18 +927,18 @@ class _Multi_ListState extends State<Multi_List>
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(child: Dropdown(items3, controller3)),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Expanded(child: Dropdown(items4, controller4))
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(right: 80),
             child: Row(
@@ -949,59 +949,59 @@ class _Multi_ListState extends State<Multi_List>
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(child: Dropdown(items5, controller5)),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Expanded(child: Dropdown(items6, controller6))
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       );
     } else if (widget.type == 'Advert') {
       return Column(
         children: [
           Txt("Category"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Dropdown(items1, controller1),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Subcategory"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Dropdown(items2, controller2),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Instagram "),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("@braelo.co", controllers[5]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Facebook "),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("@braelo.co", controllers[6]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       );
     } else if (widget.type == 'Service' || widget.type == 'Work') {
       return Column(
         children: [
           Txt("Category"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Dropdown(items1, controller1),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Subcategory"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Dropdown(items2, controller2),
-          SizedBox(height: 20),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Advertiser name"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("Criss Germano", controllers[5]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Approximate value"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("\$180 (hour)", controllers[6]),
         ],
       );
@@ -1009,15 +1009,15 @@ class _Multi_ListState extends State<Multi_List>
       return Column(
         children: [
           Txt("Subcategory"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Dropdown(items2, controller2),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Vehicle Type"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("Suzuki", controllers[5]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Txt("Approximate value"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Box("\$180 (hour)", controllers[6]),
         ],
       );
@@ -1033,7 +1033,7 @@ class _Multi_ListState extends State<Multi_List>
       alignment: Alignment.topLeft,
       child: Text(
         txt,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 16,
             color: Color(0xff78828a),
             fontFamily: "Plus Jakarta Sans",
@@ -1047,7 +1047,7 @@ class _Multi_ListState extends State<Multi_List>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xffc9cdd2))),
+          border: Border.all(color: const Color(0xffc9cdd2))),
       height: 60,
       width: Get.width * 0.9,
       child: Padding(
@@ -1063,7 +1063,7 @@ class _Multi_ListState extends State<Multi_List>
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: txt,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: "Plus Jakarta Sans",
@@ -1078,7 +1078,7 @@ class _Multi_ListState extends State<Multi_List>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xffc9cdd2))),
+          border: Border.all(color: const Color(0xffc9cdd2))),
       height: 60,
       width: MediaQuery.of(context).size.width / 2.5,
       child: Padding(
@@ -1127,7 +1127,7 @@ class _Multi_ListState extends State<Multi_List>
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: txt,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: "Plus Jakarta Sans",
@@ -1143,7 +1143,7 @@ class _Multi_ListState extends State<Multi_List>
       child: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xfffdf7e8),
             ),
             height: MediaQuery.of(context).size.height / 7.5,
@@ -1184,7 +1184,10 @@ class _Multi_ListState extends State<Multi_List>
     );
   }
 
-  Widget Dropdown(List<String> item, TextEditingController control,
+
+
+
+Widget Dropdown(List<String> item, TextEditingController control,
       {bool flag = false}) {
     return Container(
       height: 60,
@@ -1192,22 +1195,24 @@ class _Multi_ListState extends State<Multi_List>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xffb8bec4))),
+          border: Border.all(color: const Color(0xffb8bec4))),
       child: Padding(
         padding: const EdgeInsets.only(left: 2, top: 5),
-        child: CustomDropdown(
-          fillColor: Colors.white,
-          selectedStyle: TextStyle(fontSize: 16, color: Color(0xff78828a)),
-          items: item,
-          controller: control,
-          onChanged: (value) {
-            // Update the controller value when the selection changes
-            control.text = value;
-            if (flag == true) {
-              widget.type = value;
-            }
-            setState(() {});
-          },
+        child: AbsorbPointer(
+          absorbing: flag,
+          child: CustomDropdown(
+            fillColor: Colors.white,
+            selectedStyle: const TextStyle(fontSize: 16, color: Color(0xff78828a)),
+            items: item,
+            controller: control,
+            onChanged: (value) {
+              control.text = value;
+              if (flag == true) {
+                widget.type = value;
+              }
+              setState(() {});
+            },
+          ),
         ),
       ),
     );
