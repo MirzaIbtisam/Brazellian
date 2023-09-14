@@ -2,7 +2,6 @@ import 'package:brazeellian_community/Models/signUpModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreference {
-
   Future<bool> saveUser(UserLoginResponse responseModel)async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setString('id', responseModel.id.toString());

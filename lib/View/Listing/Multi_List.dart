@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,23 +8,24 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-import '../../Models/signUpModel.dart';
-import '../../Services/ApiServices/addListingApi.dart';
-import '../Listing_Screen/View.dart';
+import '../../ViewModel/DefaultViewModel/DefaultViewModel.dart';
+import '../../ViewModel/ServiceViewModel/ServiceViewModel.dart';
+import '../../Widgets/Widgets.dart';
 
 class Multi_List extends StatefulWidget {
   String type;
   final int page;
-
   Multi_List({super.key, required this.type, required this.page});
-
   @override
   State<Multi_List> createState() => _Multi_ListState();
 }
 
 class _Multi_ListState extends State<Multi_List>
     with SingleTickerProviderStateMixin {
-  // File? _selectedImage;
+
+  ServiceViewModel serviceVm = Get.put(ServiceViewModel());
+  DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
+
 
   Future<void> _showImagePickerDialog(BuildContext context, int index) async {
     final ImagePicker _picker = ImagePicker();
@@ -40,57 +40,6 @@ class _Multi_ListState extends State<Multi_List>
     }
   }
 
-  final List<String> items = [
-    'Event',
-    'Property',
-    'Advert',
-    'Service',
-    'Work',
-    'Vehicle',
-  ];
-  final List<String> items1 = [
-    'Feed',
-    'Cleaning',
-    'Construção',
-    'Feed',
-    'Cleaning',
-    'Construção',
-  ];
-  final List<String> items2 = [
-    'Coffeshop',
-    'House Cleaning',
-    'Electricista',
-    'Barco',
-    'Coffeshop',
-  ];
-  final List<String> items3 = [
-    '1 Drom',
-    '2 Drom',
-    '3 Drom',
-    '4 Drom',
-    '5 Drom',
-  ];
-  final List<String> items4 = [
-    '1 Bathroom',
-    '2 Bathroom',
-    '3 Bathroom',
-    '4 Bathroom',
-    '5 Bathroom',
-  ];
-  final List<String> items5 = [
-    '1 Suite',
-    '2 Suite',
-    '3 Suite',
-    '4 Suite',
-    '5 Suite',
-  ];
-  final List<String> items6 = [
-    '1 vagas',
-    '2 vagas',
-    '3 vagas',
-    '4 vagas',
-    '5 vagas',
-  ];
   List Salvos = [
     {'title': 'Pub', 'isActive': false},
     {'title': 'Restaurant', 'isActive': false},
@@ -106,16 +55,7 @@ class _Multi_ListState extends State<Multi_List>
     {'title': 'Barbershop', 'isActive': false},
   ];
   late TextfieldTagsController _controller;
-
-  void changeState(Map<String, dynamic> selectedItem) {
-    setState(() {
-      for (var item in Salvos) {
-        item['isActive'] = (item == selectedItem);
-      }
-    });
-  }
-
-  final TextEditingController controller = TextEditingController(text: '');
+  final TextEditingController controller  = TextEditingController(text: '');
   final TextEditingController controller1 = TextEditingController(text: '');
   final TextEditingController controller2 = TextEditingController(text: '');
   final TextEditingController controller3 = TextEditingController(text: '');
@@ -269,7 +209,7 @@ class _Multi_ListState extends State<Multi_List>
                       ),
                     ),
                     Text(
-                      "${widget.type}",
+                      widget.type,
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -383,11 +323,11 @@ class _Multi_ListState extends State<Multi_List>
                           const SizedBox(height: 10),
                           Txt("Select the Listing type"),
                           const SizedBox(height: 10),
-                          Dropdown(items, controller, flag: true ),
+                          Dropdown(items, controller,widget.type, flag: true ),
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
-                          Box("The Power of the Network  |", controllers[0]),
+                          Box("The Power of the Network  |", defaultViewModel.titleController.value),
                           const SizedBox(height: 20),
                           Txt("Description"),
                           const SizedBox(height: 10),
@@ -402,7 +342,7 @@ class _Multi_ListState extends State<Multi_List>
                               padding: const EdgeInsets.only(left: 8.0, top: 5),
                               child: TextFormField(
                                 maxLines: 5,
-                                controller: controllers[1],
+                                controller: defaultViewModel.descriptionController.value,
                                 decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     hintText:
@@ -439,20 +379,7 @@ class _Multi_ListState extends State<Multi_List>
                             width: Get.width * 0.9,
                             child: Column(
                               children: [
-                                // Padding(
-                                //   padding: const EdgeInsets.only(left: 5.0, top: 10),
-                                //   child: Align(
-                                //     alignment: Alignment.topLeft,
-                                //     child: Text(
-                                //       "Restaurante |",
-                                //       style: TextStyle(
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.w500,
-                                //           fontFamily: "Plus Jakarta Sans",
-                                //           color: Color(0xffa6adb2)),
-                                //     ),
-                                //   ),
-                                // ),
+
                                 const SizedBox(height: 10),
                                 Autocomplete<String>(
                                   optionsViewBuilder:
@@ -478,6 +405,8 @@ class _Multi_ListState extends State<Multi_List>
                                                 return TextButton(
                                                   onPressed: () {
                                                     onSelected(option);
+                                                    print(options);
+                                                    defaultViewModel.addTag(options);
                                                   },
                                                   child: Align(
                                                     alignment:
@@ -637,53 +566,28 @@ class _Multi_ListState extends State<Multi_List>
                                     );
                                   },
                                 ),
-                                // Wrap(
-                                //     direction: Axis.horizontal,
-                                //     spacing: 10.0,
-                                //     runSpacing: 10.0,
-                                //     children: Salvos.map((option) => new Container(
-                                //         child: InkWell(
-                                //             onTap: () {
-                                //               changeState(option);
-                                //             },
-                                //             child: Container(
-                                //                 decoration: BoxDecoration(
-                                //                   color: option['isActive']
-                                //                       ? Color(0xffffd25e)
-                                //                       : Color(0xfffbd35c),
-                                //                   borderRadius:
-                                //                   BorderRadius.circular(32),
-                                //                 ),
-                                //                 height: 40,
-                                //                 padding: EdgeInsets.all(10),
-                                //                 child: Text('${option['title']}',
-                                //                     textAlign: TextAlign.center,
-                                //                     style: TextStyle(
-                                //                         fontWeight: FontWeight.normal,
-                                //                         color: option['isActive']
-                                //                             ? Color(0xff4d5867)
-                                //                             : Color(
-                                //                             0xff868e96)))))))
-                                //         .toList()),
+
                               ],
                             ),
                           ),
                           const SizedBox(height: 20),
                           Txt("Location"),
                           const SizedBox(height: 10),
-                          Box("Avenida Braelo, 587", controllers[2]),
+                          Box("Avenida Braelo, 587", defaultViewModel.localController.value,),
                           const SizedBox(height: 20),
                           Txt("ZIP Code"),
                           const SizedBox(height: 10),
-                          Box("SE1 7AB", controllers[3]),
+                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value,),
                           const SizedBox(height: 20),
                           Txt("Whatsapp"),
                           const SizedBox(height: 10),
-                          Box("https://wa.me/00000000", controllers[4]),
+                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value,),
                           const SizedBox(height: 10),
-                          controllers[4].text.isNotEmpty
-                              ? getTypeSpecificWidgets(controllers)
-                              : const SizedBox(),
+                          defaultViewModel.whatsappController.value.text.isNotEmpty
+                              ? getTypeSpecificWidgets(controllers,widget.type,
+                              controller1,controller2,controller3,controller4,controller5,
+                              controller6,context)
+                              : const SizedBox(child: Text("No data")),
                           const SizedBox(height: 10),
                           Txt("Add thumbnail"),
                           const SizedBox(height: 10),
@@ -757,40 +661,10 @@ class _Multi_ListState extends State<Multi_List>
                             width: Get.width * 0.9,
                             child: ElevatedButton(
                                 onPressed: () async {
-                                  print(widget.type);
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
-                                  Map<String, dynamic> body =
-                                      generateListingBody(widget.type,
-                                          controllers, id.toString());
-                                  print(body);
 
-
-                                  UserLoginResponse response =
-                                      await ApiServicesforListing.addListing(
-                                          body, widget.type.toString());
-                                  if (response.message == 'success') {
-                                    Get.to(() => const View_Items());
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return CupertinoAlertDialog(
-                                            title: const Text('Error Message'),
-                                            content: Text('${response.error}'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(
-                                                      context); //close Dialog
-                                                },
-                                                child: const Text('Close'),
-                                              )
-                                            ],
-                                          );
-                                        });
-                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color(0xfffcd9403),
@@ -825,396 +699,4 @@ class _Multi_ListState extends State<Multi_List>
     );
   }
 
-  Map<String, dynamic> generateListingBody(
-      String type, List<TextEditingController> controllers, String id) {
-    Map<String, dynamic> body = {
-      "userId": id.toString(),
-      "title": controllers[0].text.toString(),
-      "description": controllers[1].text.toString(),
-      "local": controllers[2].text.toString(),
-      "postalCode": controllers[3].text.toString(),
-      "whatsapp": controllers[4].text.toString(),
-      "keywords": _controller.getTags,
-      "thumbnail": _image,
-      "multiplePictures": [
-        pickedImages
-      ],
-    };
-    if (type == 'Event') {
-      body["date"] = "2023-07-15";
-      body["time"] = "19:00";
-      body["start"] = "19:30";
-      body["end"] = "23:00";
-      body["website"] = controllers[5].text.toString();
-      body["instagram"] = controllers[6].text.toString();
-      body["facebook"] = controllers[7].text.toString();
-    } else if (type == 'Property') {
-      body["price"] = controllers[5].text.toString();
-      body["bedroom"] = 1;
-      body["bathroom"] = 1;
-      body["suites"] = 1;
-    } else if (type == 'Advert') {
-      body["category"] = "2023-07-15";
-      body["subcategory"] = "19:00";
-      body["instagram"] = controllers[5].text.toString();
-      body["facebook"] = controllers[6].text.toString();
-    } else if (type == 'Service' || type == 'Work') {
-      body["category"] = "2023-07-15";
-      body["subcategory"] = "19:00";
-      body["advertiserName"] = controllers[5].text.toString();
-      body["approximateValue"] = int.parse(controllers[6].text.toString());
-    } else if (type == 'Vehicle') {
-      body["subcategory"] = "19:00";
-      body["approximateValue"] = int.parse(controllers[6].text.toString());
-      body["type"] = controllers[6].text.toString();
-    }
-    return body;
-  }
-
-  Widget getTypeSpecificWidgets(List<TextEditingController> controllers) {
-    if (widget.type == 'Event') {
-      return Column(
-        children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Date"),
-                Txt("Schedule"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Box1("MM/DD/YYYY", controllers[8]),
-              Box1("4pm", controllers[9]),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Txt("Website"),
-          const SizedBox(height: 10),
-          Box("587 Braelo Avenue", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Instagram"),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[6]),
-          const SizedBox(height: 20),
-          Txt("Facebook "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[7]),
-          const SizedBox(height: 20),
-        ],
-      );
-    } else if (widget.type == 'Property') {
-      return Column(
-        children: [
-          const SizedBox(height: 20),
-          Txt("Price"),
-          const SizedBox(height: 10),
-          Box("\$ 900,00", controllers[5]),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Dorms"),
-                Txt("Bathrooms"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Dropdown(items3, controller3)),
-              const SizedBox(
-                width: 30,
-              ),
-              Expanded(child: Dropdown(items4, controller4))
-            ],
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Suites"),
-                Txt("Jobs"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Dropdown(items5, controller5)),
-              const SizedBox(
-                width: 30,
-              ),
-              Expanded(child: Dropdown(items6, controller6))
-            ],
-          ),
-          const SizedBox(height: 20),
-        ],
-      );
-    } else if (widget.type == 'Advert') {
-      return Column(
-        children: [
-          Txt("Category"),
-          const SizedBox(height: 10),
-          Dropdown(items1, controller1),
-          const SizedBox(height: 20),
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2),
-          const SizedBox(height: 20),
-          Txt("Instagram "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Facebook "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[6]),
-          const SizedBox(height: 20),
-        ],
-      );
-    } else if (widget.type == 'Service' || widget.type == 'Work') {
-      return Column(
-        children: [
-          Txt("Category"),
-          const SizedBox(height: 10),
-          Dropdown(items1, controller1),
-          const SizedBox(height: 20),
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2),
-          const SizedBox(height: 20),
-          const SizedBox(height: 20),
-          Txt("Advertiser name"),
-          const SizedBox(height: 10),
-          Box("Criss Germano", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Approximate value"),
-          const SizedBox(height: 10),
-          Box("\$180 (hour)", controllers[6]),
-        ],
-      );
-    } else if (widget.type == 'Vehicle') {
-      return Column(
-        children: [
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2),
-          const SizedBox(height: 20),
-          Txt("Vehicle Type"),
-          const SizedBox(height: 10),
-          Box("Suzuki", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Approximate value"),
-          const SizedBox(height: 10),
-          Box("\$180 (hour)", controllers[6]),
-        ],
-      );
-    } else {
-      return Container(); // Default empty container
-    }
-  }
-
-  Widget Txt(
-    String txt,
-  ) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        txt,
-        style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xff78828a),
-            fontFamily: "Plus Jakarta Sans",
-            fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-  Widget Box(String txt, TextEditingController a) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: const Color(0xffc9cdd2))),
-      height: 60,
-      width: Get.width * 0.9,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 5),
-        child: TextFormField(
-          keyboardType: txt == "SE1 7AB" || txt == "\$ 900,00"
-              ? TextInputType.number
-              : TextInputType.name,
-          controller: a,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(50),
-          ],
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: txt,
-              hintStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Plus Jakarta Sans",
-                  color: Color(0xff868e96))),
-        ),
-      ),
-    );
-  }
-
-  Widget Box1(String txt, TextEditingController dateController) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: const Color(0xffc9cdd2))),
-      height: 60,
-      width: MediaQuery.of(context).size.width / 2.5,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 5),
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          onChanged: (value) {
-            if (value.length == 2) {
-              int? month = int.tryParse(value);
-              if (month != null && month >= 1 && month <= 12) {
-                dateController.text = value + "/";
-                dateController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: dateController.text.length));
-              }
-            } else if (value.length == 5) {
-              int? day = int.tryParse(value.substring(3, 5));
-              int? month = int.tryParse(value.substring(0, 2));
-
-              if (day != null && month != null && month >= 1 && month <= 12) {
-                int maxDaysInMonth;
-
-                if (month == 2) {
-                  // February
-                  maxDaysInMonth = 28; // Leap years are not considered here
-                } else if (month == 4 ||
-                    month == 6 ||
-                    month == 9 ||
-                    month == 11) {
-                  maxDaysInMonth = 30; // Months with 30 days
-                } else {
-                  maxDaysInMonth = 31; // Months with 31 days
-                }
-
-                if (day >= 1 && day <= maxDaysInMonth) {
-                  dateController.text = value + "/";
-                  dateController.selection = TextSelection.fromPosition(
-                      TextPosition(offset: dateController.text.length));
-                }
-              }
-            }
-          },
-          controller: dateController,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(50),
-          ],
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: txt,
-              hintStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Plus Jakarta Sans",
-                  color: Color(0xff868e96))),
-        ),
-      ),
-    );
-  }
-
-  Widget Box2(BuildContext context, File? edImage, int index) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: Color(0xfffdf7e8),
-            ),
-            height: MediaQuery.of(context).size.height / 7.5,
-            width: MediaQuery.of(context).size.width / 3.5,
-            child: GestureDetector(
-              onTap: () {
-                _showImagePickerDialog(context, index);
-              },
-              child: edImage != null
-                  ? Image.file(
-                      edImage,
-                      fit: BoxFit.cover,
-                    )
-                  : SvgPicture.asset(
-                      "assets/import_Pic1.svg",
-                      fit: BoxFit.scaleDown,
-                    ),
-            ),
-          ),
-          if (edImage != null)
-            Positioned(
-              top: 5,
-              right: 5,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    pickedImages[index] = null; // Remove the selected image
-                  });
-                },
-                child: SvgPicture.asset(
-                  "assets/delete_pic.svg",
-                  height: 20,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-
-
-
-Widget Dropdown(List<String> item, TextEditingController control,
-      {bool flag = false}) {
-    return Container(
-      height: 60,
-      width: Get.width,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: const Color(0xffb8bec4))),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 2, top: 5),
-        child: AbsorbPointer(
-          absorbing: flag,
-          child: CustomDropdown(
-            fillColor: Colors.white,
-            selectedStyle: const TextStyle(fontSize: 16, color: Color(0xff78828a)),
-            items: item,
-            controller: control,
-            onChanged: (value) {
-              control.text = value;
-              if (flag == true) {
-                widget.type = value;
-              }
-              setState(() {});
-            },
-          ),
-        ),
-      ),
-    );
-  }
 }
