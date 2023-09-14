@@ -18,7 +18,6 @@ class NetworkApiServices extends BaseApiServices {
       throw InternetException('');
     }on RequestTimeOut {
       throw RequestTimeOut('');
-
     }
     return responseJson ;
   }
@@ -53,6 +52,7 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   dynamic returnResponse(http.Response response){
+    print("Hello");
     print(response.body);
     switch(response.statusCode){
       case 200:

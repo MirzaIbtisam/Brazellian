@@ -23,22 +23,12 @@ class Multi_List extends StatefulWidget {
 class _Multi_ListState extends State<Multi_List>
     with SingleTickerProviderStateMixin {
 
+
   ServiceViewModel serviceVm = Get.put(ServiceViewModel());
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
 
 
-  Future<void> _showImagePickerDialog(BuildContext context, int index) async {
-    final ImagePicker _picker = ImagePicker();
 
-    final XFile? pickedImage =
-        await _picker.pickImage(source: ImageSource.camera);
-
-    if (pickedImage != null) {
-      setState(() {
-        pickedImages[index] = File(pickedImage.path);
-      });
-    }
-  }
 
   List Salvos = [
     {'title': 'Pub', 'isActive': false},
