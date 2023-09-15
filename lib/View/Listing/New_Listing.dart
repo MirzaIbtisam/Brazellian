@@ -126,6 +126,7 @@ class _New_ListingState extends State<New_Listing> {
                 child: ElevatedButton(
                     onPressed: () {
                       if (controller.text.isNotEmpty) {
+
                         Get.to(() => Multi_List(
                               type: controller.text.toString(),
                           page: 0,

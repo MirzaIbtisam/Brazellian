@@ -1,6 +1,8 @@
 import 'dart:io';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:brazeellian_community/View/Listing/widgets/advertsWidget.dart';
+import 'package:brazeellian_community/View/Listing/widgets/eventsWidget.dart';
+import 'package:brazeellian_community/View/Listing/widgets/propertyWidgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,167 +64,13 @@ final List<String> items6 = [
 
  List<File?> pickedImages = List.generate(6, (index) => null);
 
-
-
-
-  Widget getTypeSpecificWidgets(List<TextEditingController> controllers ,String type ,TextEditingController controller1,
-      TextEditingController controller2,
-      TextEditingController controller3,
-      TextEditingController controller4,
-      TextEditingController controller5,
-      TextEditingController controller6 ,
-      BuildContext context,
-      ) {
-    print(type);
+  Widget getTypeSpecificWidgets(String type, BuildContext context,) {
     if (type == 'Event') {
-      return Column(
-        children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Date"),
-                Txt("Schedule"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Box1("MM/DD/YYYY", controllers[8],context),
-              Box1("4pm", controllers[9],context),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Txt("Website"),
-          const SizedBox(height: 10),
-          Box("587 Braelo Avenue", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Instagram"),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[6]),
-          const SizedBox(height: 20),
-          Txt("Facebook "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[7]),
-          const SizedBox(height: 20),
-        ],
-      );
+      return eventsWidget();
     } else if (type == 'Property') {
-      return Column(
-        children: [
-          const SizedBox(height: 20),
-          Txt("Price"),
-          const SizedBox(height: 10),
-          Box("\$ 900,00", controllers[5]),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Dorms"),
-                Txt("Bathrooms"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Dropdown(items3, controller3,type)),
-              const SizedBox(
-                width: 30,
-              ),
-              Expanded(child: Dropdown(items4, controller4,type))
-            ],
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(right: 80),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Txt("Suites"),
-                Txt("Jobs"),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Dropdown(items5, controller5,type)),
-              const SizedBox(
-                width: 30,
-              ),
-              Expanded(child: Dropdown(items6, controller6,type))
-            ],
-          ),
-          const SizedBox(height: 20),
-        ],
-      );
+      return propertyWidget();
     } else if (type == 'Advert') {
-      return Column(
-        children: [
-          Txt("Category"),
-          const SizedBox(height: 10),
-          Dropdown(items1, controller1,type),
-          const SizedBox(height: 20),
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2,type),
-          const SizedBox(height: 20),
-          Txt("Instagram "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Facebook "),
-          const SizedBox(height: 10),
-          Box("@braelo.co", controllers[6]),
-          const SizedBox(height: 20),
-        ],
-      );
-    } else if (type == 'Service' || type == 'Work') {
-      return Column(
-        children: [
-          Txt("Category"),
-          const SizedBox(height: 10),
-          Dropdown(items1, controller1,type),
-          const SizedBox(height: 20),
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2,type),
-          const SizedBox(height: 20),
-          const SizedBox(height: 20),
-          Txt("Advertiser name"),
-          const SizedBox(height: 10),
-          Box("Criss Germano", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Approximate value"),
-          const SizedBox(height: 10),
-          Box("\$180 (hour)", controllers[6]),
-        ],
-      );
-    } else if (type == 'Vehicle') {
-      return Column(
-        children: [
-          Txt("Subcategory"),
-          const SizedBox(height: 10),
-          Dropdown(items2, controller2,type),
-          const SizedBox(height: 20),
-          Txt("Vehicle Type"),
-          const SizedBox(height: 10),
-          Box("Suzuki", controllers[5]),
-          const SizedBox(height: 20),
-          Txt("Approximate value"),
-          const SizedBox(height: 10),
-          Box("\$180 (hour)", controllers[6]),
-        ],
-      );
+      return advertsWidget();
     } else {
       return Container(); // Default empty container
     }
@@ -390,7 +238,6 @@ final List<String> items6 = [
 
 
   Widget Dropdown(List<String> item, TextEditingController control,
-      String type,
       {bool flag = false}) {
     return Container(
       height: 60,
@@ -410,9 +257,6 @@ final List<String> items6 = [
             controller: control,
             onChanged: (value) {
               control.text = value;
-              if (flag == true) {
-                type = value;
-              }
 
             },
           ),

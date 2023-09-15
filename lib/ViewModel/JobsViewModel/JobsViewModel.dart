@@ -59,11 +59,11 @@ class JobsViewModel extends GetxController {
       "local":defaultViewModel. localController.value.toString(),
       "postalCode": defaultViewModel. postalCodeController.value.toString(),
       "whatsapp":defaultViewModel. whatsappController.value.toString(),
+      "keywords":defaultViewModel.listOfTags.value,
       "category": categoryController.value.toString(),
       "subcategory": subcategoryController.value.toString(),
       "advertiserName": advertiserNameController.value.toString(),
       "approximateValue": approximateValueController.value.toString(),
-      "keywords":defaultViewModel.listOfTags.value,
       "thumbnail": _image,
     };
     _api.addApi(data).then((value) => {
