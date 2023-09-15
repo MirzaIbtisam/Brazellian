@@ -5,11 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import '../../ViewModel/DefaultViewModel/DefaultViewModel.dart';
-import '../../ViewModel/ServiceViewModel/ServiceViewModel.dart';
 import '../../Widgets/Widgets.dart';
 
 class Multi_List extends StatefulWidget {
@@ -22,141 +20,12 @@ class Multi_List extends StatefulWidget {
 
 class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateMixin {
 
-  ServiceViewModel serviceVm = Get.put(ServiceViewModel());
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-  static List Salvos = [
-    {'title': 'Pub', 'isActive': false},
-    {'title': 'Restaurant', 'isActive': false},
-    {'title': 'Beauty Salon', 'isActive': false},
-    {'title': 'Bar', 'isActive': false},
-    {'title': 'DJ', 'isActive': false},
-    {'title': 'Coffeshop', 'isActive': false},
-    {'title': 'Bakery', 'isActive': false},
-    {'title': 'Party Room', 'isActive': false},
-    {'title': 'Studio', 'isActive': false},
-    {'title': 'Language School', 'isActive': false},
-    {'title': 'Technical Course', 'isActive': false},
-    {'title': 'Barbershop', 'isActive': false},
-  ];
-  late TextfieldTagsController _controller;
-  final TextEditingController controller  = TextEditingController(text: '');
-  final TextEditingController controller1 = TextEditingController(text: '');
-  final TextEditingController controller2 = TextEditingController(text: '');
-  final TextEditingController controller3 = TextEditingController(text: '');
-  final TextEditingController controller4 = TextEditingController(text: '');
-  final TextEditingController controller5 = TextEditingController(text: '');
-  final TextEditingController controller6 = TextEditingController(text: '');
-  List<TextEditingController> controllers = [
-    TextEditingController(text: ''),
-    TextEditingController(text: ''),
-    TextEditingController(text: ''),
-    TextEditingController(text: ''),
-    TextEditingController(text: ''),
-  ];
-  File? _image;
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
-  }
-
-  void _clearImage() {
-    setState(() {
-      _image = null;
-    });
-  }
-
-  late TabController _tabController;
   late List<File?> pickedImages = List.generate(6, (index) => null);
-
-  @override
-  void initState() {
-    File? imageone;
-    File? imagetwo;
-    File? imagethree;
-    File? imagefour;
-    File? imagefive;
-    File? imagesix;
-
-    pickedImages = [
-      imageone,
-      imagetwo,
-      imagethree,
-      imagefour,
-      imagefive,
-      imagesix,
-    ];
-    // TODO: implement initState
-    super.initState();
-    _controller = TextfieldTagsController();
-    _tabController = TabController(length: 2, vsync: this);
-    controller.text = widget.type.toString();
-    if (widget.type == 'Event') {
-      final TextEditingController a = TextEditingController(text: '');
-      final TextEditingController b = TextEditingController(text: '');
-      final TextEditingController c = TextEditingController(text: '');
-      final TextEditingController d = TextEditingController(text: '');
-      final TextEditingController e = TextEditingController(text: '');
-      controllers.addAll([a, b, c, d, e]);
-    } else if (widget.type == 'Property') {
-      final TextEditingController a = TextEditingController(text: '');
-      controllers.add(a);
-    } else if (widget.type == 'Advert') {
-      final TextEditingController a = TextEditingController(text: '');
-      final TextEditingController b = TextEditingController(text: '');
-      controllers.addAll([a, b]);
-    } else if (widget.type == 'Service' || widget.type == 'Work') {
-      final TextEditingController a = TextEditingController(text: '');
-      final TextEditingController b = TextEditingController(text: '');
-      controllers.addAll([a, b]);
-    } else if (widget.type == 'Vehicle') {
-      final TextEditingController a = TextEditingController(text: '');
-      final TextEditingController b = TextEditingController(text: '');
-      controllers.addAll([a, b]);
-    }
-    setState(() {});
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _distanceToField = MediaQuery.of(context).size.width;
-  }
-
-  static const List<String> _pickLanguage = <String>[
-    'c',
-    'c++',
-    'java',
-    'python',
-    'javascript',
-    'php',
-    'sql',
-    'yaml',
-    'gradle',
-    'xml',
-    'html',
-    'flutter',
-    'css',
-    'dockerfile'
-  ];
-
-  @override
-  void dispose() {
-    for (var controller in controllers) {
-      controller.dispose();
-    }
-    _controller.dispose();
-    super.dispose();
-  }
-
+  TextfieldTagsController _controller=TextfieldTagsController();
+  static const List<String> _pickLanguage = <String>['c', 'c++', 'java', 'python', 'javascript', 'php', 'sql', 'yaml', 'gradle', 'xml', 'html', 'flutter', 'css', 'dockerfile'];
   double _distanceToField = 2.0;
   int page = 0;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -305,9 +174,7 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 10),
                           Txt("Select the Listing type"),
                           const SizedBox(height: 10),
-
-                          Dropdown(items, controller,flag: true),
-
+                          Dropdown(items, TextEditingController(text: widget.type.toString()), flag: true ),
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
@@ -389,7 +256,6 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                                 return TextButton(
                                                   onPressed: () {
                                                     onSelected(option);
-                                                    print(options);
                                                     defaultViewModel.addTag(options);
                                                   },
                                                   child: Align(
@@ -557,24 +423,24 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 20),
                           Txt("Location"),
                           const SizedBox(height: 10),
-                          Box("Avenida Braelo, 587", defaultViewModel.localController.value),
+                          Box("Avenida Braelo, 587", defaultViewModel.localController.value,),
                           const SizedBox(height: 20),
                           Txt("ZIP Code"),
                           const SizedBox(height: 10),
-                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value),
+                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value,),
                           const SizedBox(height: 20),
                           Txt("Whatsapp"),
                           const SizedBox(height: 10),
-                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value),
+                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value,),
                           const SizedBox(height: 10),
-                         defaultViewModel.whatsappController.value.text.isNotEmpty
+                          defaultViewModel.whatsappController.value.text.isNotEmpty
                               ? getTypeSpecificWidgets(widget.type,context)
                               : const SizedBox(child: Text("No data")),
                           const SizedBox(height: 10),
                           Txt("Add thumbnail"),
                           const SizedBox(height: 10),
                           GestureDetector(
-                            onTap: _pickImage,
+                            onTap: ()=>defaultViewModel.pickImage(),
                             // Call the function to pick the image
                             child: Stack(
                               children: [
@@ -589,9 +455,9 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                   width: Get.width * 0.9,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: _image != null
+                                    child: defaultViewModel.image != null
                                         ? Image.file(
-                                            _image!,
+                                      defaultViewModel.image!,
                                             fit: BoxFit.cover,
                                             width: double.infinity,
                                           )
@@ -601,12 +467,12 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                           ),
                                   ),
                                 ),
-                                if (_image != null)
+                                if (defaultViewModel.image != null)
                                   Positioned(
                                     top: 10,
                                     right: 10,
                                     child: GestureDetector(
-                                      onTap: _clearImage,
+                                      onTap: ()=>defaultViewModel.clearImage(),
                                       // Call the function to clear the image
                                       child: SvgPicture.asset(
                                         "assets/delete_pic.svg",
@@ -643,7 +509,6 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                             width: Get.width * 0.9,
                             child: ElevatedButton(
                                 onPressed: () async {
-
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
@@ -681,5 +546,4 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
       ),
     );
   }
-
 }

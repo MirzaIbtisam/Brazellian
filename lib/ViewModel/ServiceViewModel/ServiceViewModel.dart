@@ -67,6 +67,8 @@ class ServiceViewModel extends GetxController {
   }
   void getService(){
     loading.value = true ;
+    _api.getApi().then((value){
 
+    });
   }
 }

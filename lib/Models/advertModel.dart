@@ -1,4 +1,4 @@
-class Event {
+class Advert {
   final String id;
   final String userId;
   final String title;
@@ -17,7 +17,7 @@ class Event {
   final List<String> multiplePictures;
   final int v;
 
-  Event({
+  Advert({
     required this.id,
     required this.userId,
     required this.title,
@@ -37,8 +37,8 @@ class Event {
     required this.v,
   });
 
-  factory Event.fromJson(Map<String, dynamic> json) {
-    return Event(
+  factory Advert.fromJson(Map<String, dynamic> json) {
+    return Advert(
       id: json['_id'],
       userId: json['userId'],
       title: json['title'],
@@ -60,13 +60,13 @@ class Event {
   }
 }
 
-class EventsResponse {
-  final List<Event> events;
-  EventsResponse({required this.events});
+class AdvertsResponse {
+  final List<Advert> Adverts;
+  AdvertsResponse({required this.Adverts});
 
-  factory EventsResponse.fromJson(Map<String, dynamic> json) {
-    return EventsResponse(
-      events: List<Event>.from(json['events'].map((event) => Event.fromJson(event))),
+  factory AdvertsResponse.fromJson(Map<String, dynamic> json) {
+    return AdvertsResponse(
+      Adverts: List<Advert>.from(json['Adverts'].map((Advert) => Advert.fromJson(Advert))),
     );
   }
 }

@@ -27,5 +27,5 @@ class Constants{
   static const updateProfile= "updateProfile";
   static const getUser= "getUser";
   static const getAllAdverts= "getAllAdverts";
-  static const getAllProperty= "getAllProperty";
+  static const getAllProperty= "getAllPropertys";
 }

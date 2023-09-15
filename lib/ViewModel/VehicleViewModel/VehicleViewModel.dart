@@ -26,13 +26,6 @@ class VehicleViewModel extends GetxController {
   }
   final _api = VehicleRepository();
   UserPreference userPreference = UserPreference();
-  // final userIdController = TextEditingController().obs ;
-  // final titleController = TextEditingController().obs ;
-  // final descriptionController = TextEditingController().obs ;
-  // final localController = TextEditingController().obs ;
-  // final postalCodeController = TextEditingController().obs ;
-  // final whatsappController = TextEditingController().obs ;
-  // final keywordsController = TextfieldTagsController().obs ;
   final subcategoryController = TextEditingController().obs ;
   final categoryController = TextEditingController().obs ;
   final approximateValueController = TextEditingController().obs ;
@@ -74,6 +67,8 @@ class VehicleViewModel extends GetxController {
   }
   void getVehicle(){
     loading.value = true ;
+    _api.getApi().then((value){
 
+    });
   }
 }

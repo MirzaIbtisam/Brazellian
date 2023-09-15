@@ -1,4 +1,4 @@
-class Event {
+class Service {
   final String id;
   final String userId;
   final String title;
@@ -17,7 +17,7 @@ class Event {
   final List<String> multiplePictures;
   final int v;
 
-  Event({
+  Service({
     required this.id,
     required this.userId,
     required this.title,
@@ -37,8 +37,8 @@ class Event {
     required this.v,
   });
 
-  factory Event.fromJson(Map<String, dynamic> json) {
-    return Event(
+  factory Service.fromJson(Map<String, dynamic> json) {
+    return Service(
       id: json['_id'],
       userId: json['userId'],
       title: json['title'],
@@ -60,13 +60,13 @@ class Event {
   }
 }
 
-class EventsResponse {
-  final List<Event> events;
-  EventsResponse({required this.events});
+class ServicesResponse {
+  final List<Service> Services;
+  ServicesResponse({required this.Services});
 
-  factory EventsResponse.fromJson(Map<String, dynamic> json) {
-    return EventsResponse(
-      events: List<Event>.from(json['events'].map((event) => Event.fromJson(event))),
+  factory ServicesResponse.fromJson(Map<String, dynamic> json) {
+    return ServicesResponse(
+      Services: List<Service>.from(json['Services'].map((Service) => Service.fromJson(Service))),
     );
   }
 }

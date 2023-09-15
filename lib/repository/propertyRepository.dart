@@ -9,7 +9,7 @@ class propertyRepository {
     return response ;
   }
 
-  Future<dynamic> getApi(var data) async{
+  Future<dynamic> getApi() async{
     dynamic response = await _apiService.getApi( "${Constants.baseUrl}${Constants.getAllProperty}");
     return response ;
   }

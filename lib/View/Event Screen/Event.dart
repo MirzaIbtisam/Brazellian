@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/ViewModel/ServiceViewModel/ServiceViewModel.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -36,11 +37,14 @@ class EventState extends State<Event_> {
     "assets/Events.webp",
   ];
   int currentIndex = 0;
+  ServiceViewModel advertsVM = Get.put(ServiceViewModel()) ;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    initialize();
+    // initialize();
+    advertsVM.getService();
     setState(() {
 
     });

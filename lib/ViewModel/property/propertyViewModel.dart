@@ -5,8 +5,6 @@ import 'package:brazeellian_community/repository/propertyRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-
 import '../DefaultViewModel/DefaultViewModel.dart';
 
 class PropertyViewModel extends GetxController {
@@ -63,6 +61,8 @@ class PropertyViewModel extends GetxController {
   }
   void getProperty(){
     loading.value = true ;
+    _api.getApi().then((value){
 
+    });
   }
 }

@@ -89,6 +89,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
       return propertyWidget();
     } else if (type == 'Advert') {
       return advertsWidget();
+    }
   if (type == 'Service') {
       return ServiceWidget();
     } else if (type == 'Work') {

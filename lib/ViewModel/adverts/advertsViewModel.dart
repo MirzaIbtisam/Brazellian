@@ -5,8 +5,6 @@ import 'package:brazeellian_community/repository/advertsRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-
 import '../../Models/signUpModel.dart';
 
 class AdvertsViewModel extends GetxController {
@@ -67,5 +65,8 @@ class AdvertsViewModel extends GetxController {
   }
   void getAdverts(){
     loading.value = true ;
+    _api.getApi().then((value){
+
+    });
   }
 }

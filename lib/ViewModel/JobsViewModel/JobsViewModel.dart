@@ -67,7 +67,9 @@ class JobsViewModel extends GetxController {
   }
   void getJobs(){
     loading.value = true ;
+    _api.getApi().then((value){
 
+    });
   }
 
 }
