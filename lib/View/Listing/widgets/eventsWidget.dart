@@ -15,41 +15,43 @@ class eventsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return  Column(
-      children: [
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.only(right: 80),
-          child: Row(
+    return Obx(
+          ()=> Column(
+        children: [
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.only(right: 80),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Txt("Date"),
+                Txt("Schedule"),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Txt("Date"),
-              Txt("Schedule"),
+              Box1("MM/DD/YYYY", eventsVM.dateController.value,context),
+              Box1("4pm", eventsVM.timeController.value,context),
             ],
           ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Box1("MM/DD/YYYY", eventsVM.dateController.value,context),
-            Box1("4pm", eventsVM.timeController.value,context),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Txt("Website"),
-        const SizedBox(height: 10),
-        Box("587 Braelo Avenue", eventsVM.websiteController.value),
-        const SizedBox(height: 20),
-        Txt("Instagram"),
-        const SizedBox(height: 10),
-        Box("@braelo.co", eventsVM.instagramController.value),
-        const SizedBox(height: 20),
-        Txt("Facebook "),
-        const SizedBox(height: 10),
-        Box("@braelo.co", eventsVM.facebookController.value),
-        const SizedBox(height: 20),
-      ],
+          const SizedBox(height: 20),
+          Txt("Website"),
+          const SizedBox(height: 10),
+          Box("587 Braelo Avenue", eventsVM.websiteController.value),
+          const SizedBox(height: 20),
+          Txt("Instagram"),
+          const SizedBox(height: 10),
+          Box("@braelo.co", eventsVM.instagramController.value),
+          const SizedBox(height: 20),
+          Txt("Facebook "),
+          const SizedBox(height: 10),
+          Box("@braelo.co", eventsVM.facebookController.value),
+          const SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }

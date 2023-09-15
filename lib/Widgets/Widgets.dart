@@ -89,6 +89,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
       return propertyWidget();
     } else if (type == 'Advert') {
       return advertsWidget();
+    }
   if (type == 'Service') {
       return ServiceWidget();
     } else if (type == 'Work') {
@@ -166,7 +167,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
             if (value.length == 2) {
               int? month = int.tryParse(value);
               if (month != null && month >= 1 && month <= 12) {
-                dateController.text = value + "/";
+                dateController.text = "$value/";
                 dateController.selection = TextSelection.fromPosition(
                     TextPosition(offset: dateController.text.length));
               }
