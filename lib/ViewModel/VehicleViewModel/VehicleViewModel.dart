@@ -26,9 +26,19 @@ class VehicleViewModel extends GetxController {
   }
   final _api = VehicleRepository();
   UserPreference userPreference = UserPreference();
-  final subcategoryController = TextfieldTagsController().obs ;
-  final approximateValueController = TextfieldTagsController().obs ;
-  final typeController = TextfieldTagsController().obs ;
+  // final userIdController = TextEditingController().obs ;
+  // final titleController = TextEditingController().obs ;
+  // final descriptionController = TextEditingController().obs ;
+  // final localController = TextEditingController().obs ;
+  // final postalCodeController = TextEditingController().obs ;
+  // final whatsappController = TextEditingController().obs ;
+  // final keywordsController = TextfieldTagsController().obs ;
+  final subcategoryController = TextEditingController().obs ;
+  final categoryController = TextEditingController().obs ;
+  final approximateValueController = TextEditingController().obs ;
+  final vehicleTypeController = TextEditingController().obs ;
+  final advertiserNameController = TextEditingController().obs ;
+  final typeController = TextEditingController().obs ;
   final userIdFocusNode = FocusNode().obs;
   final titleFocusNode = FocusNode().obs;
   final descriptionFocusNode = FocusNode().obs;
@@ -45,20 +55,21 @@ class VehicleViewModel extends GetxController {
     loading.value = true ;
     UserLoginResponse user = await  userPreference.getUser();
 
-    // Map data = {
-    //   "userId": user.id,
-    //   "title": defaultViewModel.titleController.value.toString(),
-    //   "description":defaultViewModel. descriptionController.value.toString(),
-    //   "local":defaultViewModel. localController.value.toString(),
-    //   "postalCode": defaultViewModel. postalCodeController.value.toString(),
-    //   "whatsapp":defaultViewModel. whatsappController.value.toString(),
-    //   "category": categoryController.value.toString(),
-    //   "subcategory": subcategoryController.value.toString(),
-    //   "advertiserName": advertiserNameController.value.toString(),
-    //   "approximateValue": approximateValueController.value.toString(),
-    //   "keywords":defaultViewModel.listOfTags.value,
-    //   "thumbnail": _image,
-    // };
+    Map data = {
+      "userId": user.id,
+      "title": defaultViewModel.titleController.value.toString(),
+      "description":defaultViewModel. descriptionController.value.toString(),
+      "local":defaultViewModel. localController.value.toString(),
+      "postalCode": defaultViewModel. postalCodeController.value.toString(),
+      "whatsapp":defaultViewModel. whatsappController.value.toString(),
+      "vehicleType":vehicleTypeController.value.toString(),
+      "category": categoryController.value.toString(),
+      "subcategory": subcategoryController.value.toString(),
+      "advertiserName": advertiserNameController.value.toString(),
+      "approximateValue": approximateValueController.value.toString(),
+      "keywords":defaultViewModel.listOfTags,
+      "thumbnail": _image,
+    };
 
   }
   void getVehicle(){
