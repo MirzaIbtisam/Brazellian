@@ -9,6 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../View/Listing/widgets/jobsWidget.dart';
+import '../View/Listing/widgets/serviceWidget.dart';
+import '../View/Listing/widgets/vehicleWidget.dart';
+import '../ViewModel/ServiceViewModel/ServiceViewModel.dart';
 
 final List<String> items = [
   'Event',
@@ -62,6 +68,18 @@ final List<String> items6 = [
   '5 vagas',
 ];
 
+ServiceViewModel serviceVm = Get.put(ServiceViewModel());
+
+Future<void> _showImagePickerDialog(BuildContext context, int index) async {
+  final ImagePicker _picker = ImagePicker();
+
+  final XFile? pickedImage =
+  await _picker.pickImage(source: ImageSource.camera);
+
+  if (pickedImage != null) {
+      pickedImages[index] = File(pickedImage.path);
+  }
+}
  List<File?> pickedImages = List.generate(6, (index) => null);
 
   Widget getTypeSpecificWidgets(String type, BuildContext context,) {
@@ -71,10 +89,19 @@ final List<String> items6 = [
       return propertyWidget();
     } else if (type == 'Advert') {
       return advertsWidget();
+  if (type == 'Service') {
+      return ServiceWidget();
+    } else if (type == 'Work') {
+      return JobsWidget();
+    }
+    else if (type == 'Vehicle') {
+      return VehicleWidget();
+
     } else {
       return Container(); // Default empty container
     }
-  }
+    }
+  
 
   Widget Txt(
       String txt,
@@ -200,7 +227,7 @@ final List<String> items6 = [
             width: MediaQuery.of(context).size.width / 3.5,
             child: GestureDetector(
               onTap: () {
-                // _showImagePickerDialog(context, index);
+                _showImagePickerDialog(context, index);
               },
               child: edImage != null
                   ? Image.file(
@@ -257,6 +284,11 @@ final List<String> items6 = [
             controller: control,
             onChanged: (value) {
               control.text = value;
+
+              if (flag == true) {
+                // type = value;
+              }
+
 
             },
           ),

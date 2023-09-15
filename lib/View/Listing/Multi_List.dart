@@ -95,7 +95,6 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
     super.initState();
     _controller = TextfieldTagsController();
     _tabController = TabController(length: 2, vsync: this);
-
     controller.text = widget.type.toString();
     if (widget.type == 'Event') {
       final TextEditingController a = TextEditingController(text: '');
@@ -306,7 +305,9 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 10),
                           Txt("Select the Listing type"),
                           const SizedBox(height: 10),
-                          Dropdown(items, controller, flag: true ),
+
+                          Dropdown(items, controller,flag: true),
+
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
@@ -556,17 +557,17 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 20),
                           Txt("Location"),
                           const SizedBox(height: 10),
-                          Box("Avenida Braelo, 587", defaultViewModel.localController.value,),
+                          Box("Avenida Braelo, 587", defaultViewModel.localController.value),
                           const SizedBox(height: 20),
                           Txt("ZIP Code"),
                           const SizedBox(height: 10),
-                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value,),
+                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value),
                           const SizedBox(height: 20),
                           Txt("Whatsapp"),
                           const SizedBox(height: 10),
-                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value,),
+                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value),
                           const SizedBox(height: 10),
-                          defaultViewModel.whatsappController.value.text.isNotEmpty
+                         defaultViewModel.whatsappController.value.text.isNotEmpty
                               ? getTypeSpecificWidgets(widget.type,context)
                               : const SizedBox(child: Text("No data")),
                           const SizedBox(height: 10),
@@ -642,6 +643,7 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                             width: Get.width * 0.9,
                             child: ElevatedButton(
                                 onPressed: () async {
+
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();

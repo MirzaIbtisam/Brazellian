@@ -26,10 +26,10 @@ class ServiceViewModel extends GetxController {
   final _api = ServiceRepository();
   UserPreference userPreference = UserPreference();
 
-  final categoryController = TextfieldTagsController().obs ;
-  final subcategoryController = TextfieldTagsController().obs ;
-  final advertiserNameController = TextfieldTagsController().obs ;
-  final approximateValueController = TextfieldTagsController().obs ;
+  final categoryController = TextEditingController().obs;
+  final subcategoryController = TextEditingController().obs;
+  final advertiserNameController = TextEditingController().obs ;
+  final approximateValueController = TextEditingController().obs ;
   final userIdFocusNode = FocusNode().obs;
   final titleFocusNode = FocusNode().obs;
   final descriptionFocusNode = FocusNode().obs;

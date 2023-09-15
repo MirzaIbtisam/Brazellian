@@ -10,6 +10,7 @@ import 'package:textfield_tags/textfield_tags.dart';
 import '../../Models/signUpModel.dart';
 
 class AdvertsViewModel extends GetxController {
+
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
 
   final _api = advertsRepository();
@@ -43,12 +44,14 @@ class AdvertsViewModel extends GetxController {
     UserLoginResponse user=await userPreference.getUser();
     Map body = {
       "userId": user.id.toString(),
+
       "title": defaultViewModel.titleController.value.toString(),
       "description":defaultViewModel. descriptionController.value.toString(),
       "local":defaultViewModel. localController.value.toString(),
       "postalCode": defaultViewModel. postalCodeController.value.toString(),
       "whatsapp":defaultViewModel. whatsappController.value.toString(),
       "keywords":defaultViewModel.listOfTags.value,
+
       "thumbnail": thumbnail,
       "multiplePictures": [
 
