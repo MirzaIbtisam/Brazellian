@@ -20,17 +20,11 @@ class Multi_List extends StatefulWidget {
   State<Multi_List> createState() => _Multi_ListState();
 }
 
-class _Multi_ListState extends State<Multi_List>
-    with SingleTickerProviderStateMixin {
-
+class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateMixin {
 
   ServiceViewModel serviceVm = Get.put(ServiceViewModel());
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-
-
-
-
-  List Salvos = [
+  static List Salvos = [
     {'title': 'Pub', 'isActive': false},
     {'title': 'Restaurant', 'isActive': false},
     {'title': 'Beauty Salon', 'isActive': false},
@@ -60,7 +54,6 @@ class _Multi_ListState extends State<Multi_List>
     TextEditingController(text: ''),
   ];
   File? _image;
-
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
@@ -312,7 +305,9 @@ class _Multi_ListState extends State<Multi_List>
                           const SizedBox(height: 10),
                           Txt("Select the Listing type"),
                           const SizedBox(height: 10),
+
                           Dropdown(items, controller,flag: true),
+
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
@@ -572,8 +567,8 @@ class _Multi_ListState extends State<Multi_List>
                           const SizedBox(height: 10),
                           Box("https://wa.me/00000000", defaultViewModel.whatsappController.value),
                           const SizedBox(height: 10),
-                          defaultViewModel.whatsappController.value.text.isNotEmpty
-                              ? getTypeSpecificWidgets(widget.type, context)
+                         defaultViewModel.whatsappController.value.text.isNotEmpty
+                              ? getTypeSpecificWidgets(widget.type,context)
                               : const SizedBox(child: Text("No data")),
                           const SizedBox(height: 10),
                           Txt("Add thumbnail"),

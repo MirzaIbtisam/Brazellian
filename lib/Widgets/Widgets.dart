@@ -1,6 +1,8 @@
 import 'dart:io';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:brazeellian_community/View/Listing/widgets/advertsWidget.dart';
+import 'package:brazeellian_community/View/Listing/widgets/eventsWidget.dart';
+import 'package:brazeellian_community/View/Listing/widgets/propertyWidgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +68,7 @@ final List<String> items6 = [
   '5 vagas',
 ];
 
+ServiceViewModel serviceVm = Get.put(ServiceViewModel());
 
 Future<void> _showImagePickerDialog(BuildContext context, int index) async {
   final ImagePicker _picker = ImagePicker();
@@ -79,14 +82,13 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
 }
  List<File?> pickedImages = List.generate(6, (index) => null);
 
-
-ServiceViewModel serviceVm = Get.put(ServiceViewModel());
-
-
-  Widget getTypeSpecificWidgets( String type,
-
-      BuildContext context,
-      ) {
+  Widget getTypeSpecificWidgets(String type, BuildContext context,) {
+    if (type == 'Event') {
+      return eventsWidget();
+    } else if (type == 'Property') {
+      return propertyWidget();
+    } else if (type == 'Advert') {
+      return advertsWidget();
   if (type == 'Service') {
       return ServiceWidget();
     } else if (type == 'Work') {
@@ -94,10 +96,12 @@ ServiceViewModel serviceVm = Get.put(ServiceViewModel());
     }
     else if (type == 'Vehicle') {
       return VehicleWidget();
+
     } else {
       return Container(); // Default empty container
     }
-  }
+    }
+  
 
   Widget Txt(
       String txt,
@@ -280,9 +284,11 @@ ServiceViewModel serviceVm = Get.put(ServiceViewModel());
             controller: control,
             onChanged: (value) {
               control.text = value;
+
               if (flag == true) {
                 // type = value;
               }
+
 
             },
           ),
