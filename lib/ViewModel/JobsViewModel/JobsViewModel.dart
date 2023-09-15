@@ -10,7 +10,6 @@ import '../DefaultViewModel/DefaultViewModel.dart';
 
 class JobsViewModel extends GetxController {
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-
   final Rx<File?> _image = Rx<File?>(null);
   File? get image => _image.value;
   Future<void> pickImage() async {
@@ -25,17 +24,10 @@ class JobsViewModel extends GetxController {
   }
   final _api = JobsRepository();
   UserPreference userPreference = UserPreference();
-  final userIdController = TextEditingController().obs ;
-  final titleController = TextEditingController().obs ;
-  final descriptionController = TextEditingController().obs ;
-  final localController = TextEditingController().obs ;
-  final postalCodeController = TextEditingController().obs ;
-  final whatsappController = TextEditingController().obs ;
-  final keywordsController = TextfieldTagsController().obs ;
-  final categoryController = TextfieldTagsController().obs ;
-  final subcategoryController = TextfieldTagsController().obs ;
-  final advertiserNameController = TextfieldTagsController().obs ;
-  final approximateValueController = TextfieldTagsController().obs ;
+  final categoryController = TextEditingController().obs ;
+  final subcategoryController = TextEditingController().obs ;
+  final advertiserNameController = TextEditingController().obs ;
+  final approximateValueController = TextEditingController().obs ;
   final userIdFocusNode = FocusNode().obs;
   final titleFocusNode = FocusNode().obs;
   final descriptionFocusNode = FocusNode().obs;
@@ -48,9 +40,8 @@ class JobsViewModel extends GetxController {
   final approximateValueFocusNode = FocusNode().obs;
   final Rx<File?> thumbnail = Rx<File?>(null);
   RxBool loading = false.obs;
-
   Future<void> addJobs() async {
-    loading.value = true ;
+    loading.value = true;
     UserLoginResponse user = await  userPreference.getUser();
     Map data = {
       "userId": user.id,
@@ -63,7 +54,7 @@ class JobsViewModel extends GetxController {
       "subcategory": subcategoryController.value.toString(),
       "advertiserName": advertiserNameController.value.toString(),
       "approximateValue": approximateValueController.value.toString(),
-      "keywords":defaultViewModel.listOfTags.value,
+      "keywords":defaultViewModel.listOfTags,
       "thumbnail": _image,
     };
     _api.addApi(data).then((value) => {

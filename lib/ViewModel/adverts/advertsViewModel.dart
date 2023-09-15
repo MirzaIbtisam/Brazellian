@@ -9,7 +9,6 @@ import 'package:textfield_tags/textfield_tags.dart';
 import '../../Models/signUpModel.dart';
 
 class AdvertsViewModel extends GetxController {
-
   final _api = advertsRepository();
   UserPreference userPreference = UserPreference();
   final instagramController = TextfieldTagsController().obs ;
@@ -41,12 +40,6 @@ class AdvertsViewModel extends GetxController {
     UserLoginResponse user=await userPreference.getUser();
     Map body = {
       "userId": user.id.toString(),
-      // "title": titleController.value.toString(),
-      // "description": descriptionController.value.toString(),
-      // "local": localController.value.toString(),
-      // "postalCode": postalCodeController.value.toString(),
-      // "whatsapp": whatsappController.value.toString(),
-      // "keywords": keywordsController.value.getTags,
       "thumbnail": thumbnail,
       "multiplePictures": [
 
