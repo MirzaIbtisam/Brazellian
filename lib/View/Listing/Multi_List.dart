@@ -178,7 +178,9 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
-                          Box("The Power of the Network  |", defaultViewModel.titleController.value),
+                          Obx(
+                                ()=>Box("The Power of the Network  |", defaultViewModel.titleController.value),
+                          ),
                           const SizedBox(height: 20),
                           Txt("Description"),
                           const SizedBox(height: 10),
@@ -453,18 +455,20 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                   ),
                                   height: 200,
                                   width: Get.width * 0.9,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: defaultViewModel.image != null
-                                        ? Image.file(
-                                      defaultViewModel.image!,
-                                            fit: BoxFit.cover,
-                                            width: double.infinity,
-                                          )
-                                        : SvgPicture.asset(
-                                            "assets/import pic.svg",
-                                            fit: BoxFit.scaleDown,
-                                          ),
+                                  child: Obx(
+                                      ()=>ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: defaultViewModel.image != null
+                                            ? Image.file(
+                                          defaultViewModel.image!,
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                        )
+                                            : SvgPicture.asset(
+                                          "assets/import pic.svg",
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      )
                                   ),
                                 ),
                                 if (defaultViewModel.image != null)
@@ -512,6 +516,7 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
+                                  serviceViewModel.addService();
 
                                 },
                                 style: ElevatedButton.styleFrom(

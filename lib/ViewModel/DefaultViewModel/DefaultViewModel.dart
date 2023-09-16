@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:brazeellian_community/ViewModel/JobsViewModel/JobsViewModel.dart';
 import 'package:brazeellian_community/ViewModel/ServiceViewModel/ServiceViewModel.dart';
 import 'package:brazeellian_community/ViewModel/VehicleViewModel/VehicleViewModel.dart';
 import 'package:brazeellian_community/ViewModel/adverts/advertsViewModel.dart';
 import 'package:brazeellian_community/ViewModel/events/eventsViewModel.dart';
 import 'package:brazeellian_community/ViewModel/property/propertyViewModel.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,6 +38,4 @@ class DefaultViewModel extends GetxController {
   void clearImage(){
     _image.value=null;
   }
-  
-  
 }
