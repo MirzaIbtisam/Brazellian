@@ -5,11 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import '../../ViewModel/DefaultViewModel/DefaultViewModel.dart';
-import '../../ViewModel/ServiceViewModel/ServiceViewModel.dart';
 import '../../Widgets/Widgets.dart';
 
 class Multi_List extends StatefulWidget {
@@ -22,51 +20,10 @@ class Multi_List extends StatefulWidget {
 
 class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateMixin {
 
-
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-  ServiceViewModel serviceViewModel = Get.put(ServiceViewModel());
-
-   TextfieldTagsController _controller =TextfieldTagsController();
-
-  File? _image;
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
-  }
-
-  void _clearImage() {
-    setState(() {
-      _image = null;
-    });
-  }
-
-
   late List<File?> pickedImages = List.generate(6, (index) => null);
-
-  static const List<String> _pickLanguage = <String>[
-    'c',
-    'c++',
-    'java',
-    'python',
-    'javascript',
-    'php',
-    'sql',
-    'yaml',
-    'gradle',
-    'xml',
-    'html',
-    'flutter',
-    'css',
-    'dockerfile'
-  ];
-
-
+  TextfieldTagsController _controller=TextfieldTagsController();
+  static const List<String> _pickLanguage = <String>['c', 'c++', 'java', 'python', 'javascript', 'php', 'sql', 'yaml', 'gradle', 'xml', 'html', 'flutter', 'css', 'dockerfile'];
   double _distanceToField = 2.0;
   int page = 0;
   @override
@@ -217,9 +174,7 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 10),
                           Txt("Select the Listing type"),
                           const SizedBox(height: 10),
-
-                          Dropdown(items, TextEditingController(text: widget.type.toString()),flag: true),
-
+                          Dropdown(items, TextEditingController(text: widget.type.toString()), flag: true ),
                           const SizedBox(height: 20),
                           Txt("Listing title"),
                           const SizedBox(height: 10),
@@ -303,7 +258,6 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                                 return TextButton(
                                                   onPressed: () {
                                                     onSelected(option);
-                                                    print(options);
                                                     defaultViewModel.addTag(options);
                                                   },
                                                   child: Align(
@@ -471,26 +425,24 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                           const SizedBox(height: 20),
                           Txt("Location"),
                           const SizedBox(height: 10),
-                          Box("Avenida Braelo, 587", defaultViewModel.localController.value),
+                          Box("Avenida Braelo, 587", defaultViewModel.localController.value,),
                           const SizedBox(height: 20),
                           Txt("ZIP Code"),
                           const SizedBox(height: 10),
-                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value),
+                          Box("SE1 7AB",  defaultViewModel.postalCodeController.value,),
                           const SizedBox(height: 20),
                           Txt("Whatsapp"),
                           const SizedBox(height: 10),
-                         Box("https://wa.me/00000000", defaultViewModel.whatsappController.value),
-                        const SizedBox(height: 10),
-
-                                  defaultViewModel.whatsappController.value.text.isNotEmpty
-                                      ? getTypeSpecificWidgets(widget.type, context)
-                                      : const SizedBox(child: Text("No data")),
-
+                          Box("https://wa.me/00000000", defaultViewModel.whatsappController.value,),
+                          const SizedBox(height: 10),
+                          defaultViewModel.whatsappController.value.text.isNotEmpty
+                              ? getTypeSpecificWidgets(widget.type,context)
+                              : const SizedBox(child: Text("No data")),
                           const SizedBox(height: 10),
                           Txt("Add thumbnail"),
                           const SizedBox(height: 10),
                           GestureDetector(
-                            onTap: () =>  defaultViewModel. pickImage(),
+                            onTap: ()=>defaultViewModel.pickImage(),
                             // Call the function to pick the image
                             child: Stack(
                               children: [
@@ -524,7 +476,7 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                                     top: 10,
                                     right: 10,
                                     child: GestureDetector(
-                                      onTap: _clearImage,
+                                      onTap: ()=>defaultViewModel.clearImage(),
                                       // Call the function to clear the image
                                       child: SvgPicture.asset(
                                         "assets/delete_pic.svg",
@@ -561,7 +513,6 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
                             width: Get.width * 0.9,
                             child: ElevatedButton(
                                 onPressed: () async {
-
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   String id = prefs.getString("id").toString();
@@ -600,5 +551,4 @@ class _Multi_ListState extends State<Multi_List> with SingleTickerProviderStateM
       ),
     );
   }
-
 }

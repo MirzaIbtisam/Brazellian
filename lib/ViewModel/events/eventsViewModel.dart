@@ -72,6 +72,8 @@ class EventsViewModel extends GetxController {
   }
   void getEvents(){
     loading.value = true ;
+    _api.getApi().then((value){
 
+    });
   }
 }

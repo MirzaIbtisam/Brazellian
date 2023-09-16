@@ -9,7 +9,7 @@ class advertsRepository {
     return response ;
   }
 
-  Future<dynamic> getApi(var data) async{
+  Future<dynamic> getApi() async{
     dynamic response = await _apiService.getApi( "${Constants.baseUrl}${Constants.getAllAdverts}");
     return response ;
   }
