@@ -66,5 +66,57 @@ class NetworkApiServices extends BaseApiServices {
         throw FetchDataException('Error accoured while communicating with server '+response.statusCode.toString()) ;
     }
   }
+  Future<dynamic> postMultipartApi(
+      Map data,
+      String url,
+        File? singleFile,
+        // List<File?> multipleFiles
+    ) async {
+    if (kDebugMode) {
+      print(url);
+      print(data);
+    }
+
+    dynamic responseJson;
+    try {
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+
+      // Add fields to the request
+      data.forEach((key, value) {
+        request.fields[key] = value.toString();
+      });
+
+
+      print( singleFile?.path);
+      if (singleFile != null) {
+        final filePart = await http.MultipartFile.fromPath('serviceImages', singleFile.path);
+        request.files.add(filePart);
+      }
+
+      // Add the multiple files if they exist
+      // for (int i = 0; i < multipleFiles.length; i++) {
+      //   final file = multipleFiles[i];
+      //   if (file != null) {
+      //     final filePart =
+      //     await http.MultipartFile.fromPath('serviceImages', file.path);
+      //     request.files.add(filePart);
+      //   }
+      // }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+    if (kDebugMode) {
+      print(responseJson);
+    }
+    return responseJson;
+  }
+
 
 }

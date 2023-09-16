@@ -48,19 +48,21 @@ class ServiceViewModel extends GetxController {
     UserLoginResponse user = await  userPreference.getUser();
     Map data = {
           "userId": user.id,
-          "title": defaultViewModel.titleController.value.toString(),
-          "description":defaultViewModel. descriptionController.value.toString(),
-          "local":defaultViewModel. localController.value.toString(),
-          "postalCode": defaultViewModel. postalCodeController.value.toString(),
-          "whatsapp":defaultViewModel. whatsappController.value.toString(),
-          "category": categoryController.value.toString(),
-          "subcategory": subcategoryController.value.toString(),
-          "advertiserName": advertiserNameController.value.toString(),
-          "approximateValue": approximateValueController.value.toString(),
-          "keywords":defaultViewModel.listOfTags.value,
-          "thumbnail": _image,
+          "title": defaultViewModel.titleController.value.text.toString(),
+          "description":defaultViewModel. descriptionController.value.text.toString(),
+          "local":defaultViewModel. localController.value.text.toString(),
+          "postalCode": defaultViewModel. postalCodeController.value.text.toString(),
+          "whatsapp":defaultViewModel. whatsappController.value.text.toString(),
+          "category": categoryController.value.text.toString(),
+          "subcategory": subcategoryController.value.text.toString(),
+          "advertiserName": advertiserNameController.value.text.toString(),
+          "approximateValue": int.parse(approximateValueController.value.text),
+          // "keywords":defaultViewModel.listOfTags.value,
+
     };
-    _api.addApi(data).then((value) => {
+    print(thumbnail.value);
+
+    _api.addApi(data ,defaultViewModel.image , ).then((value) => {
       print(value)
     });
 
