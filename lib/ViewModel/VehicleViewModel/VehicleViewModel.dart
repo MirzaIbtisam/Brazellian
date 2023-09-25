@@ -1,29 +1,16 @@
-import 'dart:io';
+import 'package:brazeellian_community/Models/vehiclemodel.dart';
+import 'package:brazeellian_community/Utils/utils.dart';
 import 'package:brazeellian_community/ViewModel/user_preference/userPrefrenceViewModel.dart';
+import 'package:brazeellian_community/constant/routes/routes_name.dart';
+import 'package:brazeellian_community/data/response/status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:textfield_tags/textfield_tags.dart';
 import '../../Models/signUpModel.dart';
 import '../../repository/VehicleListingRepository.dart';
 import '../DefaultViewModel/DefaultViewModel.dart';
 
 class VehicleViewModel extends GetxController {
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-
-  final Rx<File?> _image = Rx<File?>(null);
-
-  File? get image => _image.value;
-  Future<void> pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.camera);
-    if (pickedImage != null) {
-      _image.value = File(pickedImage.path);
-      if (_image.value != null) {
-        thumbnail.value = _image.value;
-      }
-    }
-  }
   final _api = VehicleRepository();
   UserPreference userPreference = UserPreference();
   final subcategoryController = TextEditingController().obs ;
@@ -41,7 +28,6 @@ class VehicleViewModel extends GetxController {
   final subcategoryFocusNode = FocusNode().obs;
   final approximateValueFocusNode = FocusNode().obs;
   final typesFocusNode = FocusNode().obs;
-  final Rx<File?> thumbnail = Rx<File?>(null);
 
   RxBool loading = false.obs;
   Future<void> addVehicle() async {
@@ -50,24 +36,54 @@ class VehicleViewModel extends GetxController {
 
     Map data = {
       "userId": user.id,
-      "title": defaultViewModel.titleController.value.toString(),
-      "description":defaultViewModel. descriptionController.value.toString(),
-      "local":defaultViewModel. localController.value.toString(),
-      "postalCode": defaultViewModel. postalCodeController.value.toString(),
-      "whatsapp":defaultViewModel. whatsappController.value.toString(),
-      "vehicleType":vehicleTypeController.value.toString(),
-      "category": categoryController.value.toString(),
-      "subcategory": subcategoryController.value.toString(),
-      "advertiserName": advertiserNameController.value.toString(),
-      "approximateValue": approximateValueController.value.toString(),
-      "keywords":defaultViewModel.listOfTags,
-      "thumbnail": _image,
+      "title": defaultViewModel.titleController.value.text.toString(),
+      "description":defaultViewModel. descriptionController.value.text.toString(),
+      "local":defaultViewModel. localController.value.text.toString(),
+      "postalCode": defaultViewModel. postalCodeController.value.text.toString(),
+      "whatsapp":defaultViewModel. whatsappController.value.text.toString(),
+      "vehicleType":vehicleTypeController.value.text.toString(),
+      "category": categoryController.value.text.toString(),
+      "subcategory": subcategoryController.value.text.toString(),
+      "advertiserName": advertiserNameController.value.text.toString(),
+      "approximateValue": approximateValueController.value.text.toString(),
+      "keywords":defaultViewModel.tags.value,
     };
+    _api.addApi(data ,defaultViewModel.image , defaultViewModel.images).then((value) {
+      if(value['message']=="success"){
+        Get.delete<DefaultViewModel>();
+        Get.delete<VehicleViewModel>();
+        Get.toNamed(RouteName.homeView)!.then((value){});
+        Utils.snackBar('Note', 'Data uploaded successfully');
+      }
+      else{
+        Utils.snackBar('Error', value["error"]);
+      }
+    });
 
   }
+  final rxRequestStatus = Status.LOADING.obs ;
+  final vehiclesList =VehiclesResponse().obs ;
+  RxString error = ''.obs;
+  void setRxRequestStatus(Status _value) => rxRequestStatus.value = _value ;
+  void setEventList(VehiclesResponse _value) => vehiclesList.value = _value ;
+  void setError(String _value) => error.value = _value ;
   void getVehicle(){
-    loading.value = true ;
     _api.getApi().then((value){
+      setEventList(VehiclesResponse.fromJson(value));
+      setRxRequestStatus(Status.COMPLETED);
+    }).onError((error, stackTrace){
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+    });
+  }
+  void refreshApi(){
+    setRxRequestStatus(Status.LOADING);
+    _api.getApi().then((value){
+      setRxRequestStatus(Status.COMPLETED);
+      setEventList(VehiclesResponse.fromJson(value));
+    }).onError((error, stackTrace){
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
 
     });
   }

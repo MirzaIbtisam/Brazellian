@@ -39,31 +39,31 @@ class Event {
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(
-      id: json['_id'],
-      userId: json['userId'],
-      title: json['title'],
-      description: json['description'],
-      keywords: List<String>.from(json['keywords']),
-      date: json['date'],
-      time: json['time'],
-      start: json['start'],
-      end: json['end'],
-      local: json['local'],
-      postalCode: json['postalCode'],
-      website: json['website'],
-      instagram: json['instagram'],
-      facebook: json['facebook'],
-      thumbnail: json['thumbnail'],
-      multiplePictures: List<String>.from(json['multiplePictures']),
-      v: json['__v'],
+      id: json['_id'] ?? "",
+      userId: json['userId'] ?? "",
+      title: json['title'] ?? "",
+      description: json['description'] ?? "",
+      keywords: List<String>.from(json['keywords'] ?? []),
+      date: json['date'] ?? "",
+      time: json['time'] ?? "",
+      start: json['start'] ?? "",
+      end: json['end'] ?? "",
+      local: json['local'] ?? "",
+      postalCode: json['postalCode'] ?? "",
+      website: json['website'] ?? "",
+      instagram: json['instagram'] ?? "",
+      facebook: json['facebook'] ?? "",
+      thumbnail: json['thumbnail'] ?? "",
+      multiplePictures: List<String>.from(json['multiplePictures'] ?? []),
+      v: json['__v'] ?? 0,
     );
   }
+
 }
 
 class EventsResponse {
-  final List<Event> events;
-  EventsResponse({required this.events});
-
+  final List<Event>? events;
+  EventsResponse({ this.events});
   factory EventsResponse.fromJson(Map<String, dynamic> json) {
     return EventsResponse(
       events: List<Event>.from(json['events'].map((event) => Event.fromJson(event))),

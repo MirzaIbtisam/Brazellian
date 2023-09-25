@@ -1,7 +1,7 @@
 import 'package:brazeellian_community/View/Starting%20Pages/widgets/input_email_widget.dart';
 import 'package:brazeellian_community/View/Starting%20Pages/widgets/input_password_widget.dart';
 import 'package:brazeellian_community/View/Starting%20Pages/widgets/login_button_widget.dart';
-import 'package:brazeellian_community/ViewModel/login/loginViewModel.dart';
+import 'package:brazeellian_community/ViewModel/LoginViewModel/loginViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

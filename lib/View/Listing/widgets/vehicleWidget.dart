@@ -1,11 +1,7 @@
-import 'package:brazeellian_community/Validations/validations.dart';
-import 'package:brazeellian_community/ViewModel/login/loginViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../ViewModel/VehicleViewModel/VehicleViewModel.dart';
 import '../../../Widgets/Widgets.dart';
-import '../../../utils/utils.dart';
 
 class VehicleWidget extends StatelessWidget {
   VehicleWidget({Key? key}) : super(key: key);

@@ -1,12 +1,16 @@
 import 'dart:ui';
+import 'package:brazeellian_community/ViewModel/EventsViewModel/eventsViewModel.dart';
+import 'package:brazeellian_community/ViewModel/UserViewModel/userViewModel.dart';
 import 'package:brazeellian_community/constant/colors/colors.dart';
+import 'package:brazeellian_community/constant/components/general_exception.dart';
+import 'package:brazeellian_community/constant/components/internet_exceptions_widget.dart';
+import 'package:brazeellian_community/data/response/status.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Component/Beauty_Tips.dart';
 import '../Component/Categorias.dart';
 import '../Component/Multiple Service.dart';
@@ -52,28 +56,21 @@ class _Home_ScreenState extends State<Home_Screen> {
     "assets/PLANTS.jpg",
     "assets/manicure pedicure.jpeg"
   ];
-  bool _showBottomSheet = false;
-
-  void _showPersistentBottomSheet() {
-    setState(() {
-      _showBottomSheet = true;
-    });
-  }
-
-  void _hidePersistentBottomSheet() {
-    setState(() {
-      _showBottomSheet = false;
-    });
-  }
-
   int currentIndex = 1;
+  final userVM = Get.put(UserViewModel()) ;
+  final eventsVM = Get.put(EventsViewModel()) ;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userVM.getUserInfo();
+    setState(() {
+      eventsVM.getEvents();
+    });
+    setState(() {
 
-  Future<String> fetchLoginInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id").toString();
-    return id;
+    });
   }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -82,7 +79,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       child: Scaffold(
         drawer: Drawer(
           width: double.infinity,
-          child: drawer(id: fetchLoginInfo()),
+          child: drawer(),
         ),
         backgroundColor: ColorValues.darkBgColor,
         body: SingleChildScrollView(
@@ -128,19 +125,25 @@ class _Home_ScreenState extends State<Home_Screen> {
                         alignment: Alignment.center,
                       ),
                     ),
-                    const Column(
+                     Column(
                       children: [
                         Text(
                           "Bom te ver por aqui, 👋",
                           style: TextStyle(fontSize: 14, color: Colors.white),
                         ),
                         SizedBox(height: 5),
-                        Text(
-                          "Criss Germano",
+                        userVM.userInfo.value.name==null?Text(
+                         "Criss Germano",
                           style: TextStyle(
                               fontSize: 17,
                               color: Colors.white,
                               fontWeight: FontWeight.w700),
+                        ):Text(
+                          userVM.userInfo!.value!.name!,
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -409,7 +412,24 @@ class _Home_ScreenState extends State<Home_Screen> {
                 height: 1400,
                 child: TabBarView(
                   children: [
-                    tabBarView(),
+                    Obx((){
+                      switch(eventsVM.rxRequestStatus.value){
+                        case Status.LOADING:
+                          return const Center(child: CircularProgressIndicator());
+                        case Status.ERROR:
+                          if(eventsVM.error.value =='No internet'){
+                            return InterNetExceptionWidget(onPress: () {
+                              eventsVM.refreshApi();
+                            },);
+                          }else {
+                            return GeneralExceptionWidget(onPress: (){
+                              eventsVM.refreshApi();
+                            });
+                          }
+                        case Status.COMPLETED:
+                          return tabBarView();
+                      }
+                    }),
                     tabBarView(),
                     tabBarView(),
                   ],
@@ -444,27 +464,27 @@ class _Home_ScreenState extends State<Home_Screen> {
                   Multiple_Service(
                       Image1: "assets/service.svg",
                       Image2: "assets/Favorite.svg",
-                      Image3: "assets/Gardener.jpg",
-                      Text1: "House\nGardener",
-                      Text2: "\$ 180,00"),
-                  Multiple_Service(
-                      Image1: "assets/feed.svg",
-                      Image2: "assets/Favorite (1).svg",
-                      Image3: "assets/head chef.jpg",
-                      Text1: "Head Chef\n",
-                      Text2: "\$ 80,00"),
+                      Image3: eventsVM.eventsList.value.events![0].thumbnail,
+                      Text1: eventsVM.eventsList.value.events![0].title,
+                      Text2: eventsVM.eventsList.value.events![0].time),
                   Multiple_Service(
                       Image1: "assets/service.svg",
-                      Image2: "assets/Favorite (1).svg",
-                      Image3: "assets/brick helper.jpg",
-                      Text1: "Bricklayer's\nHelper",
-                      Text2: "\$ 98,00"),
+                      Image2: "assets/Favorite.svg",
+                      Image3: eventsVM.eventsList.value.events![1].thumbnail,
+                      Text1: eventsVM.eventsList.value.events![1].title,
+                      Text2: eventsVM.eventsList.value.events![1].time),
                   Multiple_Service(
-                      Image1: "assets/building.svg",
-                      Image2: "assets/Favorite (1).svg",
-                      Image3: "assets/Electrician.jpg",
-                      Text1: "Eletrician\nConstruction",
-                      Text2: "\$ 99,00"),
+                      Image1: "assets/service.svg",
+                      Image2: "assets/Favorite.svg",
+                      Image3: eventsVM.eventsList.value.events![2].thumbnail,
+                      Text1: eventsVM.eventsList.value.events![2].title,
+                      Text2: eventsVM.eventsList.value.events![2].time),
+                  // Multiple_Service(
+                  //     Image1: "assets/service.svg",
+                  //     Image2: "assets/Favorite.svg",
+                  //     Image3: eventsVM.eventsList.value.events![4].thumbnail,
+                  //     Text1: eventsVM.eventsList.value.events![4].title,
+                  //     Text2: eventsVM.eventsList.value.events![4].time),
                 ],
               ),
             ),

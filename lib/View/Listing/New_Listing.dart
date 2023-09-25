@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:brazeellian_community/ViewModel/DefaultViewModel/DefaultViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,14 +7,7 @@ import 'package:get/get.dart';
 
 import 'Multi_List.dart';
 
-class New_Listing extends StatefulWidget {
-  const New_Listing({super.key});
-
-  @override
-  State<New_Listing> createState() => _New_ListingState();
-}
-
-class _New_ListingState extends State<New_Listing> {
+class New_Listing extends StatelessWidget {
   final List<String> items = [
     'Event',
     'Property',
@@ -22,7 +16,8 @@ class _New_ListingState extends State<New_Listing> {
     'Work',
     'Vehicle'
   ];
-  final TextEditingController controller = TextEditingController(text: '');
+
+  DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +106,7 @@ class _New_ListingState extends State<New_Listing> {
                     selectedStyle:
                         const TextStyle(fontSize: 16, color: Color(0xff78828a)),
                     items: items,
-                    controller: controller,
-                    onChanged: (value) {
-                      // Update the controller value when the selection changes
-                      controller.text = value!;
-                    },
+                    controller: defaultViewModel.type.value,
                   ),
                 ),
               ),
@@ -125,12 +116,8 @@ class _New_ListingState extends State<New_Listing> {
                 width: Get.width * 0.9,
                 child: ElevatedButton(
                     onPressed: () {
-                      if (controller.text.isNotEmpty) {
-
-                        Get.to(() => Multi_List(
-                              type: controller.text.toString(),
-                          page: 0,
-                            ));
+                      if (defaultViewModel.type.value.text.isNotEmpty) {
+                        Get.to(() => Multi_List(page: 0,));
                       } else {
                         showDialog(
                             context: context,

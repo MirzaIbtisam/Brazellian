@@ -34,29 +34,21 @@ class _Multiple_ServiceState extends State<Multiple_Service> {
       width: MediaQuery.of(context).size.width / 2.3,
       child: Column(
         children: [
-          Container(
+          widget.Image3.toString()=="assets/Events.webp"?Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(widget.Image3), fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(image: AssetImage("assets/Events.webp",),fit: BoxFit.fill
+              )
+            ),
+            height: 120,
+            width: MediaQuery.of(context).size.width / 2.4,
+          ):Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
             height: 120,
             width: MediaQuery.of(context).size.width / 2.4,
-            child: Column(
-              children: [
-                SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(widget.Image1),
-                      SvgPicture.asset(widget.Image2)
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: Image.network(widget.Image3.toString(),fit: BoxFit.fill,),
           ),
           SizedBox(height: 5),
           Padding(

@@ -1,11 +1,7 @@
-import 'package:brazeellian_community/Validations/validations.dart';
-import 'package:brazeellian_community/ViewModel/adverts/advertsViewModel.dart';
-import 'package:brazeellian_community/ViewModel/login/loginViewModel.dart';
+import 'package:brazeellian_community/ViewModel/AdvertsViewModel/advertsViewModel.dart';
 import 'package:brazeellian_community/Widgets/Widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../../utils/utils.dart';
 
 class advertsWidget extends StatelessWidget {
   advertsWidget({Key? key}) : super(key: key);

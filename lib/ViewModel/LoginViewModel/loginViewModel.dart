@@ -10,7 +10,7 @@ class LoginViewModel extends GetxController {
   final _api = LoginRepository();
   UserPreference userPreference = UserPreference();
   final emailController = TextEditingController(text: "immuhammadfaizan@gmail.com").obs;
-  final passwordController = TextEditingController(text: "12345678").obs;
+  final passwordController = TextEditingController(text: "xxxxxxxx").obs;
   final emailFocusNode = FocusNode().obs;
   final passwordFocusNode = FocusNode().obs;
   RxBool loading = false.obs;

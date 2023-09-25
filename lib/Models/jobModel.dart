@@ -4,13 +4,12 @@ class Work {
   final String title;
   final String description;
   final List<String> keywords;
-  final String date;
-  final String time;
-  final String start;
-  final String end;
   final String local;
   final String postalCode;
-  final String website;
+  final String category;
+  final String subcategory;
+  final String advertiserName;
+  final int approximateValue;
   final String instagram;
   final String facebook;
   final String thumbnail;
@@ -23,13 +22,12 @@ class Work {
     required this.title,
     required this.description,
     required this.keywords,
-    required this.date,
-    required this.time,
-    required this.start,
-    required this.end,
     required this.local,
     required this.postalCode,
-    required this.website,
+    required this.advertiserName,
+    required this.category,
+    required this.subcategory,
+    required this.approximateValue,
     required this.instagram,
     required this.facebook,
     required this.thumbnail,
@@ -39,34 +37,34 @@ class Work {
 
   factory Work.fromJson(Map<String, dynamic> json) {
     return Work(
-      id: json['_id'],
-      userId: json['userId'],
-      title: json['title'],
-      description: json['description'],
-      keywords: List<String>.from(json['keywords']),
-      date: json['date'],
-      time: json['time'],
-      start: json['start'],
-      end: json['end'],
-      local: json['local'],
-      postalCode: json['postalCode'],
-      website: json['website'],
-      instagram: json['instagram'],
-      facebook: json['facebook'],
-      thumbnail: json['thumbnail'],
-      multiplePictures: List<String>.from(json['multiplePictures']),
-      v: json['__v'],
+      id: json['_id'] ?? "",
+      userId: json['userId'] ?? "",
+      title: json['title'] ?? "",
+      description: json['description'] ?? "",
+      keywords: List<String>.from(json['keywords'] ?? []),
+      category: json['category'] ?? "",
+      subcategory: json['subcategory'] ?? "",
+      approximateValue: json['approximateValue'] ?? 0,
+      advertiserName: json['advertiserName'] ?? "",
+      local: json['local'] ?? "",
+      postalCode: json['postalCode'] ?? "",
+      instagram: json['instagram'] ?? "",
+      facebook: json['facebook'] ?? "",
+      thumbnail: json['thumbnail'] ?? "",
+      multiplePictures: List<String>.from(json['multiplePictures'] ?? []),
+      v: json['__v'] ?? 0,
     );
   }
+
 }
 
 class WorksResponse {
-  final List<Work> Works;
-  WorksResponse({required this.Works});
+  final List<Work>? Works;
+  WorksResponse({ this.Works});
 
   factory WorksResponse.fromJson(Map<String, dynamic> json) {
     return WorksResponse(
-      Works: List<Work>.from(json['Works'].map((Work) => Work.fromJson(Work))),
+      Works: List<Work>.from(json['Works'].map((work) => Work.fromJson(work))),
     );
   }
 }

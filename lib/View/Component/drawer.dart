@@ -1,4 +1,5 @@
 import 'package:brazeellian_community/Models/signUpModel.dart';
+import 'package:brazeellian_community/ViewModel/UserViewModel/userViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,9 +26,9 @@ import '../Support/Support.dart';
 import '../Tutorials/Tutorial.dart';
 
 class drawer extends StatefulWidget {
-  final id;
 
-  const drawer({super.key, this.id});
+
+  const drawer({super.key, });
 
   @override
   State<drawer> createState() => _drawerState();
@@ -35,8 +36,14 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   bool loading = false;
+  final userVm = Get.put(UserViewModel()) ;
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userVm.getUserInfo();
+  }
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -70,7 +77,7 @@ class _drawerState extends State<drawer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Criss Germano",
+                        "${userVm.userInfo.value.name}",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -79,7 +86,7 @@ class _drawerState extends State<drawer> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "crissgermano@gmail.com",
+                        "${userVm.userInfo.value.email}",
                         style: TextStyle(
                             fontSize: 14,
                             color: Colors.white,

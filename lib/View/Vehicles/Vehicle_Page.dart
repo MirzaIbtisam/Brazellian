@@ -1,8 +1,10 @@
+import 'package:brazeellian_community/ViewModel/VehicleViewModel/VehicleViewModel.dart';
 import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Vehicle_Page extends StatefulWidget {

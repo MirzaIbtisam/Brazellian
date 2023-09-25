@@ -1,5 +1,5 @@
 import 'package:brazeellian_community/Validations/validations.dart';
-import 'package:brazeellian_community/ViewModel/login/loginViewModel.dart';
+import 'package:brazeellian_community/ViewModel/LoginViewModel/loginViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
