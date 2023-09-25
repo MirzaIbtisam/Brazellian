@@ -3,11 +3,11 @@ import 'package:brazeellian_community/View/Create%20Account/widgets/input_email_
 import 'package:brazeellian_community/View/Create%20Account/widgets/input_name_widget.dart';
 import 'package:brazeellian_community/View/Create%20Account/widgets/input_password_widget.dart';
 import 'package:brazeellian_community/View/Create%20Account/widgets/signup_button_widget.dart';
+import 'package:brazeellian_community/ViewModel/RegisterViewModel/RegisterViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../../ViewModel/register/RegisterViewModel.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
 

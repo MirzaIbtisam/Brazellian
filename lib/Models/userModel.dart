@@ -1,6 +1,6 @@
 class UserProfile {
   final String? state;
-  final String id;
+  final String? id;
   final String? name;
   final String? email;
   final List<String>? interests;
@@ -16,7 +16,7 @@ class UserProfile {
 
   UserProfile({
     this.state,
-    required this.id,
+    this.id,
     this.name,
     this.email,
     this.interests,

@@ -1,3 +1,4 @@
+import 'package:brazeellian_community/ViewModel/JobsViewModel/JobsViewModel.dart';
 import 'package:brazeellian_community/constant/colors/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Job_Page extends StatefulWidget {
@@ -15,6 +17,15 @@ class Job_Page extends StatefulWidget {
 }
 
 class Job_PageState extends State<Job_Page> {
+  JobsViewModel jobsVM = Get.put(JobsViewModel()) ;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // initialize();
+    jobsVM.getJobs();
+  }
   List<String> Imge = [
     "assets/Flag.svg",
     "assets/Group 1000004549.svg",

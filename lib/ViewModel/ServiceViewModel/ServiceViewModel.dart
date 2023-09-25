@@ -1,5 +1,9 @@
 import 'dart:io';
+import 'package:brazeellian_community/Models/serviceModel.dart';
+import 'package:brazeellian_community/Utils/utils.dart';
 import 'package:brazeellian_community/ViewModel/user_preference/userPrefrenceViewModel.dart';
+import 'package:brazeellian_community/constant/routes/routes_name.dart';
+import 'package:brazeellian_community/data/response/status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +14,6 @@ import '../DefaultViewModel/DefaultViewModel.dart';
 
 class ServiceViewModel extends GetxController {
   DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
-
   final Rx<File?> _image = Rx<File?>(null);
   File? get image => _image.value;
   Future<void> pickImage() async {
@@ -18,14 +21,11 @@ class ServiceViewModel extends GetxController {
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       _image.value = File(pickedImage.path);
-      if (_image.value != null) {
-        thumbnail.value = _image.value;
-      }
     }
   }
+
   final _api = ServiceRepository();
   UserPreference userPreference = UserPreference();
-
   final categoryController = TextEditingController().obs;
   final subcategoryController = TextEditingController().obs;
   final advertiserNameController = TextEditingController().obs ;
@@ -40,7 +40,6 @@ class ServiceViewModel extends GetxController {
   final subcategoryFocusNode = FocusNode().obs;
   final advertiserNameFocusNode = FocusNode().obs;
   final approximateValueFocusNode = FocusNode().obs;
-  final Rx<File?> thumbnail = Rx<File?>(null);
 
   RxBool loading = false.obs;
   void addService()async {
@@ -53,23 +52,51 @@ class ServiceViewModel extends GetxController {
           "local":defaultViewModel. localController.value.text.toString(),
           "postalCode": defaultViewModel. postalCodeController.value.text.toString(),
           "whatsapp":defaultViewModel. whatsappController.value.text.toString(),
-          "category": categoryController.value.text.toString(),
-          "subcategory": subcategoryController.value.text.toString(),
+          "category": "categoryController.value.text.toString()",
+          "subcategory": "subcategoryController.value.text.toString()",
           "advertiserName": advertiserNameController.value.text.toString(),
           "approximateValue": int.parse(approximateValueController.value.text),
-          // "keywords":defaultViewModel.listOfTags.value,
-
+          "keywords":defaultViewModel.tags.value,
     };
-    print(thumbnail.value);
-
-    _api.addApi(data ,defaultViewModel.image , ).then((value) => {
-      print(value)
+    _api.addApi(data ,defaultViewModel.image , defaultViewModel.images).then((value) {
+      if(value['message']=="success"){
+        Get.delete<DefaultViewModel>();
+        Get.delete<ServiceViewModel>();
+        Get.toNamed(RouteName.homeView)!.then((value){});
+        Utils.snackBar('Note', 'Data uploaded successfully');
+      }
+      else{
+        Utils.snackBar('Error', value["error"]);
+      }
     });
 
+
+
   }
+  final rxRequestStatus = Status.LOADING.obs ;
+  final servicesList =ServicesResponse().obs ;
+  RxString error = ''.obs;
+  void setRxRequestStatus(Status _value) => rxRequestStatus.value = _value ;
+  void setEventList(ServicesResponse _value) => servicesList.value = _value ;
+  void setError(String _value) => error.value = _value ;
   void getService(){
-    loading.value = true ;
     _api.getApi().then((value){
+      setRxRequestStatus(Status.COMPLETED);
+      setEventList(ServicesResponse.fromJson(value));
+    }).onError((error, stackTrace){
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+
+    });
+  }
+  void refreshApi(){
+    setRxRequestStatus(Status.LOADING);
+    _api.getApi().then((value){
+      setRxRequestStatus(Status.COMPLETED);
+      setEventList(ServicesResponse.fromJson(value));
+    }).onError((error, stackTrace){
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
 
     });
   }

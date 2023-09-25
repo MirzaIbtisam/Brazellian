@@ -1,4 +1,4 @@
-import 'package:brazeellian_community/ViewModel/splashScreen/splashScreenViewModel.dart';
+import 'package:brazeellian_community/ViewModel/SplashScreenViewModel/splashScreenViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

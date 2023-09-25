@@ -3,6 +3,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:brazeellian_community/View/Listing/widgets/advertsWidget.dart';
 import 'package:brazeellian_community/View/Listing/widgets/eventsWidget.dart';
 import 'package:brazeellian_community/View/Listing/widgets/propertyWidgets.dart';
+import 'package:brazeellian_community/ViewModel/DefaultViewModel/DefaultViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,11 +11,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../View/Listing/widgets/jobsWidget.dart';
 import '../View/Listing/widgets/serviceWidget.dart';
 import '../View/Listing/widgets/vehicleWidget.dart';
-import '../ViewModel/ServiceViewModel/ServiceViewModel.dart';
 
 final List<String> items = [
   'Event',
@@ -68,7 +67,6 @@ final List<String> items6 = [
   '5 vagas',
 ];
 
-ServiceViewModel serviceVm = Get.put(ServiceViewModel());
 
 Future<void> _showImagePickerDialog(BuildContext context, int index) async {
   final ImagePicker _picker = ImagePicker();
@@ -215,7 +213,9 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
     );
   }
 
-  Widget Box2(BuildContext context, File? edImage, int index) {
+  Widget Box2(BuildContext context, File? edImage, int index,) {
+    DefaultViewModel defaultViewModel = Get.put(DefaultViewModel());
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Stack(
@@ -227,9 +227,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
             height: MediaQuery.of(context).size.height / 7.5,
             width: MediaQuery.of(context).size.width / 3.5,
             child: GestureDetector(
-              onTap: () {
-                _showImagePickerDialog(context, index);
-              },
+              onTap: ()=>defaultViewModel.pickImages(index),
               child: edImage != null
                   ? Image.file(
                 edImage,
@@ -246,11 +244,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
               top: 5,
               right: 5,
               child: GestureDetector(
-                onTap: () {
-
-                    pickedImages[index] = null; // Remove the selected image
-
-                },
+                onTap: ()=>defaultViewModel.clearImages(index),
                 child: SvgPicture.asset(
                   "assets/delete_pic.svg",
                   height: 20,
@@ -265,8 +259,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
 
 
 
-  Widget Dropdown(List<String> item, TextEditingController control,
-      {bool flag = false}) {
+  Widget Dropdown(List<String> item, TextEditingController control) {
     return Container(
       height: 60,
       width: Get.width,
@@ -277,7 +270,7 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
       child: Padding(
         padding: const EdgeInsets.only(left: 2, top: 5),
         child: AbsorbPointer(
-          absorbing: flag,
+          absorbing: false,
           child: CustomDropdown(
             fillColor: Colors.white,
             selectedStyle: const TextStyle(fontSize: 16, color: Color(0xff78828a)),
@@ -285,12 +278,6 @@ Future<void> _showImagePickerDialog(BuildContext context, int index) async {
             controller: control,
             onChanged: (value) {
               control.text = value;
-
-              if (flag == true) {
-                // type = value;
-              }
-
-
             },
           ),
         ),

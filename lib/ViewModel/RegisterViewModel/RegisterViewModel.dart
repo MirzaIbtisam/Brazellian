@@ -42,7 +42,7 @@ class RegisterViewModel extends GetxController {
           );
           userPreference.saveUser(userModel).then((value){
             Get.delete<RegisterViewModel>();
-            Get.toNamed(RouteName.loginView)!.then((value){});
+            Get.toNamed(RouteName.AccountType)!.then((value){});
             Utils.snackBar('Login', 'User Registered Successfully');
           }).onError((error, stackTrace){
           });

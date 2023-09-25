@@ -1,6 +1,4 @@
-import 'package:brazeellian_community/Validations/validations.dart';
-import 'package:brazeellian_community/ViewModel/login/loginViewModel.dart';
-import 'package:brazeellian_community/ViewModel/property/propertyViewModel.dart';
+import 'package:brazeellian_community/ViewModel/PropertyViewModel/propertyViewModel.dart';
 import 'package:brazeellian_community/Widgets/Widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

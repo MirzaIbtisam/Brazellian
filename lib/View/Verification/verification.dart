@@ -20,6 +20,12 @@ class _verificationState extends State<verification> {
   bool loading = false;
   TextEditingController Code = TextEditingController();
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

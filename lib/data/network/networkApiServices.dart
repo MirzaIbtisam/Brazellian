@@ -52,13 +52,11 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   dynamic returnResponse(http.Response response){
-    print("Hello");
-    print(response.body);
     switch(response.statusCode){
       case 200:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson ;
-      case 404:
+      case 500:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson ;
 
@@ -70,7 +68,7 @@ class NetworkApiServices extends BaseApiServices {
       Map data,
       String url,
         File? singleFile,
-        // List<File?> multipleFiles
+        List<File?> multipleFiles
     ) async {
     if (kDebugMode) {
       print(url);
@@ -85,24 +83,18 @@ class NetworkApiServices extends BaseApiServices {
       data.forEach((key, value) {
         request.fields[key] = value.toString();
       });
-
-
-      print( singleFile?.path);
       if (singleFile != null) {
-        final filePart = await http.MultipartFile.fromPath('serviceImages', singleFile.path);
+        final filePart = await http.MultipartFile.fromPath('thumbnail', singleFile.path);
         request.files.add(filePart);
       }
-
-      // Add the multiple files if they exist
-      // for (int i = 0; i < multipleFiles.length; i++) {
-      //   final file = multipleFiles[i];
-      //   if (file != null) {
-      //     final filePart =
-      //     await http.MultipartFile.fromPath('serviceImages', file.path);
-      //     request.files.add(filePart);
-      //   }
-      // }
-
+      if(multipleFiles!=null){
+        for(int i=0;i<multipleFiles.length;i++){
+          if(multipleFiles[i]!=null){
+            final filePart = await http.MultipartFile.fromPath('images', multipleFiles[i]!.path);
+            request.files.add(filePart);
+          }
+        }
+      }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
 

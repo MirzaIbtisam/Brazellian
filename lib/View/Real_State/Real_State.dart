@@ -1,5 +1,10 @@
 import 'dart:ui';
-
+import 'package:brazeellian_community/View/Component/Multiple%20Service.dart';
+import 'package:brazeellian_community/ViewModel/PropertyViewModel/propertyViewModel.dart';
+import 'package:brazeellian_community/Widgets/postWidget.dart';
+import 'package:brazeellian_community/constant/components/general_exception.dart';
+import 'package:brazeellian_community/constant/components/internet_exceptions_widget.dart';
+import 'package:brazeellian_community/data/response/status.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,11 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-
-import '../Component/MultiService_extended.dart';
-import '../FilterScreen.dart';
-import 'ReaslStateDetail.dart';
 
 class RealState extends StatefulWidget {
   const RealState({Key? key}) : super(key: key);
@@ -21,532 +21,376 @@ class RealState extends StatefulWidget {
 }
 
 class RealStateState extends State<RealState> {
-  List<String> RealState = [
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
-    "assets/Real_state.webp",
+
+
+
+  List<String> Event = [
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
+    "assets/Events.webp",
   ];
-  bool _showBottomSheet = false;
-
-  void _showPersistentBottomSheet() {
-    setState(() {
-      _showBottomSheet = true;
-    });
-  }
-
-  void _hidePersistentBottomSheet() {
-    setState(() {
-      _showBottomSheet = false;
-    });
-  }
-
   int currentIndex = 0;
-  final scaffoldState = GlobalKey<ScaffoldState>();
+  final propertyVM = Get.put(PropertyViewModel()) ;
 
-  _showSheet() {
-    print("hello");
-
-    // Show BottomSheet here using the Scaffold state instead of the Scaffold context
-    scaffoldState.currentState?.showBottomSheet((context) {
-      return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-        // Adjust blur intensity as needed
-        child: Filter(context),
-      );
-    });
-
-    print("Something");
-  }
-
-  SfRangeValues _currentRangeValues = SfRangeValues(100.0, 900.0);
-  bool slelected = false;
-
-  void dropdown() {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     setState(() {
-      slelected = !slelected;
+      propertyVM.getProperty();
+    });
+    setState(() {
+
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldState,
-      body: Stack(
-        children: [
-          CarouselSlider.builder(
-            itemCount: RealState.length,
-            itemBuilder: (BuildContext context, int index, int realIndex) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(),
-                child: Image.asset(
-                  RealState[realIndex],
-                  fit: BoxFit.cover,
-                ),
-              );
-            },
-            options: CarouselOptions(
-              viewportFraction: 1.0,
-              aspectRatio: 16 / 15,
-              initialPage: 0,
-              // Set initial page to 0
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              // Set autoPlay to false for debugging
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (int index, CarouselPageChangedReason reason) {
-                setState(() {
-                  currentIndex =
-                      index; // Update currentIndex when the carousel index changes
+      body: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Obx((){
+          switch(propertyVM.rxRequestStatus.value){
+            case Status.LOADING:
+              return const Center(child: CircularProgressIndicator());
+            case Status.ERROR:
+              if(propertyVM.error.value =='No internet'){
+                return InterNetExceptionWidget(onPress: () {
+                  propertyVM.refreshApi();
+                },);
+              }else {
+                return GeneralExceptionWidget(onPress: (){
+                  propertyVM.refreshApi();
                 });
-              },
-            ),
-          ),
-          Column(
-            children: [
-              SizedBox(height: 60),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white54,
-                              borderRadius: BorderRadius.circular(100)),
-                          height: 45,
-                          width: 45,
-                          child: SvgPicture.asset(
-                            "assets/Arrow - Left.svg",
-                            fit: BoxFit.scaleDown,
+              }
+            case Status.COMPLETED:
+              return Stack(
+                children: [
+                  CarouselSlider.builder(
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index, int realIndex) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          // margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: const BoxDecoration(),
+                          child: Image.network(
+                            propertyVM.propertysList.value!.Propertys![0].thumbnail,
+                            fit: BoxFit.cover,
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 30),
-                  ],
-                ),
-              ),
-              SizedBox(height: 100),
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Studio Compacto 2 Dormitórios\nPalm Beach",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontFamily: "Plus Jakarta Sans",
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 25,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xffe2aa19),
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                        ),
-                        child: Text(
-                          "Imóveis",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Color(0xff7c5a04),
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "PlusJakarta Sans",
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black12,
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                            side: BorderSide(color: Colors.white),
-                          ),
-                        ),
+                        );
+                      },
+                      options: CarouselOptions(
+                          viewportFraction: 1.0,
+                          aspectRatio: 16 / 15,
+                          initialPage: Event.length,
+                          enableInfiniteScroll: false,
+                          reverse: false,
+                          autoPlay: true,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (int index, CarouselPageChangedReason reason) {
+                            setState(() {
+                              currentIndex =
+                                  index; // Update currentIndex when the carousel index changes
+                            });
+                          })),
+
+                  Column(
+                    children: [
+                      SizedBox(height: 60),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset("assets/miami fl.svg"),
-                            SizedBox(width: 1),
-                            Text(
-                              "Miami, FL",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "PlusJakarta Sans",
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white54,
+                                      borderRadius: BorderRadius.circular(100)),
+                                  height: 45,
+                                  width: 45,
+                                  child: SvgPicture.asset(
+                                    "assets/Arrow - Left.svg",
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
                             ),
+                            Text(
+                              "Property",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontFamily: "Plus Jakarta Sans",
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(width: 30),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 15),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20),
-                        Container(
-                          height: 15,
-                          decoration: BoxDecoration(
+                      SizedBox(height: 100),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "${propertyVM.propertysList.value!.Propertys![0].title}",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontFamily: "Plus Jakarta Sans",
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 25,
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color(0xffe2aa19),
+                                      elevation: 0.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                      )),
+                                  child: Text(
+                                    "Property",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xff7c5a04),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "PlusJakarta Sans"),
+                                  )),
+                            ),
+                            Text(
+                              "${propertyVM.propertysList.value!.Propertys![0].local}",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "PlusJakarta Sans"),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      SizedBox(height: 20),
+                      Container(
+                        height: 15,
+                        decoration: BoxDecoration(
                             border: Border.all(
-                              color: const Color(0xffeaecf0),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          child: DotsIndicator(
-                            dotsCount: RealState.length,
-                            position: currentIndex,
-                            decorator: const DotsDecorator(
-                              spacing: EdgeInsets.symmetric(horizontal: 4),
-                              size: Size.square(7.5),
-                              color: Color(0xffd0d5dd), // Inactive color
-                              activeColor: Color(0xff495057),
-                            ),
+                                color: const Color(0xffeaecf0), width: 1),
+                            borderRadius: BorderRadius.circular(32)),
+                        child: DotsIndicator(
+                          dotsCount: Event.length,
+                          position: currentIndex,
+                          decorator: const DotsDecorator(
+                            spacing: EdgeInsets.symmetric(horizontal: 4),
+                            size: Size.square(7.5),
+                            color: Color(0xffd0d5dd), // Inactive color
+                            activeColor: Color(0xff495057),
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6f8fb),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: TextFormField(
-                              onTap: () {},
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(50),
-                              ],
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(top: 15),
-                                border: InputBorder.none,
-                                prefixIcon: SvgPicture.asset(
-                                  "assets/Seacrh.svg",
-                                  fit: BoxFit.scaleDown,
-                                ),
-                                hintText: "O que você está buscando?",
-                                hintStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xffa6aeb7),
-                                ),
-                                suffixIcon: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SvgPicture.asset("assets/Vector (1).svg"),
-                                    SizedBox(width: 15),
-                                    SvgPicture.asset("assets/Vector 2.svg"),
-                                    IconButton(
-                                      onPressed: () {
-                                        print("object");
-                                        _showSheet();
-                                      },
-                                      icon:
-                                          SvgPicture.asset("assets/shape.svg"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                      ),
+                      SizedBox(height: 30),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xfff6f8fb),
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        SizedBox(height: 15),
-                        Divider(
-                          thickness: 0.5,
-                          color: Color(0xffefefef),
-                        ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Valor aproximado",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "PlusJakarta Sans",
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  dropdown();
-                                },
-                                icon: Icon(
-                                  slelected
-                                      ? CupertinoIcons
-                                          .chevron_down // Show the icon in the opposite direction when it's pressed
-                                      : CupertinoIcons.chevron_up,
-                                  size: 20,
-                                ),
-                              ),
+                        height: 60,
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: TextFormField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(50),
                             ],
+                            decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.only(top: 20, left: 15),
+                                border: InputBorder.none,
+                                hintText: "O que você busca?",
+                                hintStyle: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xffb7bec5)),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: SvgPicture.asset(
+                                    "assets/Seacrh.svg",
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                )),
                           ),
                         ),
-                        if (slelected) dropdownslider(),
-                        Divider(
-                          thickness: 0.5,
-                          color: Color(0xffefefef),
+                      ),
+                      SizedBox(height: 15),
+                      Divider(
+                        thickness: 0.5,
+                        color: Color(0xffefefef),
+                      ),
+                      SizedBox(
+                        height: 400,
+                        child: Obx((){
+                          switch(propertyVM.rxRequestStatus.value){
+                            case Status.LOADING:
+                              return const Center(child: CircularProgressIndicator());
+                            case Status.ERROR:
+                              if(propertyVM.error.value =='No internet'){
+                                return InterNetExceptionWidget(onPress: () {
+                                  propertyVM.refreshApi();
+                                },);
+                              }else {
+                                return GeneralExceptionWidget(onPress: (){
+                                  propertyVM.refreshApi();
+                                });
+                              }
+                            case Status.COMPLETED:
+                              return ListView.builder(
+                                  itemCount: propertyVM.propertysList.value.Propertys!.length,
+                                  itemBuilder: (context, index){
+                                    return GridView.builder(
+                                      physics: ScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: propertyVM.propertysList.value!.Propertys!.isNotEmpty&&propertyVM.propertysList.value!.Propertys!.length<6?propertyVM.propertysList.value!.Propertys!.length:6, // Replace with the actual item count
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, // Number of columns in the grid
+                                        crossAxisSpacing: 10.0, // Spacing between columns
+                                        mainAxisSpacing: 20.0, // Spacing between rows
+                                      ),
+                                      itemBuilder: (BuildContext context, int index) {
+                                        // Replace with your item widget
+                                        return InkWell(
+                                          onTap: ()async{
+                                            // Get.to( ()=> Detail(data: propertyVM.propertysList.value!.Propertys![index],));
+                                          },
+                                          child: Multiple_Servicee(
+                                              "assets/Event button.svg",
+                                              "assets/Favorite (1).svg",
+                                              propertyVM.propertysList.value!.Propertys![index].thumbnail,
+                                              "${propertyVM.propertysList.value?.Propertys?[index].title}",
+                                              "\$ 50,00",context),
+                                        );
+                                      },
+                                    );
+                                  }
+                              );
+                          }
+                        }),
+                      ),
+                      SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Destaques da semana",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "PlusJakarta Sans"),
+                          ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Divider(
+                        thickness: 0.5,
+                        color: Color(0xffefefef),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: SizedBox(
+                          height: 220,
                           child: GridView(
-                            scrollDirection: Axis.vertical,
+                            scrollDirection: Axis.horizontal,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 215,
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisExtent: 185,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10,
                             ),
                             // itemCount: 4,
                             shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => ReaslStateDetail());
-                                },
-                                child: MultiService_extends(
-                                    Image1: "assets/Real_state_button.svg",
-                                    Image2: "assets/Favorite.svg",
-                                    Image3: "assets/Real_state.webp",
-                                    Text1:
-                                        "Aluguel Studio compacto\npara estudantes",
-                                    Text2: "\$ 950,00"),
-                              ),
-                              MultiService_extends(
-                                  Image1: "assets/Real_state_button.svg",
-                                  Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Real_state.webp",
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
+                                  Image2: "assets/Favorite.svg",
+                                  Image3: "assets/Events.webp",
                                   Text1:
-                                      "Apartamento compacto\nStudio Comercial",
-                                  Text2: "\$ 950,00"),
-                              MultiService_extends(
-                                  Image1: "assets/Real_state_button.svg",
+                                  "O poder do Networking\nSegunda Edição",
+                                  Text2: "\$ 50,00"),
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
                                   Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Real_state.webp",
-                                  Text1: "Studio 2 Dormitórios\nInfra completa",
-                                  Text2: "\$ 950,00"),
-                              MultiService_extends(
-                                  Image1: "assets/Real_state_button.svg",
+                                  Image3: "assets/Events.webp",
+                                  Text1:
+                                  "O poder do Networking\nTerceira Edição",
+                                  Text2: "\$ 50,00"),
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
                                   Image2: "assets/Favorite (1).svg",
-                                  Image3: "assets/Real_state.webp",
-                                  Text1: "Flat para solteiro\nTemporada Maio",
-                                  Text2: "\$ 950,00"),
+                                  Image3: "assets/Events.webp",
+                                  Text1:
+                                  "O poder do Networking\nTerceira Edição",
+                                  Text2: "\$ 50,00"),
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
+                                  Image2: "assets/Favorite (1).svg",
+                                  Image3: "assets/Events.webp",
+                                  Text1:
+                                  "O poder do Networking\nTerceira Edição",
+                                  Text2: "\$ 50,00"),
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
+                                  Image2: "assets/Favorite (1).svg",
+                                  Image3: "assets/Events.webp",
+                                  Text1:
+                                  "O poder do Networking\nTerceira Edição",
+                                  Text2: "\$ 50,00"),
+                              Multiple_Service(
+                                  Image1: "assets/Event button.svg",
+                                  Image2: "assets/Favorite (1).svg",
+                                  Image3: "assets/Events.webp",
+                                  Text1:
+                                  "O poder do Networking\nTerceira Edição",
+                                  Text2: "\$ 50,00"),
                             ],
                           ),
                         ),
-                        SizedBox(height: 50),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Recomendações",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "PlusJakarta Sans",
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Divider(
-                          thickness: 0.5,
-                          color: Color(0xffefefef),
-                        ),
-                        SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: SizedBox(
-                            height: 220,
-                            child: GridView(
-                              scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1,
-                                mainAxisExtent: 185,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              // itemCount: 4,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              children: [
-                                MultiService_extends(
-                                    Image1: "assets/Real_state_button.svg",
-                                    Image2: "assets/Favorite.svg",
-                                    Image3: "assets/Real_state.webp",
-                                    Text1:
-                                    "Aluguel Studio compacto\npara estudantes",
-                                    Text2: "\$ 950,00"),
-                                MultiService_extends(
-                                    Image1: "assets/Real_state_button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Real_state.webp",
-                                    Text1:
-                                    "Apartamento compacto\nStudio Comercial",
-                                    Text2: "\$ 950,00"),
-                                MultiService_extends(
-                                    Image1: "assets/Real_state_button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Real_state.webp",
-                                    Text1: "Studio 2 Dormitórios\nInfra completa",
-                                    Text2: "\$ 950,00"),
-                                MultiService_extends(
-                                    Image1: "assets/Real_state_button.svg",
-                                    Image2: "assets/Favorite (1).svg",
-                                    Image3: "assets/Real_state.webp",
-                                    Text1: "Flat para solteiro\nTemporada Maio",
-                                    Text2: "\$ 950,00"),
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: 50),
-                        SvgPicture.asset("assets/card.svg"),
-                        SizedBox(height: 50),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 50),
+                      SvgPicture.asset("assets/card.svg"),
+                      SizedBox(height: 50),
+                    ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ],
+                ],
+              );
+          }
+        }),
       ),
     );
   }
 
-  Widget dropdownslider() {
-    double startValue = _currentRangeValues.start;
-    double endValue = _currentRangeValues.end;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width / 2.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Color(0xffb8bec4)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(18),
-                  child: Text(
-                    '\$${startValue.round()}',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "plus Jakarta Sans",
-                        color: Color(0xff75818d)),
-                  ),
-                ),
-              ),
-              SvgPicture.asset("assets/divider.svg"),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width / 2.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Color(0xffb8bec4)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(18),
-                  child: Text(
-                    '\$${endValue.round()}',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "plus Jakarta Sans",
-                        color: Color(0xff75818d)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SfRangeSlider(
-          activeColor: Color(0xffcd9403),
-          inactiveColor: Color(0xffefefef),
-          min: 0.0,
-          max: 1000.0,
-          values: _currentRangeValues,
-          onChanged: (SfRangeValues values) {
-            setState(() {
-              _currentRangeValues = values;
-            });
-          },
-        ),
-        Text(
-          'Start: ${_currentRangeValues.start.round()} - End: ${_currentRangeValues.end.round()}',
-          style: TextStyle(fontSize: 16),
-        ),
-      ],
-    );
-  }
+
 }
